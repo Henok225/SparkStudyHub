@@ -1,0 +1,28 @@
+.email-verification{
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: max(30vw,250px);
+    padding: 20px;
+    box-shadow: 0 0 10px #b3aeae;
+    border-radius: 15px;
+    margin: 100px auto;
+}
+.email-verification p{
+    margin: 20px;
+    color: red;
+}
+.email-verification button{
+   width: 150px;
+   padding: 5px;
+   text-align: center;
+   border-radius: 10px;
+   border: none;
+   font-size: 20px;
+   cursor: pointer;
+   background-color: red;
+   color: white;font-weight: 600;
+}

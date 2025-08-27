@@ -1,0 +1,91 @@
+.ethio-cur-home .welc{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+.ethio-cur-home .welc h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+.ethio-cur-home .welc p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin-bottom: 30px;    
+}
+.ethio-cur-home .welc .welc-text{
+    /* text-align: center; */
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+.main .grades{
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.main .grades .grade{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    width: max(25vw,200px);
+    cursor: pointer;
+}
+.main .grades .grade:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+
+}
+.main .grades .grade h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+.main h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+.main p {
+    font-size: 1rem;
+    color: #666;
+    max-width: 800px;
+    margin-bottom: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    .ethio-cur-home .welc {
+        flex-direction: column;
+        padding: 20px;
+    }
+    .ethio-cur-home .welc h1 {
+        font-size: 2rem;
+    }
+    .ethio-cur-home .welc p {
+        font-size: 1rem;
+    }
+    .ethio-cur-home .welc .welc-text {
+        padding: 15px;
+    }
+    
+}

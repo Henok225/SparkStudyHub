@@ -1,0 +1,216 @@
+ 
+  .content-container{
+    margin: 0;
+    background-color: var(--primary-background);
+    color: var(--primary-color);
+    padding: 10px;
+}
+.content-container > h1{
+    text-align: center;
+}
+.content-nav{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 80vw;
+    margin: auto;
+}
+ .content-nav .content-filter p{
+    font-size: 20px;
+    font-weight: 600;
+}
+ .content-search{
+    display: grid;
+    grid-template-columns: auto 20%;
+    /* width: 20vw; */
+    /* background-color:  #d9d6d6; */
+    border-radius: 20px;
+    outline: 1px solid rgb(102, 201, 234);
+    width: max(25vw,280px);
+    /* display: flex;
+    justify-content: start;
+    align-items: center; */
+}
+ 
+.content-search .search-bar{
+    border-radius: 20px;
+    width: 100%;
+    overflow: hidden;
+}
+ .content-search .search-bar input{
+    border-radius: 20px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 12px 35px;
+    background-color: transparent;
+    border: none;
+    width: 65%;
+    font-size: 16px;
+    color: var(--primary-color);
+}
+.content-search .search-bar input:focus {
+    outline: none;
+    border: none;
+  }
+  .content-search .search-bar input:focus-within{
+    outline: 1px solid rgb(32, 187, 239);
+  }
+ .content-search .search-btn{
+    width: 40%;
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: white;
+}
+ .content-search .search-btn img{
+    width: max(20px,50%);
+    border: none;
+    padding: 0 10px;
+    cursor: pointer;
+    opacity: 0.7;
+    
+}
+.content-search .search-btn img:hover{
+    opacity: 1;
+    scale: 1.1;
+}
+ .subjects-list{
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+    width: 80vw;
+    margin: 50px auto;
+    overflow: scroll;
+
+}
+ .subjects-list::-webkit-scrollbar{
+    display: none;
+}
+.content-container .subjects-list .subject{
+    width: 100px;
+    text-align: center;
+    padding: 10px;
+    
+}
+.content-container .subjects-list .subject .sub-image {
+    width: 80px;
+    height: 80px;
+    background-color: rgb(225, 224, 224);
+    border-radius: 50%;
+    margin: auto;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgb(123, 123, 125);
+    
+}
+.content-container .subjects-list .subject .active{
+border: 2px solid yellow;
+}
+.content-container .subjects-list .subject .sub-image img{
+width: 100%;
+height: 100%;
+border-radius: 50%;
+}
+.content-container .subjects-list .subject p{
+    cursor: pointer;
+    opacity: 0.6;
+    font-size: 16px;
+    z-index: 1;
+}
+.content-container .subjects-list .subject p:hover{
+    opacity: 1;
+}
+.content-list{
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 90vw;
+    margin: auto;
+}
+.content-list > div{
+    width: max(20vw,300px);
+    /* height: max(25vw,350px); */
+    /* background-color: #fefcfc; */
+    border-radius: 10px;
+    cursor: pointer;
+    padding-bottom: 10px;
+    overflow: hidden;
+}
+
+.content-list > div:hover{
+    background-color: var(--primary-backgroundhover);
+}
+.content-list > div .image{
+    width: 100%;
+    height: 60%;
+    background-color: var(--loading-content);
+    animation: loadingContent 1s ;
+    /* animation: onLoading 10s infinite; */
+    transition: 1s;
+    overflow: hidden;
+}
+
+.content-list > div .image img{
+    width: 100%;
+}
+.content-list > div .caption h3{
+    text-align: center;
+}
+.content-list > div .caption p{
+    text-align: center;
+    height: 70%;
+}
+.content-list > div .caption .btns{
+    width: 100%;
+    display: flex;
+    justify-content:space-around;
+
+}
+.content-list > div .caption .btns button{
+    width: fit-content;
+    padding: 0px 20px;
+    border: none;
+    background-color: rgb(244, 238, 238);
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    transition: 0.3s;
+}
+.content-list > div .caption .btns button:hover{
+    background-color: rgb(92, 91, 91);
+    color: white;
+}
+.content-list > div .caption .btns .open-btn{
+    background-color: rgb(55, 161, 254);
+    color: white;
+}
+@keyframes loadingContent{
+    0%{
+        background-color: rgb(255, 252, 252);  
+    }
+    50%{
+        background-color: rgba(246, 245, 245, 0.626);
+    }
+    100%{
+        background-color: rgba(223, 223, 223, 0.626);
+
+    }
+}
+@media (max-width:700px) {
+    .content-container .content-nav{
+        width: 90vw;
+    }
+    .content-container .subjects-list{
+        width: 90vw;
+    }
+}

@@ -1,0 +1,72 @@
+.service{
+    margin: 0;
+    text-align: center;
+    margin-top: 100px;
+}
+.service .service-list{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* align-items: center; */
+    gap: 30px;
+    margin: 50px 0;
+   
+}
+.service .service-list > div{
+    width: max(22vw,300px);
+    background-color: var(--primary-background);
+    padding: 10px;
+    overflow: hidden;
+    border-radius: 10px;
+    /* height: max(18vw,250px); */
+    box-shadow: 0 0 15px rgba(194, 193, 193, 0.381);
+    cursor: pointer;
+    /* color: #fff; */
+    transition: 0.5s;
+}
+.service .service-list > div:hover{
+    box-shadow: 0 0 30px rgba(166, 165, 165, 0.582);
+    transition: 0.3s;
+
+}
+.service .service-list div .image{
+    width: 80%;
+    margin: auto;
+    /* height: 70%; */
+    text-align: center;
+    /* background-color: rgba(245, 237, 237, 0.828); */
+    overflow: hidden;
+    cursor: pointer;
+    padding: 20px;
+    border-bottom: 1px solid silver;
+    
+}
+.service .service-list div .image img{
+    width: 60%;
+}
+.service .service-list div p{
+    font-size: 20px;
+    font-weight: 600;
+    
+}
+.service .service-list .comming-soon{
+    background-color: rgba(26, 5, 67, 0.774);
+    width: 100%;
+    height: 100%;
+    color:#b7b7b9;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 600;
+    border-radius: 10px;
+    position: relative;
+    bottom: 100%;
+    padding: 0;
+}
+.service .service-list div p span{
+    font-size: 14px;
+    opacity: 0.4;
+    font-weight: 400;
+}

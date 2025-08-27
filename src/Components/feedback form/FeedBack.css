@@ -1,0 +1,130 @@
+.feedback{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #f0f0f0;
+    background-image: url('../../assets/background1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    
+}
+.feedback__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width:min(80vw,650px) ;
+  margin: 100px auto;
+  padding: 40px;
+  background-color: #fff;
+  margin-bottom: 100px;
+  border-radius: 10px;
+}
+.feedback .feed-header{
+    border-bottom: 1px solid silver;
+    margin: 0;
+    margin-bottom: 40px;
+}
+.feedback .feed-header p{
+    color: var(--secondary-color);
+}
+.feedback__container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+.feedback__container form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+}
+.feedback__container form label {
+ 
+  margin-bottom: 10px;
+}
+.feedback__container .inputs1{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.feedback__container form input,
+.feedback__container form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.feedback__container form textarea{
+    resize: none;
+    height: 200px;
+}
+.feedback__container form .btns{
+    border-top: 1px solid silver;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+.feedback__container form button {
+  padding: 15px 60px;
+  background-color: var(--button-color);
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+.feedback__container form button:hover {
+  background-color: #0056b3;
+}
+.feedback__container form .error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: -15px;
+  margin-bottom: 10px;
+}
+.feedback__container form .success {
+  color: green;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+.feedback__container form .success-message {
+  display: none;
+}
+.feedback__container form .success-message.active {
+  display: block;
+}
+.feedback__container form .error-message {
+  display: none;
+}
+.feedback__container form .error-message.active {
+  display: block;
+}
+.feedback__thankyou-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.feedback__thankyou-button:hover {
+  background-color: #45a049;
+}
+
+.feedback__thankyou-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px #4CAF50;
+}
