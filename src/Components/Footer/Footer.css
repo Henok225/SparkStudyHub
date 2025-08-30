@@ -24,11 +24,11 @@
     justify-content: center;
     align-items: center;
     transition: 0.3s;
-    margin: 5px 0;
+    /* margin: 5px 0; */
     cursor: pointer;
 }
 .footer .links .social-links p:hover{
-    background-color: var(--primary-color);
+    background-color: var(--primary-backgroundhover);
     opacity: 0.7;
     cursor: pointer;
     transition: 0.3s;

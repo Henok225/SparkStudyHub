@@ -18,23 +18,23 @@ const StoreContextProvider = (props) => {
     const subjectsList = [
         {
           name:"Physics",
-          image:assets.physics_icon
+          image:"<Atom/>"
         },
         {
           name:"Biology",
-          image:assets.biology_icon
+          image:"<Microscope/>"
         },
         {
           name:"History",
-          image:assets.history_icon1
+          image:"<Landmark/>"
         },
         {
           name:"Mathematics",
-          image:assets.maths_icon
+          image:"<Sigma/>"
         },
         {
           name:"Geography",
-          image:assets.geography_icon
+          image:"<Globe/>"
         }
       ]
 
@@ -63,6 +63,28 @@ const StoreContextProvider = (props) => {
 
     // useLearningTimer(userData?.userId, url, token);
 
+    // time formater
+    function timeAgo(date) {
+      const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+      const diff = (date - new Date()) / 1000; // seconds
+      const divisions = [
+        { amount: 60, name: "seconds" },
+        { amount: 60, name: "minutes" },
+        { amount: 24, name: "hours" },
+        { amount: 7, name: "days" },
+        { amount: 4.34524, name: "weeks" },
+        { amount: 12, name: "months" },
+        { amount: Number.POSITIVE_INFINITY, name: "years" },
+      ];
+    
+      let duration = diff;
+      for (let i = 0; i < divisions.length; i++) {
+        if (Math.abs(duration) < divisions[i].amount) {
+          return rtf.format(Math.round(duration), divisions[i].name);
+        }
+        duration /= divisions[i].amount;
+      }
+    }
     
     const contextValue = {
         url,
@@ -78,7 +100,8 @@ const StoreContextProvider = (props) => {
         setShowLogin,
         showPopup,
         setShowPopup,
-        subjectsList
+        subjectsList,
+        timeAgo
     }
 
     return(

@@ -2,6 +2,7 @@ import React from 'react'
 import './Service.css'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { BookOpen, HelpCircle } from 'lucide-react'
 
 const Service = () => {
   
@@ -12,11 +13,17 @@ const navigate = useNavigate();
       <h1>What Are You Looking For?</h1>
       <div className="service-list">
       <div onClick={()=>{navigate('/explain')}}>
-        <div className="image"><img src={assets.explanation_icon} alt="Topic explanation" /></div>
+        <div className="image">
+          {/* <img src={assets.explanation_icon} alt="Topic explanation" /> */}
+          <BookOpen className='icon' size={100}/>
+          </div>
         <p>Explanations <span><br />Understand Complex Concepts with Ease </span></p>
         </div>
         <div onClick={()=>{navigate('/quizzes')}}>
-            <div className="image"><img src={assets.quiz_icon1} alt="Quizzes icon" /></div>
+            <div className="image">
+              {/* <img src={assets.quiz_icon1} alt="Quizzes icon" /> */}
+              <HelpCircle className='icon' size={100}/>
+              </div>
             <p>Quizzes <span><br />Test Your Knowledge and Track Progress</span></p>
         </div>
         

@@ -5,10 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { StoreContext } from '../../../Context/StoreContext';
 import SmallLoader from '../../../Components/SmallLoaderSpin/SmallLoader';
 import axios from 'axios';
+import { Atom, Bookmark, BookmarkCheck, Globe, Landmark, Microscope, Search, Sigma } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
+
 
 const Quizes = () => {
 
-  const { token,setShowLogin,subjectsList,url } = useContext(StoreContext);
+  const { token,setShowLogin,subjectsList,url, setShowPopup, userData } = useContext(StoreContext);
   const [ quizzesList,setQuizzesList] = useState([]);
   const [quizzesFetched,setQuizzesFetched] = useState({loaded:false,success:false})
   const [refetchQuizzes,setRefetchQuizzes] = useState(false)
@@ -17,6 +20,8 @@ const Quizes = () => {
   const [searchKeyList,setSearchKeyList] = useState([]);
   const [filteredSearchList,setFilteredSearchList] = useState([]);
   const [filteredQuizList,setFilteredQuizList] = useState({content:quizzesList})
+  const [itemSaved,setItemSaved] = useState(false); 
+  const [savedItems,setSavedItems] = useState([]);
  
 // fetching quizzes list
 useEffect(()=>{
@@ -49,6 +54,25 @@ useEffect(()=>{
   }
   fetchQuizzesList();
 },[refetchQuizzes])
+
+// fetching saved items
+useEffect(() => {
+  //  fetching saved items from backend 
+  const fetchSavedItems = async ()=>{
+
+      try {
+          const response = await axios.get(`${url}/api/user/get-saved-items` ,{
+            headers: { token: token }
+          });
+          setSavedItems(response.data.savedItems);
+          console.log("Saved items fetched", response.data.savedItems)
+      } catch (error) {
+          console.log("Error fetching saved items", error);
+      }
+  }
+  fetchSavedItems();
+  
+},[itemSaved])
 
   // filter content by subject
   useEffect(()=>{
@@ -93,15 +117,68 @@ useEffect(()=>{
     }
   }
 
+  // subjects list
+  const subjects_list = [
+    {
+      name:"Physics",
+      icon:Atom
+    },
+    {
+      name:"Biology",
+      icon:Microscope
+    },
+    {
+      name:"History",
+      icon:Landmark
+    },
+    {
+      name:"Mathematics",
+      icon:Sigma
+    },
+    {
+      name:"Geography",
+      icon:Globe
+    }
+  ] ;
+
   const navigate = useNavigate();
 
-  const subjects_list = subjectsList;
+  // const subjects_list = subjectsList;
 
+  // handle save quiz
+  const handleSaveQuiz = async (e, itemId, itemTitle, itemSubject) => {
+    // Logic to save the explanation 
+   try {
+   console.log("Title: ",itemTitle) 
+    const response = await axios.post(`${url}/api/user/update-saved-items`, {
+      userId: userData?.userId, // Assuming token is the user ID; adjust as necessary
+      itemType: 'quizzes', // or 'quizzes' or 'flashCards'
+      itemAddress: `/quizzes/${itemSubject}/${itemId}`,
+      itemTitle: itemTitle,
+      date: new Date().toISOString()
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
+    console.log("Title: ",response.data.message) 
+  
+    setItemSaved(!itemSaved);
+    
+   } catch(error) {
+    alert(error)
+    console.error('Error saving quizzes:', error);
+    // setShowPopup({show:true,response:"error",title:"Failed to save the item. Please try again."})
+   }
+    
+  };
  
 
   return (
     <div className='quizzes-container content-container'>
       <h1 className='header-title'>Quizzes</h1>
+
+
       <div className="content-nav">
         <div className="content-filter">
           <p>Filter quizzes </p>
@@ -123,47 +200,84 @@ useEffect(()=>{
       </div>
           </div>
           <div className="search-btn">
-            <img src={assets.search_icon} alt="" />
+            {/* <img src={assets.search_icon} alt="" /> */}
+            <Search/>
           </div>
         </div>
       </div>
+      
       <div className="subjects-list">
         {
-          subjects_list.map((subject,index)=>{
-            return(
-              <div className='subject' key={index} onClick={()=>{subFilter!==subject.name?setSubFilter(subject.name):setSubFilter("All")}}>
-          <div className={subFilter===subject.name?"sub-image active":"sub-image"}><img src={subject.image} alt="" /></div>
-          <p>{subject.name}</p>
+          subjects_list.map(({name,icon:Icon}, index)=>(
+           
+              <div className='subject' key={index} onClick={()=>subFilter!==name?setSubFilter(name):setSubFilter("All")}>
+          <div className={subFilter===name?"sub-image active":"sub-image"}>
+            <Icon />
+            </div>
+          <p>{name}</p>
         </div>
+          ))
+        }
+      </div>
+
+      
+<div className="content-list">
+        {
+          quizzesFetched.loaded?
+          
+          <>{
+            filteredQuizList.content.length != 0 ?
+          filteredQuizList.content.map((topic,index)=>{
+            return (
+              <motion.div
+      className="my-section"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      viewport={{ once: true }}  >
+
+              <div key={index} >
+                <div className="image" onClick={() => { token?navigate(`/quizzes/${topic.subject}/${topic._id}`):setShowLogin(true) }}>
+                  <img src={topic.image} alt="" />
+
+                </div>
+                <div className="caption" >
+                  <h3>{topic.title}</h3>
+                  <p>{topic.description}</p>
+                 
+                  <div className="btns">
+                    <button onClick={(e)=>handleSaveQuiz(e, topic._id,topic.title, topic.subject)}>
+                      
+                    {
+                      savedItems.quizzes &&
+                      <>
+                    {savedItems.quizzes.find((item) => item.itemAddress === `/quizzes/${topic.subject}/${topic._id}` ) !== undefined  ? <> <BookmarkCheck/> Saved </> : <> <Bookmark/> Save</> }
+                     </>
+                    } </button>
+                    
+                    <button className='open-btn' onClick={() => { token?navigate(`/quizzes/${topic.subject}/${topic._id}`):setShowLogin(true) }}>open</button>
+                  </div>
+                </div>
+                
+              </div>
+              </motion.div>
             )
           })
+          : <div> 
+             <h2 style={{textAlign:'center', padding:'20px'}}> Content is not available! </h2> 
+          </div> // for no content available in the search
+ } </>
+          : null
         }
+        
         
       </div>
 
-      <div className="content-list">
-        {
-          filteredQuizList.content.map((topic, index) => {
-            return (
-              <div key={index} onClick={() => { token?navigate(`/quizzes/${topic.subject}/${topic._id}`):setShowLogin(true) }}>
-                <div className="image">
-                  <img src={topic.image} alt="" />
-                </div>
-                <div className="caption">
-                  <h3>{topic.title}</h3>
-                  <p>{topic.description}</p>
-                  <div className="btns">
-                    <button><img src={assets.save_icon} alt="save" /></button>
-                  </div>
-                </div>
 
-              </div>
-            )
-          })
-        }
-      </div>
       {
-        quizzesFetched.loaded ? <>{quizzesFetched.success ? null : <p style={{ color: 'red', textAlign: 'center' }}>Something went wrong! <br /><br /><button style={{ borderRadius: 10 + 'px', cursor: 'pointer', padding: 5 + 'px', border: 'none' }} onClick={() => setRefetchQuizzes(!refetchQuizzes)}>Retry</button></p>}</>
+        quizzesFetched.loaded ?
+         <>
+         {quizzesFetched.success ? null : <p style={{ color: 'red', textAlign: 'center' }}>Something went wrong! <br /><br /><button style={{ borderRadius: 10 + 'px', cursor: 'pointer', padding: 5 + 'px', border: 'none' }} onClick={() => setRefetchQuizzes(!refetchQuizzes)}>Retry</button></p>}</>
           : <SmallLoader />
       }
 

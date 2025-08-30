@@ -3,7 +3,7 @@ import './Navbar.css'
 import {useNavigate} from 'react-router-dom'
 import { assets } from '../../assets/assets';
 import { StoreContext } from '../../Context/StoreContext';
-import { Menu, User } from 'lucide-react'; // Using lucide-react for icons
+import { Menu, User, Zap } from 'lucide-react'; // Using lucide-react for icons
 
 
 const Navbar = () => {
@@ -100,7 +100,7 @@ const Navbar = () => {
     <>
     {/* <div className="navbar-container"> */}
     <div id='header-bar' className='navbar'> 
-        <div className="logo"><p>Spark Study</p></div>
+        <div className="logo"><p> <Zap/> <span className='logo-text'>SparkStudy</span> </p></div>
         <div className="navbar-right">
         <div className="signin-login">
         {!token? <p onClick={()=> setShowLogin(true)}>Login</p>

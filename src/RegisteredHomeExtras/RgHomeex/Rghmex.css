@@ -2,9 +2,9 @@
           /* General Styles */
           .home-extras-container {
             font-family: 'Inter', sans-serif;
-            color: #4b5563;
+            color: var(--primary-color);
             padding: 40px 10px;
-            background: #f8f9fa;
+            background: var(--primary-background);
             position: relative;
             overflow-x: hidden;
             display: flex;
@@ -61,7 +61,7 @@
           .section-title {
             font-size: 2.2em;
             font-weight: 800;
-            color: #2c3e50;
+            color: var(--primary-color);
             text-align: center;
             position: relative;
           }

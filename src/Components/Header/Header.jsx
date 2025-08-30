@@ -3,6 +3,7 @@ import './Header.css'
 import { StoreContext } from '../../Context/StoreContext'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { Book, BookOpen, TrendingUp, Zap } from 'lucide-react'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -24,15 +25,15 @@ const Header = () => {
         <div className="customer-welcoming">
           <div className='welcoming-text'>
             <h2> 👋 Welcome back, {userData.name}</h2>
-          <h1>🎓 Spark Study</h1>
+          <h1><Zap size={40} />Spark Study</h1>
           <br /><br />
           <h3>Continue your learning journey today.</h3>
           <div className="tracking-user">
-            <div className="continue-learning">
-              <p onClick={()=>navigate('/explain')}><span>📚 </span> Continue Learning</p>
+            <div onClick={()=>navigate('/explain')} className="continue-learning">
+              <p> <BookOpen/>  <span>Continue Learning</span></p>
             </div>
-            <div className="view-progress">
-              <p onClick={()=>navigate('/profile')}><span>📊 </span> View Progress</p>
+            <div onClick={()=>navigate('/profile')} className="view-progress">
+              <p><TrendingUp/><span>View Progress </span> </p>
             </div>
             {/* <div className="explore">
               <p><span>🔍</span> Explore</p>

@@ -14,12 +14,12 @@
 }
 .service .service-list > div{
     width: max(22vw,300px);
-    background-color: var(--primary-background);
+    background-color: var(--card-bg);
     padding: 10px;
     overflow: hidden;
     border-radius: 10px;
     /* height: max(18vw,250px); */
-    box-shadow: 0 0 15px rgba(194, 193, 193, 0.381);
+    box-shadow: var(--shadow);
     cursor: pointer;
     /* color: #fff; */
     transition: 0.5s;
@@ -44,6 +44,13 @@
 .service .service-list div .image img{
     width: 60%;
 }
+.service .service-list div .image .icon{
+    color: var(--button-color);
+    padding: 10px;
+    box-shadow: var(--shadow);
+    border-radius: 20px;
+    background-color: var(--card-bg);
+}
 .service .service-list div p{
     font-size: 20px;
     font-weight: 600;
@@ -67,6 +74,7 @@
 }
 .service .service-list div p span{
     font-size: 14px;
-    opacity: 0.4;
+    color: var(--light-text);
+    /* opacity: 0.4; */
     font-weight: 400;
 }

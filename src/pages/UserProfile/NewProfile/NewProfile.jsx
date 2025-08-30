@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { User, Bookmark, Settings, Pencil, Lock, LogOut, BarChart3, Book, Brain, Star, MapPin } from 'lucide-react';
+import { User, Bookmark, Settings, Pencil, Lock, LogOut, BarChart3, Book, Brain, Star, MapPin, DeleteIcon, Loader } from 'lucide-react';
 import './Newprofile.css'
 import { StoreContext } from '../../../Context/StoreContext';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import SmallLoader from '../../../Components/SmallLoaderSpin/SmallLoader';
 // Simulated backend data fetching
 const fetchUserData = (userData) => {
 
@@ -58,6 +61,7 @@ export default function NewProfile() {
       setIsLoading(false);
     };
 
+
     getData();
   }, []);
 
@@ -83,7 +87,7 @@ export default function NewProfile() {
           </>
         );
       case 'saved':
-        return <SavedItems savedItems={userInfo.savedItems} />;
+        return <SavedItems />;
       case 'settings':
         return <AccountSettings />;
       default:
@@ -272,9 +276,67 @@ function RecentActivity({ recentItems }) {
 }
 
 // SavedItems Component
-function SavedItems({ savedItems }) {
+function SavedItems() {
   const [expandedQuiz, setExpandedQuiz] = useState(false);
   const [expandedLessons, setExpandedLessons] = useState(false);
+  const [savedItems, setSavedItems] = useState({ quizzes: [], lessons: [] });
+  const {url, token, userData, timeAgo, setShowPopup} = useContext(StoreContext);
+  const [removeItem,setRemoveItem] = useState(false)
+  const [removing, setRemoving] = useState(false);
+
+  const date = (d) => new Date(d);
+console.log(date.toLocaleString());
+const navigate = useNavigate();
+
+  useEffect(() => {
+        //  fetching saved items from backend 
+        const fetchSavedItems = async ()=>{
+
+            try {
+                const response = await axios.get(`${url}/api/user/get-saved-items` ,{
+                  headers: { token: token }
+                });
+                setSavedItems(response.data.savedItems);
+            } catch (error) {
+                console.log("Error fetching saved items", error);
+            }
+        }
+
+        
+
+        fetchSavedItems();
+        
+      },[removeItem])
+
+      // Removing saved item
+      const removeSavedItem = async (itemAddress, itemTitle, itemType, date) => {
+        // Logic to save the explanation 
+       try {
+        setRemoving(true);
+        const response = await axios.post(`${url}/api/user/update-saved-items`, {
+          userId: userData?.userId, // Assuming token is the user ID; adjust as necessary
+          itemType: 'lessons', // or 'quizzes' or 'flashCards'
+          itemAddress: itemAddress,
+          itemTitle: itemTitle,
+          date: new Date().toISOString()
+        }, {
+          headers: {
+            'Authorization': `Bearer ${token}` 
+          }
+        });
+        setRemoving(false);
+       } catch (error) {
+        console.log("Error removing saved item", error);
+        setRemoving(false);
+        
+       }
+         // You can also update the UI to reflect the saved state
+        setShowPopup({show:true,response:"success!",title:`${itemType} removed!`})
+        setRemoveItem(!removeItem);
+      
+      };
+
+  
 
   return (
     <div className="saved-items-container">
@@ -286,9 +348,54 @@ function SavedItems({ savedItems }) {
         <div className={`expandable-content ${expandedQuiz ? 'expanded' : ''}`}>
           <ul>
             {savedItems.quizzes.length > 0 ? savedItems.quizzes.map((quiz, index) => (
-              <li key={index}><Star size={16} className="item-icon-small" /> {quiz}</li>
+              <li key={index}><Star size={16} className="item-icon-small" /> {quiz.itemTitle}</li>
             ))
-          : <li>No saved quizzes</li>
+          : <>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "24px",
+              borderRadius: "16px",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+              backgroundColor: "white",
+              color: "#374151",
+            }}
+          >
+            <li
+              style={{
+                listStyle: "none",
+                fontSize: "18px",
+                fontWeight: "500",
+                marginBottom: "8px",
+              }}
+            >
+              No saved quizzes
+            </li>
+            <button
+              style={{
+                padding: "8px 16px",
+                marginTop: "8px",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "white",
+                backgroundColor: "#2563EB",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+              }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#1D4ED8")}
+              onMouseOut={(e) => (e.target.style.backgroundColor = "#2563EB")}
+              onClick={()=>navigate('/quizzes')}
+            >
+              Explore more quizzes
+            </button>
+          </div>
+        </>
+        
           }
           </ul>
         </div>
@@ -301,13 +408,73 @@ function SavedItems({ savedItems }) {
         <div className={`expandable-content ${expandedLessons ? 'expanded' : ''}`}>
           <ul>
             {savedItems.lessons.length > 0 ? savedItems.lessons.map((lesson, index) => (
-              <li key={index}><Book size={16} className="item-icon-small" /> {lesson}</li>
+            <>  <li style={{cursor:'pointer'}}  key={index}>
+               <span onClick={()=>navigate(lesson.itemAddress)} style={{display:'flex',gap:'20px', justifyContent:'flex-start', alignItems:'center',width:'100%'}}> 
+              <Book size={18} className="item-icon-small" /> 
+                <span>{lesson.itemTitle}</span> 
+               </span> 
+               <span>
+              {  !removing? <DeleteIcon onClick={()=>{ removeSavedItem(lesson.itemAddress, lesson.itemTitle, "lesson", lesson.date)}} size={18}/>
+                : <Loader/>
+            }
+                </span>
+               {/* <span style={{ fontSize:'12px', color:'silver'}}>{timeAgo(new Date(lesson.date))}</span> */}
+                </li>
+                <span style={{ fontSize:'11px', color:'gray'}}>{timeAgo(new Date(lesson.date))}</span>
+                
+                </>
             ))
-          : <li>No saved lessons</li>
+          : <>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "24px",
+              borderRadius: "16px",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+              backgroundColor: "white",
+              color: "#374151",
+            }}
+          >
+            <li
+              style={{
+                listStyle: "none",
+                fontSize: "18px",
+                fontWeight: "500",
+                marginBottom: "8px",
+              }}
+            >
+              No saved lessons
+            </li>
+            <button
+              style={{
+                padding: "8px 16px",
+                marginTop: "8px",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "white",
+                backgroundColor: "#2563EB",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+              }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#1D4ED8")}
+              onMouseOut={(e) => (e.target.style.backgroundColor = "#2563EB")}
+              onClick={()=>navigate('/explain')}
+            >
+              Explore more lessons
+            </button>
+          </div>
+        </>
+        
           }
           </ul>
         </div>
       </div>
+      
     </div>
   );
 }

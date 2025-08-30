@@ -2,7 +2,7 @@ import React from 'react'
 import './Footer.css'
 import { assets } from '../../assets/assets';
 import {useNavigate} from 'react-router-dom'
-import { Facebook, LocateFixedIcon, Mail, MapPin, Phone, Send, YoutubeIcon } from 'lucide-react';
+import { Facebook, LocateFixedIcon, Mail, MapPin, Phone, Send, YoutubeIcon, Zap } from 'lucide-react';
 
 const Footer = () => {
   
@@ -40,9 +40,11 @@ const Footer = () => {
           </div>
         </div>
         <div className="social-links">
-          <p><a style={{color:'unset'}} href="https://t.me/spark_study" target="_blank" rel="noopener noreferrer">
+          <p>
+            <a style={{color:'unset'}} href="https://t.me/spark_study" target="_blank" rel="noopener noreferrer">
           <Send/>
-</a></p>
+</a>
+</p>
           <p><YoutubeIcon/></p>
           <p><Facebook/></p>
           {/* <p></p> */}
@@ -50,7 +52,7 @@ const Footer = () => {
       </div>
       <div className="footer-copyright">
         <p>Read our <span style={{color:'darkblue', cursor:'pointer'}} onClick={()=>navigate('/terms-and-privacy-policy')}>Terms of use and privacy policy</span></p>
-        <p>&copy; {date.getFullYear()} <span style={{color:'darkblue',cursor:'pointer'}} onClick={()=>navigate('/')}>Spark Study</span> All rights reserved</p>
+        <p>&copy; {date.getFullYear()} <span style={{color:'darkblue',cursor:'pointer'}} onClick={()=>navigate('/')}><Zap size={18}/>SparkStudy</span> All rights reserved</p>
       </div>
     </div>
   )

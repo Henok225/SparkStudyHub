@@ -49,7 +49,7 @@ justify-content: flex-start;
 cursor: pointer;
 width: fit-content;
 /* background-color: #4856f0; */
-background-color: #454444b7;
+background-color: var(--button-color);
 color: white;
 border: none;
 }

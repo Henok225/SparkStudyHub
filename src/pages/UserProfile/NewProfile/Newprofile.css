@@ -1,10 +1,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
+/* user profile css */
 :root {
+  /* --primary-color: #fff; */
   --primary-color: #4a5568;
   --secondary-color: #6366f1;
   --text-color: #2d3748;
+  /* --bg-color: #000; */
   --bg-color: #e2e8f0;
   --card-bg: #ffffff;
   --border-radius: 12px;
@@ -353,6 +355,9 @@ body {
   justify-content: space-between;
   align-items: center;
   transition: color 0.3s ease;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-color);
 }
 
 .saved-section h2:hover {

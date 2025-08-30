@@ -101,7 +101,7 @@ const RegisteredHomeExtras = () => {
       {
         root: null,
         rootMargin: '0px',
-        threshold: 0.5, // Trigger when 50% of the section is visible
+        threshold: 0.3, // Trigger when 50% of the section is visible
       }
     );
 

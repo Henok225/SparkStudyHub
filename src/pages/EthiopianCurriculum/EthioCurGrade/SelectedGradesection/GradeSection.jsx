@@ -94,6 +94,7 @@ import Tooltip from '../../../../Components/Utilities/Tooltip';
 
 // This is the main component for the curriculum section.
 // It displays four interactive cards for different learning activities.
+
 const GradeSection = ({
   explanationsLink,
   quizzesLink,
@@ -101,7 +102,7 @@ const GradeSection = ({
   examsLink
 }) => {
   // Define the data for the four cards.
-  const {gradeId} = useParams()
+  const { gradeId } = useParams()
   const cards = [
     {
       title: "Explanations",
@@ -109,7 +110,7 @@ const GradeSection = ({
       icon: <Book size={48} />, // Book icon for explanations
       colorClass: "card-indigo",
       iconColorClass: "icon-indigo",
-      link:`ethiopian-curriculum/grade/${gradeId}/explain?grade=${gradeId}`
+      link: `ethiopian-curriculum/grade/${gradeId}/explain?grade=${gradeId}`
     },
     {
       title: "Quizzes",
@@ -117,7 +118,7 @@ const GradeSection = ({
       icon: <ClipboardCheck size={48} />, // Clipboard icon for quizzes
       colorClass: "card-green",
       iconColorClass: "icon-green",
-      link:`ethiopian-curriculum/grade/${gradeId}/quiz?grade=${gradeId}`
+      link: `ethiopian-curriculum/grade/${gradeId}/quiz?grade=${gradeId}`
     },
     {
       title: "Videos",
@@ -125,7 +126,7 @@ const GradeSection = ({
       icon: <Video size={48} />, // Video icon for video content
       colorClass: "card-red",
       iconColorClass: "icon-red",
-      link:`ethiopian-curriculum/grade/${gradeId}/video?grade=${gradeId}`
+      link: `ethiopian-curriculum/grade/${gradeId}/video?grade=${gradeId}`
     },
     {
       title: "Prepare for Exam",
@@ -133,31 +134,30 @@ const GradeSection = ({
       icon: <Rocket size={48} />, // Rocket icon for exam preparation
       colorClass: "card-yellow",
       iconColorClass: "icon-yellow",
-      link:`ethiopian-curriculum/grade/${gradeId}/exam?grade=${gradeId}`
+      link: `ethiopian-curriculum/grade/${gradeId}/exam?grade=${gradeId}`
     },
   ];
 
   const navigate = useNavigate()
-  
-  const {token} = useContext(StoreContext)
+
+  const { token } = useContext(StoreContext)
 
   return (
     <>
-      {/* Styles for the component */}
-     
+
       <div className="app-container">
         {/* Top navigation/header section */}
         {/* <header className="header"> */}
-         <br /> <div className="header-content">
-            {/* Menu icon button */}
-            <Tooltip content={`Exit grade ${gradeId}`}>
-              <button className="menu-button">
-              <LogOut style={{transform:'rotate(180deg)'}} onClick={()=>history.back()} size={24} />
+        <br /> <div className="header-content">
+          {/* Menu icon button */}
+          <Tooltip content={`Exit grade ${gradeId}`}>
+            <button className="menu-button">
+              <LogOut style={{ transform: 'rotate(180deg)' }} onClick={() => history.back()} size={24} />
             </button>
-            </Tooltip>
-            
-            
-          </div>
+          </Tooltip>
+
+
+        </div>
         {/* </header> */}
 
         {/* Main content container */}
@@ -175,39 +175,39 @@ const GradeSection = ({
             <h3 className='grade-title'>Contents for Grade {gradeId} </h3>
 
             {/* Responsive grid for the cards */}
-            <div className="cards-grid">
+            <div className="sg-cards-grid">
               {cards.map((card, index) => (
                 <div
                   key={index}
-                  className={`card ${card.colorClass}`}
-                  onClick={()=>navigate('/'+card.link)}
+                  className={`sg-card sg-${card.colorClass}`}
+                  onClick={() => navigate('/' + card.link)}
                 >
                   {/* Icon container */}
-                  <div className={`card-icon-container ${card.iconColorClass}`}>
+                  <div className={`sg-card-icon-container sg-${card.iconColorClass}`}>
                     {card.icon}
                   </div>
 
                   {/* Card title */}
-                  <h2 className="card-title"> 
+                  <h2 className="sg-card-title">
                     {card.title}
                   </h2>
 
                   {/* Card description */}
-                  <p className="card-description">
+                  <p className="sg-card-description">
                     {card.description}
                   </p>
                 </div>
               ))}
             </div>
-            
+
             {
               token ? null
-              : <button className="start-button" >
-              Get started for free
-            </button>
+                : <button className="start-button" >
+                  Get started for free
+                </button>
 
             }
-            
+
 
           </div>
         </main>
