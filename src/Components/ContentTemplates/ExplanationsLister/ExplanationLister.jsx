@@ -6,10 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import SmallLoader from '../../SmallLoaderSpin/SmallLoader'
 import { StoreContext } from '../../../Context/StoreContext'
 import { assets } from '../../../assets/assets';
-import { Atom, Bookmark, BookmarkCheck, Save, SaveIcon, Landmark, Globe, Microscope, Globe2, LandmarkIcon, MicroscopeIcon, Sigma, Search,  } from 'lucide-react';
+import { Atom, Bookmark, BookmarkCheck, Save, SaveIcon, Landmark, Globe, Microscope, Globe2, LandmarkIcon, MicroscopeIcon, Sigma, Search, SearchXIcon,  } from 'lucide-react';
 
 
-const ExplanationLister = ({apiName}) => {
+const ExplanationLister = ({apiName, filter}) => {
 
   // const {explanationsList,explanationsFetched,setExplanationsFetched} = useContext(StoreContext);
   const navigate = useNavigate();
@@ -36,10 +36,22 @@ const ExplanationLister = ({apiName}) => {
 
         try {
             const response = await axios.get(url+apiName);
-            setExplanationsList({loaded:true,content:response.data.data})
-            setFilteredExplanationsList({content:response.data.data})
+          
+            const filteredData = filter ? response.data.data.filter((quiz) => {
+              let isMatch = true;
+              for (const key in filter) {
+                if (quiz[key] !== filter[key]) {
+                  isMatch = false;
+                  break;
+                }
+              }
+              return isMatch;
+            }) : response.data.data;
+
+            setExplanationsList({loaded:true,content:filteredData})
+            setFilteredExplanationsList({content:filteredData})
          
-            response.data.data.forEach((element)=>{
+            filteredData.forEach((element)=>{
               const searchKey1 = element.name.toLowerCase();
               const searchKey2 = element.description.toLowerCase();
               searchKeyList.push({key:searchKey1,address:`/explain/${element.subject}/${element._id}`})
@@ -73,7 +85,7 @@ useEffect(() => {
             headers: { token: token }
           });
           setSavedItems(response.data.savedItems);
-          console.log("Saved items fetched", response.data.savedItems)
+          // console.log("Saved items fetched", response.data.savedItems)
       } catch (error) {
           console.log("Error fetching saved items", error);
       }
@@ -213,7 +225,10 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
       <div className="content-list">
         {
           explanationsList.loaded?
-          filteredExplanationsList.content.map((topic,index)=>{
+          <>{
+            filteredExplanationsList.content.length != 0 ?
+         
+            filteredExplanationsList.content.map((topic,index)=>{
             return (
               <motion.div
       className="my-section"
@@ -232,19 +247,18 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
                   <p>{topic.description}</p>
                  
                   <div className="btns">
-                    <button onClick={(e)=>handleSaveExplanation(e, topic._id,topic.name, topic.subject)}>
-                    <>  
-                    {
-                      savedItems ?
-                      <>
-                    {savedItems.lessons.find((item) => item.itemAddress === `/explain/${topic.subject}/${topic._id}` ) !== undefined  ? <> <BookmarkCheck/> Saved </> : <> <Bookmark/> Save</> }
-                     </>
-                     :null
-                    }
-                    </>
                     
+                    {
+                      savedItems && savedItems.lessons ?
+                      <button onClick={(e)=>handleSaveExplanation(e, topic._id,topic.name, topic.subject)}>
+                    
+                    {savedItems.lessons.find((item) => item.itemAddress === `/explain/${topic.subject}/${topic._id}` ) !== undefined  ? <> <BookmarkCheck/> Saved </> : <> <Bookmark/> Save</> }
+                     </button>
+                     :<button onClick={()=>setShowLogin(true)}> <Bookmark /> Save</button>
+                      }
+                   
+
                       
-                      </button>
                     <button className='open-btn' onClick={()=>{token? navigate(`/explain/${topic.subject}/${topic._id}`) :setShowLogin(true)}}>open</button>
                   </div>
                 </div>
@@ -253,6 +267,12 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
               </motion.div>
             )
           })
+          
+          : <div style={{width:'max(70vw,250px)', margin:'auto', textAlign:'center', padding:'20px', backgroundColor:'whitesmoke', borderRadius:10+'px'}}> 
+          <h2 style={{textAlign:'center', padding:'20px'}}> <SearchXIcon/>  <br /> Content is not available! </h2> 
+       </div> // for no content available in the search
+
+         } </>
           : null
         }
         

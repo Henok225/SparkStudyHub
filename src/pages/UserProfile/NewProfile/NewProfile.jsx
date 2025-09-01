@@ -9,7 +9,7 @@ import SmallLoader from '../../../Components/SmallLoaderSpin/SmallLoader';
 const fetchUserData = (userData) => {
 
   // const {userData} = useContext(StoreContext);
-    
+
 
   return new Promise(resolve => {
     setTimeout(() => {
@@ -22,16 +22,10 @@ const fetchUserData = (userData) => {
           bio: userData ? userData.bio : 'This is your bio. Update it in settings.',
           location: userData ? userData.location : 'N/A',
           memberSince: userData ? new Date(userData.createdAt).toLocaleDateString() : 'N/A',
-          
+
         },
-        progress: userData.progress ? userData.progress : {
-          learningHours: userData.learningHours ? userData.learningHours : 10,
-          completedLessons: userData.completedLessons ? userData.completedLessons : 0,
-          totalLessons: userData.totalLessons ? userData.totalLessons : 0,
-          completedQuizzes: userData.completedQuizzes ? userData.completedQuizzes : 0,
-          totalQuizzes: userData.totalQuizzes ? userData.totalQuizzes : 0,
-        },
-        recentActivity:userData.recentActivity? userData.recentActivity : [
+        progress: userData.progress ? userData.progress : null,
+        recentActivity: userData.recentActivity ? userData.recentActivity : [
           { title: 'Intro to React Hooks', type: 'Lesson', date: '2 days ago' },
           { title: 'Algebra I Quiz', type: 'Quiz', date: '3 days ago' },
           { title: 'The Scientific Method', type: 'Lesson', date: '1 week ago' },
@@ -51,8 +45,8 @@ export default function NewProfile() {
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('profile');
-  const {token, userData, setShowLogin} = useContext(StoreContext);
-  
+  const { token, userData, setShowLogin } = useContext(StoreContext);
+
 
   useEffect(() => {
     const getData = async () => {
@@ -75,7 +69,7 @@ export default function NewProfile() {
             <ProfileHeader profileData={userInfo.profile} />
             <div className="section-grid">
               <ProgressTracker progressData={userInfo.progress} />
-              <RecentActivity recentItems={userInfo.recentActivity} />
+              <RecentActivity />
             </div>
           </>
         );
@@ -96,7 +90,7 @@ export default function NewProfile() {
             <ProfileHeader profileData={userInfo.profile} />
             <div className="section-grid">
               <ProgressTracker progressData={userInfo.progress} />
-              <RecentActivity recentItems={userInfo.recentActivity} />
+              <RecentActivity />
             </div>
           </>
         );
@@ -153,15 +147,16 @@ function ProfileHeader({ profileData }) {
   return (
     <div className="profile-header">
       <div className="profile-photo-container">
-        <div style={{backgroundImage:` url('https://placehold.co/120x120/d1c4e9/673ab7?text=${profilePicture}')`
-  }} className="profile-photo"></div>
+        <div style={{
+          backgroundImage: ` url('https://placehold.co/120x120/d1c4e9/673ab7?text=${profilePicture}')`
+        }} className="profile-photo"></div>
       </div>
       <div className="profile-info">
         <h1 className="profile-name">{profileData.username}</h1>
         <p className="profile-email">{profileData.email}</p>
         <div className="profile-details">
-          <p><MapPin size={18} /> <span className="detail-value">{profileData.location?profileData.location:'Unknown'}</span></p>
-           </div>
+          <p><MapPin size={18} /> <span className="detail-value">{profileData.location ? profileData.location : 'Unknown'}</span></p>
+        </div>
       </div>
     </div>
   );
@@ -181,7 +176,7 @@ function AnimatedCounter({ endValue, label }) {
       const currentCount = Math.min(
         Number(((progress / duration) * endValue).toFixed(2))
       );
-      
+
       setCount(currentCount);
 
       if (progress < duration) {
@@ -207,8 +202,8 @@ function ProgressTracker({ progressData }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setProgressWidths({
-        lessons: `${(progressData.completedLessons / progressData.totalLessons) * 100}%`,
-        quizzes: `${(progressData.completedQuizzes / progressData.totalQuizzes) * 100}%`,
+        lessons: `${(progressData.completedLessons.length / progressData.totalLessons) * 100}%`,
+        quizzes: `${(progressData.completedQuizzes.length / progressData.totalQuizzes) * 100}%`,
       });
     }, 100);
     return () => clearTimeout(timeout);
@@ -228,7 +223,7 @@ function ProgressTracker({ progressData }) {
               style={{ width: progressWidths.lessons }}
             ></div>
           </div>
-          <span className="progress-value">{completedLessons}/{totalLessons}</span>
+          <span className="progress-value">{completedLessons.length}/{totalLessons}</span>
         </div>
         <div className="progress-item">
           <span className="progress-label">Completed Quizzes</span>
@@ -238,7 +233,7 @@ function ProgressTracker({ progressData }) {
               style={{ width: progressWidths.quizzes }}
             ></div>
           </div>
-          <span className="progress-value">{completedQuizzes}/{totalQuizzes}</span>
+          <span className="progress-value">{completedQuizzes.length}/{totalQuizzes}</span>
         </div>
       </div>
       <div className="learning-hours">
@@ -249,27 +244,55 @@ function ProgressTracker({ progressData }) {
 }
 
 // RecentActivity Component
-function RecentActivity({ recentItems }) {
+function RecentActivity() {
+
+  const { url, token, timeAgo } = useContext(StoreContext)
+  const [recentItems, setRecentItems] = useState([]);
+  const navigate = useNavigate();
+
+  // fetch recent activity
+  useEffect(() => {
+    const fetchRecentViewdItem = async () => {
+      try {
+        const response = await axios.get(`${url}/api/user/get-recently-viewed`, {
+
+          headers: {
+            'Content-Type': 'application/json',
+            'token': token
+          }
+        })
+        setRecentItems(response.data.recentActivity)
+        // console.log("recent items fetched: ", response.data)
+
+      } catch (error) {
+        console.log("Error fetching recently viewed items!", error)
+      }
+    }
+
+    fetchRecentViewdItem()
+  }, [])
+
+
   return (
     <div className="recent-activity-card">
       <h2>Recently Viewed</h2>
       <div className="recent-items-container">
-        {recentItems.length > 0 ? recentItems.map((item, index) => (
-          <div key={index} className="recent-item-wrapper">
+        {recentItems && recentItems.length > 0 ? recentItems.map((item, index) => (
+          <div key={index} onClick={()=>navigate('/'+item.itemId)} className="recent-item-wrapper">
             <div className="recent-item-card">
               <div className="item-icon">
-                {item.type === 'Lesson' ? <Book size={36} /> : <Brain size={36} />}
+                {item.itemType === 'lessons' ? <Book size={30} /> : <Brain size={30} />}
               </div>
               <div className="item-info">
-                <h3>{item.title}</h3>
-                <p>{item.type}</p>
+                <h3>{item.itemTitle}</h3>
+                <p>{item.itemType}</p>
               </div>
-              <span className="item-date">{item.date}</span>
+              <span className="item-date">{timeAgo(new Date(item.date))}</span>
             </div>
           </div>
         ))
-      : <p>No recent activity </p>
-      }
+          : <p>No recent activity </p>
+        }
       </div>
     </div>
   );
@@ -280,63 +303,64 @@ function SavedItems() {
   const [expandedQuiz, setExpandedQuiz] = useState(false);
   const [expandedLessons, setExpandedLessons] = useState(false);
   const [savedItems, setSavedItems] = useState({ quizzes: [], lessons: [] });
-  const {url, token, userData, timeAgo, setShowPopup} = useContext(StoreContext);
-  const [removeItem,setRemoveItem] = useState(false)
+  const { url, token, userData, timeAgo, setShowPopup } = useContext(StoreContext);
+  const [removeItem, setRemoveItem] = useState(false)
   const [removing, setRemoving] = useState(false);
 
   const date = (d) => new Date(d);
-console.log(date.toLocaleString());
-const navigate = useNavigate();
+  console.log(date.toLocaleString());
+  const navigate = useNavigate();
 
   useEffect(() => {
-        //  fetching saved items from backend 
-        const fetchSavedItems = async ()=>{
+    //  fetching saved items from backend 
+    const fetchSavedItems = async () => {
 
-            try {
-                const response = await axios.get(`${url}/api/user/get-saved-items` ,{
-                  headers: { token: token }
-                });
-                setSavedItems(response.data.savedItems);
-            } catch (error) {
-                console.log("Error fetching saved items", error);
-            }
-        }
-
-        
-
-        fetchSavedItems();
-        
-      },[removeItem])
-
-      // Removing saved item
-      const removeSavedItem = async (itemAddress, itemTitle, itemType, date) => {
-        // Logic to save the explanation 
-       try {
-        setRemoving(true);
-        const response = await axios.post(`${url}/api/user/update-saved-items`, {
-          userId: userData?.userId, // Assuming token is the user ID; adjust as necessary
-          itemType: 'lessons', // or 'quizzes' or 'flashCards'
-          itemAddress: itemAddress,
-          itemTitle: itemTitle,
-          date: new Date().toISOString()
-        }, {
-          headers: {
-            'Authorization': `Bearer ${token}` 
-          }
+      try {
+        const response = await axios.get(`${url}/api/user/get-saved-items`, {
+          headers: { token: token }
         });
-        setRemoving(false);
-       } catch (error) {
-        console.log("Error removing saved item", error);
-        setRemoving(false);
-        
-       }
-         // You can also update the UI to reflect the saved state
-        setShowPopup({show:true,response:"success!",title:`${itemType} removed!`})
-        setRemoveItem(!removeItem);
-      
-      };
+        setSavedItems(response.data.savedItems);
+      } catch (error) {
+        console.log("Error fetching saved items", error);
+      }
+    }
 
-  
+
+
+    fetchSavedItems();
+
+  }, [removeItem])
+
+  // Removing saved item
+  const removeSavedItem = async (itemAddress, itemTitle, itemType, date) => {
+    // Logic to save the explanation 
+    try {
+      setRemoving(true);
+      const response = await axios.post(`${url}/api/user/update-saved-items`, {
+        userId: userData?.userId, // Assuming token is the user ID; adjust as necessary
+        itemType: itemType, // or 'quizzes' or 'flashCards'
+        itemAddress: itemAddress,
+        itemTitle: itemTitle,
+        date: new Date().toISOString()
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setRemoving(false);
+    } catch (error) {
+      console.log("Error removing saved item", error);
+      setRemoving(false);
+
+    }
+    // You can also update the UI to reflect the saved state
+    setShowPopup({ show: true, response: "success!", title: `${itemType} removed!` })
+    setRemoveItem(!removeItem);
+
+
+  };
+
+
 
   return (
     <div className="saved-items-container">
@@ -348,55 +372,72 @@ const navigate = useNavigate();
         <div className={`expandable-content ${expandedQuiz ? 'expanded' : ''}`}>
           <ul>
             {savedItems.quizzes.length > 0 ? savedItems.quizzes.map((quiz, index) => (
-              <li key={index}><Star size={16} className="item-icon-small" /> {quiz.itemTitle}</li>
+              <>
+                <li style={{ cursor: 'pointer', display:'flex', flexDirection:'column',alignItems: 'flex-start' }} key={index}>
+                <div style={{display:'flex', gap: '20px', justifyContent: 'space-betweeen', alignItem:'center', width:'100%'}}>
+                  <span onClick={() => navigate(lesson.itemAddress)} style={{ display: 'flex', gap: '20px', justifyContent: 'flex-start', alignItems: 'center', width: '100%' }}>
+                    <Star size={16} className="item-icon-small" />
+                    <span>{quiz.itemTitle}</span>
+                  </span>
+                  <span>
+                    <DeleteIcon className='remove-icon' onClick={(e) => { removeSavedItem(quiz.itemAddress, quiz.itemTitle, "quizzes", quiz.date,e) }} size={18} />
+                     
+                  </span>
+                  </div>
+                  <span style={{ fontSize: '0.6rem', color: 'gray' }}>{timeAgo(new Date(quiz.date))}</span>
+
+                </li>
+                
+              </>
+
             ))
-          : <>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "24px",
-              borderRadius: "16px",
-              boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-              backgroundColor: "white",
-              color: "#374151",
-            }}
-          >
-            <li
-              style={{
-                listStyle: "none",
-                fontSize: "18px",
-                fontWeight: "500",
-                marginBottom: "8px",
-              }}
-            >
-              No saved quizzes
-            </li>
-            <button
-              style={{
-                padding: "8px 16px",
-                marginTop: "8px",
-                fontSize: "14px",
-                fontWeight: "600",
-                color: "white",
-                backgroundColor: "#2563EB",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#1D4ED8")}
-              onMouseOut={(e) => (e.target.style.backgroundColor = "#2563EB")}
-              onClick={()=>navigate('/quizzes')}
-            >
-              Explore more quizzes
-            </button>
-          </div>
-        </>
-        
-          }
+              : <>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "24px",
+                    borderRadius: "16px",
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                    backgroundColor: "white",
+                    color: "#374151",
+                  }}
+                >
+                  <li
+                    style={{
+                      listStyle: "none",
+                      fontSize: "18px",
+                      fontWeight: "500",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    No saved quizzes
+                  </li>
+                  <button
+                    style={{
+                      padding: "8px 16px",
+                      marginTop: "8px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      color: "white",
+                      backgroundColor: "#2563EB",
+                      border: "none",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                    }}
+                    onMouseOver={(e) => (e.target.style.backgroundColor = "#1D4ED8")}
+                    onMouseOut={(e) => (e.target.style.backgroundColor = "#2563EB")}
+                    onClick={() => navigate('/quizzes')}
+                  >
+                    Explore more quizzes
+                  </button>
+                </div>
+              </>
+
+            }
           </ul>
         </div>
       </div>
@@ -408,73 +449,75 @@ const navigate = useNavigate();
         <div className={`expandable-content ${expandedLessons ? 'expanded' : ''}`}>
           <ul>
             {savedItems.lessons.length > 0 ? savedItems.lessons.map((lesson, index) => (
-            <>  <li style={{cursor:'pointer'}}  key={index}>
-               <span onClick={()=>navigate(lesson.itemAddress)} style={{display:'flex',gap:'20px', justifyContent:'flex-start', alignItems:'center',width:'100%'}}> 
-              <Book size={18} className="item-icon-small" /> 
-                <span>{lesson.itemTitle}</span> 
-               </span> 
-               <span>
-              {  !removing? <DeleteIcon onClick={()=>{ removeSavedItem(lesson.itemAddress, lesson.itemTitle, "lesson", lesson.date)}} size={18}/>
-                : <Loader/>
-            }
-                </span>
-               {/* <span style={{ fontSize:'12px', color:'silver'}}>{timeAgo(new Date(lesson.date))}</span> */}
+              <>
+                <li  style={{ cursor: 'pointer', display:'flex', flexDirection:'column',alignItems: 'flex-start' }} key={index}>
+                  <div style={{display:'flex', gap: '20px', justifyContent: 'space-betweeen', alignItem:'center', width:'100%'}}>
+                  <span onClick={() => navigate(lesson.itemAddress)} style={{ display: 'flex', gap: '20px', justifyContent: 'flex-start', alignItems: 'center', width: '100%' }}>
+                    <Book size={18} className="item-icon-small" />
+                    <span>{lesson.itemTitle}</span>
+                  </span>
+                  <span>
+                     <DeleteIcon className='remove-icon' onClick={() => { removeSavedItem(lesson.itemAddress, lesson.itemTitle, "lessons", lesson.date) }} size={18} />
+                     
+                  </span>
+                  </div>
+                  <span style={{ fontSize: '0.6rem', color: 'gray' }}>{timeAgo(new Date(lesson.date))}</span>
+
                 </li>
-                <span style={{ fontSize:'11px', color:'gray'}}>{timeAgo(new Date(lesson.date))}</span>
                 
-                </>
+              </>
             ))
-          : <>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "24px",
-              borderRadius: "16px",
-              boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-              backgroundColor: "white",
-              color: "#374151",
-            }}
-          >
-            <li
-              style={{
-                listStyle: "none",
-                fontSize: "18px",
-                fontWeight: "500",
-                marginBottom: "8px",
-              }}
-            >
-              No saved lessons
-            </li>
-            <button
-              style={{
-                padding: "8px 16px",
-                marginTop: "8px",
-                fontSize: "14px",
-                fontWeight: "600",
-                color: "white",
-                backgroundColor: "#2563EB",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#1D4ED8")}
-              onMouseOut={(e) => (e.target.style.backgroundColor = "#2563EB")}
-              onClick={()=>navigate('/explain')}
-            >
-              Explore more lessons
-            </button>
-          </div>
-        </>
-        
-          }
+              : <>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "24px",
+                    borderRadius: "16px",
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                    backgroundColor: "white",
+                    color: "#374151",
+                  }}
+                >
+                  <li
+                    style={{
+                      listStyle: "none",
+                      fontSize: "18px",
+                      fontWeight: "500",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    No saved lessons
+                  </li>
+                  <button
+                    style={{
+                      padding: "8px 16px",
+                      marginTop: "8px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      color: "white",
+                      backgroundColor: "#2563EB",
+                      border: "none",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                    }}
+                    onMouseOver={(e) => (e.target.style.backgroundColor = "#1D4ED8")}
+                    onMouseOut={(e) => (e.target.style.backgroundColor = "#2563EB")}
+                    onClick={() => navigate('/explain')}
+                  >
+                    Explore more lessons
+                  </button>
+                </div>
+              </>
+
+            }
           </ul>
         </div>
       </div>
-      
+
     </div>
   );
 }

@@ -19,21 +19,84 @@ const ExplanationShower = () => {
     const fetchExplanation = async () => {
 
       try {
-        const response = await axios.post(`${url}/api/explanations/explanation?token=${token}&id=${id}`);
+        const response = await axios.post(`${url}/api/explanations/explanation`, { id: id }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'token': token
+          }
+        });
         setContent(response.data.content)
         setTitle(response.data.title)
 
         setLoadingContent({ loaded: true, success: true, response: "Content has successfuly loaded" })
 
+        // waiting 5 minuts before marking viewed
+        setTimeout(async () => {
+          try {
+           const timer_response = await axios.post(`${url}/api/user/update-recently-viewed`, 
+              {
+                itemType:"lessons",
+                itemId:"explain/subject/"+id,
+                itemTitle:response.data.title,
+                date: new Date()
+              },{
+                headers: {
+                  'Content-Type': 'application/json',
+                  'token': token
+                }
+              });
+  
+              // console.log(timer_response.data.message)
+  
+          } catch (error) {
+            console.log("Error marking explanation as viewed:", error);
+          }
+        }, 3000); // 5 minutes
+       
+
       } catch (error) {
         console.log("Error", error)
         setLoadingContent({ loaded: true, success: false, response: "Content couldn't be loaded!" })
       }
-
+      
 
     }
+    
     fetchExplanation();
+    
+    
   }, [])
+
+  // 
+  // useEffect(()=>{
+  //   const updateViewedItem = (itemTitle)=>{
+  //     setTimeout(async () => {
+  //       try {
+  //        const timer_response = await axios.post(`${url}/api/user/update-recently-viewed`, 
+  //           {
+  //             itemType:"lessons",
+  //             itemId:"explain/subject/"+id,
+  //             itemTitle:itemTitle,
+  //             date: new Date()
+  //           },{
+  //             headers: {
+  //               'Content-Type': 'application/json',
+  //               'token': token
+  //             }
+  //           });
+
+  //           console.log(timer_response.data.message)
+
+  //       } catch (error) {
+  //         console.log("Error marking explanation as viewed:", error);
+  //       }
+  //     }, 3000); // 5 minutes
+  //   }
+  //   console.log("Title: ",title )
+  //   title ?
+  //    updateViewedItem(title) :null
+  // },[])
+
 
   const topicToExplain = {
     id: id,

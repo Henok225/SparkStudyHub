@@ -110,7 +110,7 @@ const GradeSection = ({
       icon: <Book size={48} />, // Book icon for explanations
       colorClass: "card-indigo",
       iconColorClass: "icon-indigo",
-      link: `ethiopian-curriculum/grade/${gradeId}/explain?grade=${gradeId}`
+      link: `ethiopian-curriculum/grade/${gradeId}/lessons`
     },
     {
       title: "Quizzes",
@@ -118,7 +118,7 @@ const GradeSection = ({
       icon: <ClipboardCheck size={48} />, // Clipboard icon for quizzes
       colorClass: "card-green",
       iconColorClass: "icon-green",
-      link: `ethiopian-curriculum/grade/${gradeId}/quiz?grade=${gradeId}`
+      link: `ethiopian-curriculum/grade/${gradeId}/quizzes`
     },
     {
       title: "Videos",
@@ -126,7 +126,7 @@ const GradeSection = ({
       icon: <Video size={48} />, // Video icon for video content
       colorClass: "card-red",
       iconColorClass: "icon-red",
-      link: `ethiopian-curriculum/grade/${gradeId}/video?grade=${gradeId}`
+      link: `ethiopian-curriculum/grade/${gradeId}/videos`
     },
     {
       title: "Prepare for Exam",

@@ -36,11 +36,41 @@ const Quizer = () => {
 
       setContentLoaded({loading:true})
         try {
-            const response = await axios.post(`${url}/api/quizzes/quiz?token=${token}&id=${id}`);
+            const response = await axios.post(`${url}/api/quizzes/quiz`, {id:id}, {
+              headers: {
+                'Content-Type': 'application/json',
+                'token': token
+              }
+            });
+            // console.log("Response",response)
             setContent(response.data.content)
             setTitle(response.data.title)
          
             setContentLoaded({loading:false,success:true})
+
+            // waiting 5 minuts before marking viewed
+            setTimeout(async () => {
+              try {
+               const timer_response = await axios.post(`${url}/api/user/update-recently-viewed`, 
+                  {
+                    itemType:"quizzes",
+                    itemId:"quizzes/subject/"+id,
+                    itemTitle:response.data.title,
+                    date: new Date()
+                  },{
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'token': token
+                    }
+                  });
+        
+                  // console.log(timer_response.data.message)
+        
+              } catch (error) {
+                console.log("Error marking explanation as viewed:", error);
+              }
+            }, 3000); // 5 minutes
+       
         } catch (error) {
             console.log("Error",error)
             if(error.response){
@@ -55,8 +85,14 @@ const Quizer = () => {
         }
           
     }
+    
     fetchQuiz();
+
+    
+    
 },[refetch])
+
+
 
 const question_list = {
   id:id,

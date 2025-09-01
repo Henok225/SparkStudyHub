@@ -214,7 +214,7 @@ const RegisteredHomeExtras = () => {
         </section>
 
         {/* Today's Challenge Question Section */}
-        <section id="challenge-question" ref={el => sectionRefs.current[3] = el} className={`section section-animation slide-in-left ${inView['challenge-question'] ? 'in-view' : ''}`}>
+        {/* <section id="challenge-question" ref={el => sectionRefs.current[3] = el} className={`section section-animation slide-in-left ${inView['challenge-question'] ? 'in-view' : ''}`}>
           <div className="content-wrapper">
             <div className="section-header">
               <Lightbulb size={40} color="#ffbe0b" />
@@ -250,10 +250,10 @@ const RegisteredHomeExtras = () => {
               )}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Featured Course Section */}
-        <section id="featured-course" ref={el => sectionRefs.current[4] = el} className={`section section-animation scale-in ${inView['featured-course'] ? 'in-view' : ''}`}>
+        {/* <section id="featured-course" ref={el => sectionRefs.current[4] = el} className={`section section-animation scale-in ${inView['featured-course'] ? 'in-view' : ''}`}>
           <div className="content-wrapper">
             <div className="section-header">
               <Star size={40} color="#fff" style={{ fill: '#ffbe0b', stroke: '#ffbe0b' }} />
@@ -265,7 +265,7 @@ const RegisteredHomeExtras = () => {
               <button className="featured-course-btn">Enroll Now</button>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Learning Techniques Section */}
         <section id="learning-techniques" ref={el => sectionRefs.current[5] = el} className={`section section-animation horizontal-scroll-section fade-in-slide-up ${inView['learning-techniques'] ? 'in-view' : ''}`}>
@@ -286,7 +286,7 @@ const RegisteredHomeExtras = () => {
         </section>
 
         {/* Your Progress & Achievements Section */}
-        <section id="achievements" ref={el => sectionRefs.current[6] = el} className={`section section-animation horizontal-scroll-section fade-in-slide-up ${inView['achievements'] ? 'in-view' : ''}`}>
+        {/* <section id="achievements" ref={el => sectionRefs.current[6] = el} className={`section section-animation horizontal-scroll-section fade-in-slide-up ${inView['achievements'] ? 'in-view' : ''}`}>
           <div className="content-wrapper">
             <div className="section-header">
               <Trophy size={40} color="#f9a623" />
@@ -305,7 +305,7 @@ const RegisteredHomeExtras = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Quick Poll Section */}
         <section id="quick-poll" ref={el => sectionRefs.current[7] = el} className={`section section-animation slide-in-left ${inView['quick-poll'] ? 'in-view' : ''}`}>

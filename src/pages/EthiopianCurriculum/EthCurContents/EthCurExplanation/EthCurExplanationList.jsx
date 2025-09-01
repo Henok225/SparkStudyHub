@@ -8,7 +8,7 @@ const EthCurExplanationList = () => {
  
     return (
     <div>
-      <ExplanationLister apiName={`api/ethiopian-curriculum/explanations?grade=${gradeId}`} />
+      <ExplanationLister apiName={`/api/explanations`} filter={{grade:gradeId}} />
     </div>
   )
 }

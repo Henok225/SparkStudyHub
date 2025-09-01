@@ -24,6 +24,7 @@ import TermsAndPrivacy from './Components/TermsOfUsePrivacyPolicy/TermsOfUsePriv
 import NewProfile from './pages/UserProfile/NewProfile/NewProfile'
 import useLearningTimer from './hooks/useLearningTimer'
 import NotFoundPage from './pages/utilityPages/NotFoundPage'
+import EthCurQuizzes from './pages/EthiopianCurriculum/EthCurContents/EthCurQuzzes/EthCurQuizzes'
 
 function App() {
   
@@ -43,7 +44,9 @@ function App() {
   }
 
   // hook to track learning time
-  // useLearningTimer(userData?.userId, url, token);
+  useLearningTimer();
+  const {setTimeOn, timer, timeOn} = useLearningTimer()
+
 
 
 
@@ -66,8 +69,8 @@ function App() {
         <Route path='/feedback' element={<FeedBack/>} />
         <Route path='/ethiopian-curriculum' element={<EthioCurHome/>} />
         <Route path='/ethiopian-curriculum/grade/:gradeId' element={<GradeSection/>} />
-        <Route path='/ethiopian-curriculum/grade/:gradeId/explain' element={<EthCurExplanationList />} />
-         {/* <Route path='/ethiopian-curriculum/grade/:gradeId/quiz' element={<EthCurQuizList />} */}
+        <Route path='/ethiopian-curriculum/grade/:gradeId/lessons' element={<EthCurExplanationList />} />
+         <Route path='/ethiopian-curriculum/grade/:gradeId/quizzes' element={<EthCurQuizzes/>} />
         <Route path='/terms-and-privacy-policy' element={<TermsAndPrivacy />} />
         {/* <Route path='/plans' element={<Plans/>} /> */}
         <Route path="*" element={<NotFoundPage userId={userData?.userId} />} />
