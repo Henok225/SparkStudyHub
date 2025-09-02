@@ -50,35 +50,38 @@ const LoginPopUp = () => {
           setUserData(response.data.data);
         }
         
-
         const tempUserData = JSON.stringify(response.data.data);
         localStorage.setItem("userData", tempUserData)
-       
-
-        setServerResponse(response.data.message)
-        setShowLogin(false)
-        setShowPopup(prev=>({...prev,show:true,response:serverResponse,title:currState}))
-        // !showPopup.show ? null : setShowLogin(false)
         
       }
       setServerResponse(response.data.message)
-      setShowPopup(prev=>({...prev,show:true,response:serverResponse,title:currState}))
-       
+      showPopup.show ? 
+      setTimeout(()=>{
+        setShowLogin(false)
+      },1000 ) 
+      : null
+    
+      
     } catch (error) {
-
       console.log("Error", error)
       setServerResponse("Server error try again later!")
-      setShowPopup(true)
-      !showPopup.show ? null : setShowLogin(false)
-      setShowPopup(prev=>({...prev,show:true,response:serverResponse,title:currState}))
+     
+      showPopup.show ? 
+      setTimeout(()=>{
+        setShowLogin(false)
+      },10 ) 
+      : null
       
-
     } finally {
       setLoading(false)
     }
 
-
   }
+
+  useEffect(()=>{
+    setShowPopup(prev=>({...prev,show:true,response:serverResponse,title:currState}))
+   
+  },[serverResponse])
 
   const Verify = () => {
     const [reverify, setReverify] = useState(false);

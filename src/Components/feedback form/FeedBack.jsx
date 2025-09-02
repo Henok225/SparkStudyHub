@@ -5,11 +5,15 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const FeedBack = () => {
-    const {userData,url} = useContext(StoreContext)
+    const {userData,url, token, setShowLogin} = useContext(StoreContext)
     const navigate = useNavigate();
     const [feedBackSent, setFeedBackSent] = useState(false);
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if(!token){
+          setShowLogin(true)
+          return;
+        }
         const formData = new FormData(event.target);
         const data = {
             name: formData.get('name'),
@@ -23,11 +27,12 @@ const FeedBack = () => {
             },
           });
           if (response.data.success === true) { 
-            alert('Feedback submitted successfully!');
+            
             setFeedBackSent(true);
 
           } else {
-            alert('Failed to submit feedback. Please try again later.');
+            setShowPopup(prev=>({...prev,show:true,response:response.data.message,title:"FeedBack Sent Status"}))
+   
           }
         }
         catch (error) {
