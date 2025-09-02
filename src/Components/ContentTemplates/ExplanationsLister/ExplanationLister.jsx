@@ -16,10 +16,13 @@ const ExplanationLister = ({apiName, filter}) => {
   const [ explanationsList,setExplanationsList] = useState({loaded:false,content:[]});
   const [filteredExplanationsList,setFilteredExplanationsList] = useState({content:[]})
   const [explanationsFetched,setExplanationsFetched] = useState({loaded:false,success:false})
+
+
   const [refetchExplanations,setRefetchExplanations] = useState(false);
   const {url,userData,token,setShowLogin,subjectsList, setShowPopup} = useContext(StoreContext);
   const [subFilter,setSubFilter] = useState("All")
   const [searchKeyList,setSearchKeyList] = useState([]);
+
   const [filteredSearchList,setFilteredSearchList] = useState([]);
   const [itemSaved,setItemSaved] = useState(false); 
   const [savedItems,setSavedItems] = useState([]);
@@ -121,7 +124,6 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
 };
 
 
-  // const subjects_list = subjectsList;
   // subject list
   const subjects_list = [
     {
@@ -222,7 +224,7 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
         }
       </div>
 
-      <div className="content-list">
+      {/* <div className="content-list">
         {
           explanationsList.loaded?
           <>{
@@ -277,7 +279,102 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
         }
         
         
+      </div> */}
+
+<div className="content-list">
+  {explanationsList.loaded ? (
+    filteredExplanationsList.content.length !== 0 ? (
+      filteredExplanationsList.content.map((topic, index) => (
+        <motion.div
+          className="my-section"
+          key={topic._id} // moved key here
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <div className="lesson-card">
+            <div
+              className="image"
+              onClick={() =>
+                token
+                  ? navigate(`/explain/${topic.subject}/${topic._id}`)
+                  : setShowLogin(true)
+              }
+            >
+              <img
+                src={topic.image}
+                alt={topic.name}
+                loading="lazy"
+                style={{ width: "100%", height: "auto", borderRadius: "10px" }}
+              />
+            </div>
+
+            <div className="caption">
+              <h3>{topic.name}</h3>
+              <p>{topic.description}</p>
+
+              <div className="btns">
+                {savedItems?.lessons ? (
+                  <button
+                    onClick={(e) =>
+                      handleSaveExplanation(e, topic._id, topic.name, topic.subject)
+                    }
+                  >
+                    {savedItems.lessons.find(
+                      (item) =>
+                        item.itemAddress === `/explain/${topic.subject}/${topic._id}`
+                    ) ? (
+                      <>
+                        <BookmarkCheck /> Saved
+                      </>
+                    ) : (
+                      <>
+                        <Bookmark /> Save
+                      </>
+                    )}
+                  </button>
+                ) : (
+                  <button onClick={() => setShowLogin(true)}>
+                    <Bookmark /> Save
+                  </button>
+                )}
+
+                <button
+                  className="open-btn"
+                  onClick={() =>
+                    token
+                      ? navigate(`/explain/${topic.subject}/${topic._id}`)
+                      : setShowLogin(true)
+                  }
+                >
+                  Open
+                </button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      ))
+    ) : (
+      <div
+        style={{
+          width: "max(70vw, 250px)",
+          margin: "auto",
+          textAlign: "center",
+          padding: "20px",
+          backgroundColor: "whitesmoke",
+          borderRadius: "10px",
+        }}
+      >
+        <h2 style={{ padding: "20px" }}>
+          <SearchXIcon />
+          <br /> Content is not available!
+        </h2>
       </div>
+    )
+  ) : null}
+</div>
+
           {
             explanationsFetched.loaded?<>
             {explanationsFetched.success?null
