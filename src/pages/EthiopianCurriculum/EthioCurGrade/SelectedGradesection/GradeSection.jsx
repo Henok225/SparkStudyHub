@@ -101,6 +101,9 @@ const GradeSection = ({
   videosLink,
   examsLink
 }) => {
+
+  
+
   // Define the data for the four cards.
   const { gradeId } = useParams()
   const cards = [
@@ -140,7 +143,7 @@ const GradeSection = ({
 
   const navigate = useNavigate()
 
-  const { token } = useContext(StoreContext)
+  const { token, url, setShowLogin } = useContext(StoreContext)
 
   return (
     <>
@@ -202,7 +205,7 @@ const GradeSection = ({
 
             {
               token ? null
-                : <button className="start-button" >
+                : <button onClick={()=>setShowLogin(true))} className="start-button" >
                   Get started for free
                 </button>
 
