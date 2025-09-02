@@ -224,7 +224,7 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
         }
       </div>
 
-      {/* <div className="content-list">
+      <div className="content-list">
         {
           explanationsList.loaded?
           <>{
@@ -279,9 +279,9 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
         }
         
         
-      </div> */}
+      </div>
 
-<div className="content-list">
+{/* <div className="content-list">
   {explanationsList.loaded ? (
     filteredExplanationsList.content.length !== 0 ? (
       filteredExplanationsList.content.map((topic, index) => (
@@ -306,8 +306,7 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
                 src={topic.image}
                 alt={topic.name}
                 loading="lazy"
-                style={{ width: "100%", height: "auto", borderRadius: "10px" }}
-              />
+                />
             </div>
 
             <div className="caption">
@@ -357,14 +356,7 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
       ))
     ) : (
       <div
-        style={{
-          width: "max(70vw, 250px)",
-          margin: "auto",
-          textAlign: "center",
-          padding: "20px",
-          backgroundColor: "whitesmoke",
-          borderRadius: "10px",
-        }}
+        
       >
         <h2 style={{ padding: "20px" }}>
           <SearchXIcon />
@@ -373,7 +365,7 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
       </div>
     )
   ) : null}
-</div>
+</div> */}
 
           {
             explanationsFetched.loaded?<>
