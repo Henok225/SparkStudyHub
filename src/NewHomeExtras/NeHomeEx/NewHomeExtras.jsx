@@ -1,5 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import './NewHomeExtras.css'; 
+import { StoreContext } from '../../Context/StoreContext';
+import { ArrowRight, Target } from 'lucide-react';
+import { assets } from '../../assets/assets';
+import {useNavigate} from 'react-router-dom'
 
 
 // Data for sections
@@ -24,6 +28,8 @@ const testimonialsData = [
 
 const NewHomeExtras = () => {
   const revealRefs = useRef([]);
+  const {setShowLogin} = useContext(StoreContext)
+  const navigate = useNavigate()
 
   useEffect(() => {
     // Check if IntersectionObserver is supported
@@ -61,6 +67,19 @@ const NewHomeExtras = () => {
     };
   }, []);
 
+  const handleHwLink = (index)=>{
+     switch (index) {
+      case 0:
+        setShowLogin(true)
+        break;
+      case 1:
+        navigate('/explain')
+        break;
+      default:navigate('/explain')
+        break;
+     }
+  }
+
   return (
     <div className="spark-study-homepage">
      
@@ -70,17 +89,17 @@ const NewHomeExtras = () => {
         <p className="scroll-reveal" ref={(el) => (revealRefs.current.push(el))}>
           Learn with structured explanations, quizzes, and lessons designed to make studying easier and more effective.
         </p>
-        <div className="cards-container">
+        <div className="wy-cards-container">
           {whySparkStudyData.map((card, index) => (
             <div
               key={index}
-              className="card scroll-reveal"
+              className="wy-card scroll-reveal"
               ref={(el) => (revealRefs.current.push(el))}
               style={{ transitionDelay: `${index * 0.1}s` }}
             >
-              <div className="card-icon">{card.icon}</div>
+              <div className="wy-card-icon">{card.icon}</div>
               <h3>{card.title}</h3>
-              <p className="card-description">{card.description}</p>
+              <p className="wy-card-description">{card.description}</p>
             </div>
           ))}
         </div>
@@ -100,15 +119,20 @@ const NewHomeExtras = () => {
                       <div className="step-number">{step.step}</div>
                       <h3>{step.title}</h3>
                       <p>{step.description}</p>
+                      
+                      <p 
+                      onClick={()=>handleHwLink(index)}
+                      style={{cursor:'pointer',display:'flex',alignItems: 'center',color:'var(--button-bgh)',gap:'5px'}}> <span>Learn more</span> <ArrowRight size={18}/></p>
                   </div>
               ))}
           </div>
       </section>
+      
 
       {/* Testimonial Section */}
       <section className="section testimonial-section">
         <h2 className="scroll-reveal" ref={(el) => (revealRefs.current.push(el))}>What Our Students Say</h2>
-        <div className="cards-container">
+        <div className="wy-cards-container">
           {testimonialsData.map((testimonial, index) => (
             <div
               key={index}
@@ -126,8 +150,12 @@ const NewHomeExtras = () => {
       
       {/* Our Mission Section */}
       <section className="section">
+      <span>
+              <Target size={70}/>
+            </span>
           <h2 className="scroll-reveal" ref={(el) => (revealRefs.current.push(el))}>Our Mission</h2>
           <p className="scroll-reveal" ref={(el) => (revealRefs.current.push(el))}>
+             
               Our mission is to empower every student with the tools they need to succeed in their education. We believe
               that learning should be accessible, effective, and tailored to the unique needs of Ethiopian students.
           </p>
@@ -137,10 +165,10 @@ const NewHomeExtras = () => {
       <section className="section cta-section">
         <h2 className="scroll-reveal" ref={(el) => (revealRefs.current.push(el))}>Ready to Spark Your Learning?</h2>
         <a 
-          href="#" 
           className="cta-button scroll-reveal" 
           ref={(el) => (revealRefs.current.push(el))}
           style={{ transitionDelay: '0.2s' }}
+          onClick={()=>setShowLogin(true)}
         >
           Start Learning Today
         </a>

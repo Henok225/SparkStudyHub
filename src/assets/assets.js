@@ -26,6 +26,8 @@ import heropic2 from './heropic2.png'
 import heropic3 from './heropic3.png'
 import home_icon from './home_icon.png'
 import ethiopian_curriculum_icon from './ethiopian_curriculum_icon.png'
+import contact_us_side_image from './illustrations/undraw_contact-us_kcoa.svg'
+import students_jumping_illustration from './illustrations/many-students-jumping-illustration.jpg'
 
 export const assets = {
     explanation_icon,
@@ -55,5 +57,7 @@ export const assets = {
     heropic2,
     heropic3,
     home_icon,
-    ethiopian_curriculum_icon
+    ethiopian_curriculum_icon,
+    contact_us_side_image,
+    students_jumping_illustration
 }

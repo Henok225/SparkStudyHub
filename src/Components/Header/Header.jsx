@@ -4,6 +4,7 @@ import { StoreContext } from '../../Context/StoreContext'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { Book, BookOpen, TrendingUp, Zap } from 'lucide-react'
+import LandingPageCard from './LandingPageCard'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -21,6 +22,7 @@ const Header = () => {
         </div>
         <button className='start-btn' onClick={()=>setShowLogin(true)}>Start now</button>
         </div>
+      // <LandingPageCard />
           :
         <div className="customer-welcoming">
           <div className='welcoming-text'>

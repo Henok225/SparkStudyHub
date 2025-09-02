@@ -1,14 +1,14 @@
 import './App.css'
 import Navbar from './Components/Navbar/Navbar'
 import Footer from './Components/Footer/Footer'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, ScrollRestoration, useLocation } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import TopicExplanation from './pages/TopicExplanation/TopicExplanation'
 import ExplanationShower from './pages/TopicExplanation/ExplanationShower/ExplanationShower'
 import Quizes from './pages/Quizes/Quizes-List/Quizes'
 import Quizer from './pages/Quizes/Quizer/Quizer'
 import LoginPopUp from './Components/LoginPopUp/LoginPopUp'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import VerifyEmail from './pages/emailVerify/VerifyEmail'
 import Loader from './Components/loaderSpin/Loader'
 import { StoreContext } from './Context/StoreContext'
@@ -25,6 +25,8 @@ import NewProfile from './pages/UserProfile/NewProfile/NewProfile'
 import useLearningTimer from './hooks/useLearningTimer'
 import NotFoundPage from './pages/utilityPages/NotFoundPage'
 import EthCurQuizzes from './pages/EthiopianCurriculum/EthCurContents/EthCurQuzzes/EthCurQuizzes'
+import Contact from './Components/ContactUs/Contact'
+import HelpAndFaq from './pages/HelpandFAQ/HelpAndFaq'
 
 function App() {
   
@@ -34,32 +36,39 @@ function App() {
   function ScrollToTop() {
     const { pathname } = useLocation();
   
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, [pathname]);
+    const lastPath = useRef(null);
 
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 50); // tiny delay ensures content is mounted
+      return () => clearTimeout(timeout);
+    }, [pathname]);
 
   
     return null;
   }
 
   // hook to track learning time
-  useLearningTimer();
-  const {setTimeOn, timer, timeOn} = useLearningTimer()
+   useLearningTimer()
 
 
 
 
   return (
     <>
-     <ScrollToTop />
+    
      {showLogin?<LoginPopUp/>:<></>}
      {showPopup.show && showPopup.response?<PopUp response={showPopup.response} title={showPopup.title} />:<></>}
 
       <Navbar />
+      
+      <ScrollToTop />
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/about' element={<About/>} />
+        <Route path='/contact' element={<Contact/>} />
+        <Route path='/help' element={<HelpAndFaq/>} />
         <Route path='/explain' element={<TopicExplanation/>} />
         <Route path='/explain/:subject/:id' element={<ExplanationShower/>} />
         <Route path='/quizzes' element={<Quizes/>} />

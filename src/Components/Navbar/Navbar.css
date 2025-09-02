@@ -57,9 +57,9 @@
     background-color: var(--button-color);
     padding: 5px 10px;
     border-radius: 10px;
-    
-
-
+    display: flex;
+    justify-content:center;
+    gap:5px;
 }
 .navbar .signin-login > p:hover{
     background-color: blue;
@@ -98,9 +98,12 @@
     text-align: center;
     z-index: 1;
 }
-.navbar-profile:hover .nav-profile-dropdown{
+/* .navbar-profile:hover .nav-profile-dropdown{
     display: flex;
-}
+} */
+ /* .drop{
+    display: flex;
+} */
 .nav-profile-dropdown .links .logout-icon{
     margin-top: 10px;
     display: flex;
@@ -341,8 +344,8 @@
     color: var(--primary-color);
     margin:0;
     padding: 0;
-    position: sticky;
-    top: 70px;
+    position: fixed;
+    top: 200px;
     right: 0px;
     left: 0px;
     overflow: hidden;
@@ -351,16 +354,42 @@
     box-shadow: 0 0 5px #aeadad;
 }
 .show-resources{
-    height: 20vw;
+    height: 35vh;
     padding-left: 20px;
-    padding-top: 10px;
+    padding-top: 30px;
+    top: 70px;
 }
 .resources .tit{
+    position: absolute;
+    margin: 10px 0 0px 30px;
+}
+.resources .tit h3{
     font-size: 20px;
     font-weight: 600;
+    margin-bottom: 0;
+}
+.resources .reso-list{
+    border-left: 1px solid silver;
+    display: inline-block;
+}
+.resources .reso-list ul{
+    list-style:none;
+    color: var(--link-text);
+    line-height: 35px;
+}
+.resources .reso-list ul li{
+ cursor: pointer;
+ transition: 0.2s;
+ display: flex;
+ align-items: center;
+ gap: 5px;
+}
 
+.resources .reso-list ul li:hover{
+    margin-left: 5px;
 }
 .resources .res-list{
+    
     width: 100%;
     margin: auto;
     display: flex;
@@ -370,20 +399,24 @@
     overflow: scroll;
 }
 .resources .res-list p{
-    width: max(15vw,200px);
+    width: max(10vw,150px);
     border:1px solid silver ;
     border-radius: 10px;
     min-height: 200px;
+    background-color: var(--button-color);
+    color: white;
     display: flex;
     align-items: center;
     flex-direction: column;
+    transition: 0.3s;
+    box-shadow: 0 0 5px rgba(126, 124, 124, 0.667);
 
 }
 .resources .res-list p:hover{
     /* opacity: 0.5; */
     scale: 1.02;
     cursor: pointer;
-    box-shadow: 0 0 5px rgba(126, 124, 124, 0.667);
+    box-shadow: var(--shadow);
 
 }
 .resources .res-list p .image{

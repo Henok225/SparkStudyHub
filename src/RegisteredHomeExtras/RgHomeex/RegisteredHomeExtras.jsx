@@ -308,7 +308,7 @@ const RegisteredHomeExtras = () => {
         </section> */}
 
         {/* Quick Poll Section */}
-        <section id="quick-poll" ref={el => sectionRefs.current[7] = el} className={`section section-animation slide-in-left ${inView['quick-poll'] ? 'in-view' : ''}`}>
+        {/* <section id="quick-poll" ref={el => sectionRefs.current[7] = el} className={`section section-animation slide-in-left ${inView['quick-poll'] ? 'in-view' : ''}`}>
           <div className="content-wrapper">
             <div className="section-header">
               <BarChart2 size={40} color="#45b8ac" />
@@ -331,7 +331,7 @@ const RegisteredHomeExtras = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Quote of the Day Section */}
         <section id="quote-of-day" ref={el => sectionRefs.current[8] = el} className={`section section-animation scale-in ${inView['quote-of-day'] ? 'in-view' : ''}`}>

@@ -5,7 +5,7 @@ import { StoreContext } from '../../../Context/StoreContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SmallLoader from '../../../Components/SmallLoaderSpin/SmallLoader';
-// Simulated backend data fetching
+
 const fetchUserData = (userData) => {
 
   // const {userData} = useContext(StoreContext);
@@ -527,6 +527,9 @@ function AccountSettings() {
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalMessage, setModalMessage] = useState('');
+  const {userData,setUserData,token, setToken} = useContext(StoreContext);
+  const navigate = useNavigate();
+  const [confirmer, setConfirmer] = useState(null)
 
   const handleEditProfile = () => {
     setModalTitle('Edit Profile');
@@ -544,13 +547,26 @@ function AccountSettings() {
     setModalTitle('Confirm Logout');
     setModalMessage('Are you sure you want to log out?');
     setShowModal(true);
+    setConfirmer(logout)
   };
+  const logout = ()=>{
+    localStorage.removeItem("token");
+    setToken("");
+    localStorage.removeItem("userData");
+    setUserData({})
+    navigate("/");
+  }
 
   const handleCloseModal = () => {
     setShowModal(false);
     setModalTitle('');
     setModalMessage('');
   };
+  const handleConfirmModal = ()=>{
+    confirmer();
+    handleCloseModal();
+
+  }
 
   return (
     <div className="account-settings-container">
@@ -575,7 +591,10 @@ function AccountSettings() {
           <div className="modal-content">
             <h3>{modalTitle}</h3>
             <p>{modalMessage}</p>
+            <div className="md-btns">
             <button className="modal-close-button" onClick={handleCloseModal}>Close</button>
+            <button className="modal-close-button" onClick={()=>handleConfirmModal()}>Confirm</button>
+            </div>
           </div>
         </div>
       )}

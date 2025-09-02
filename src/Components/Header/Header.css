@@ -33,7 +33,7 @@
 }
 
 .header .new-user-welcoming .start-btn{
-    width: 250px;
+    width: 200px;
     margin: 20px;
     padding: 15px 50px;
     text-align: center;
@@ -45,40 +45,48 @@
     color: var(--button-tcolor);
     box-shadow: 0 0 5px white;
     transition: 0.5s;
-    animation: btnanime 2s infinite;
+    animation: btnanime 2s infinite linear;
 }
 @keyframes btnanime {
     0%{
         scale: 1; 
+        background-color: var(--button-color);
+     }
+     50%{
+        scale: 1.1;
+        background-color: var(--button-bgh);
      }
      100%{
-        scale: 1.1;
+        scale: 1; 
+        background-color: var(--button-color);
      }
  
 }
 @keyframes welcanime {
-    0%{
-        background-color: #454444b7; 
+    0% {
+      background-image: linear-gradient(90deg, #1e3c72b7, #2a5298b7); /* deep to medium blue */
     }
-    25%{
-        background-image: linear-gradient(90deg,#454444b7,#8f8e8eb7)
+    25% {
+      background-image: linear-gradient(90deg, #2a5298b7, #3c6db7b7, #6a82fbcc); /* smooth transition blues */
     }
-    50%{
-        background-image: linear-gradient(90deg,#454444b7,#6a6868b7,#abaaaab7);
+    50% {
+      background-image: linear-gradient(90deg, #1e3c72b7, #3c6db7b7, #89f7feb7); /* darker blue blending into aqua */
     }
-    75%{
-        background-image: linear-gradient(90deg,#454444b7,#686767b7,#787676b7,#a9a9a9b7);  
+    75% {
+      background-image: linear-gradient(90deg, #2a5298b7, #6a82fbb7, #a1c4fcb7); /* light blue with sky tones */
     }
-    100%{
-        background-image: linear-gradient(90deg,#454444b7,#5e5c5cb7,#706e6eb7,#818080b7,#b4b2b2b7);  
+    100% {
+      background-image: linear-gradient(90deg, #1e3c72b7, #2a5298b7, #6a82fbb7, #a1c4fcb7); /* full smooth gradient */
     }
-}
+  }
+  
 .header .new-user-welcoming .start-btn:hover{
-    background-color: var(--primary-background);
-    color: var(--primary-color);
+    background-color: var(--button-bgh);
+    color: var(--button-tcolor);
     cursor: pointer;
     scale: 1.1;
     transition: 0.5s;
+    animation-play-state: paused;
 }
 .header .new-user-welcoming .welcoming .big-title{
   font-size: 30px;
