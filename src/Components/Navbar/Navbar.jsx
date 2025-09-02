@@ -104,7 +104,7 @@ const Navbar = () => {
         <div onClick={()=>navigate('/')} className="logo"><p> <Zap /> <span className='logo-text'>SparkStudy</span> </p></div>
         <div className="navbar-right">
           <div className="signin-login">
-            {!token ? <p onClick={() => setShowLogin(true)}><User size={18} /><span>Login</span></p>
+            {!token ? <p onClick={() => setShowLogin(true)}><User size={18} /><span>Log In</span></p>
               : <div className='navbar-profile' onClick={()=>setDropDownProfile(!dropDownProfile)}> <User size={30} />
                 <div style={dropDownProfile?{display:'flex'}:null} className="nav-profile-dropdown ">
                  <span style={{display:'inline-block',textAlign:'right'}}><X/></span>
