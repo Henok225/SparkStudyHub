@@ -50,7 +50,7 @@ function App() {
   }
 
   // hook to track learning time
-   useLearningTimer()
+   const {timerRef, timeOn, setTimeOn} = useLearningTimer()
 
 
 

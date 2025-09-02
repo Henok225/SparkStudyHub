@@ -18,29 +18,12 @@ const VerifyEmail = () => {
 
         let newUrl = url;
         
-        // if(emailtoken.length > 10){
-        //   console.log(emailtoken)
-        //      newUrl += `/api/user/verifyemail?token=${emailtoken}`
-        // }
-        //  else{
-        //     navigate("/");
-        //  }
-         
-        // const response = await axios.get(newUrl,emailtoken);
-        // if(response.data.success){
-        //   // setToken(response.data.token);
-        //   // localStorage.setItem("token",response.data.token)
-        //   setVerifyResponse(response.data.message)
-        // }
-        // else{
-        //   setVerifyResponse(response.data.message)
-        // }
-
+       
         try {
           const response = await axios.get(`${url}/api/user/verifyemail`, {
             params: {token:token },
           });
-          alert(response.data.message); 
+          // alert(response.data.message); 
           setVerifyResponse(response.data.message)
         } catch (error) {
           console.error('Error verifying email:', error);

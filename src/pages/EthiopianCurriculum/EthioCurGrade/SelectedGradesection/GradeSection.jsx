@@ -205,7 +205,7 @@ const GradeSection = ({
 
             {
               token ? null
-                : <button onClick={()=>setShowLogin(true))} className="start-button" >
+                : <button onClick={()=>setShowLogin(true)} className="start-button" >
                   Get started for free
                 </button>
 

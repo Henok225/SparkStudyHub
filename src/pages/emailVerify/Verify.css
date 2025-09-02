@@ -1,6 +1,6 @@
 .email-verification{
-    background-color: white;
-    color: black;
+    background-color: var(--primary-background);
+    color: var(--primary-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,6 +23,7 @@
    border: none;
    font-size: 20px;
    cursor: pointer;
-   background-color: red;
-   color: white;font-weight: 600;
+   background-color: var(--button-color);
+   color: white;
+   font-weight: 600;
 }
