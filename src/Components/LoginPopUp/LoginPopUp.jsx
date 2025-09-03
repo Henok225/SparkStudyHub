@@ -80,6 +80,8 @@ const LoginPopUp = () => {
 
   }
 
+  
+
   useEffect(()=>{
     setShowPopup(prev=>({...prev,show:true,response:serverResponse,title:currState}))
    
@@ -127,6 +129,8 @@ const LoginPopUp = () => {
           {currState === "Log In" ? <></> : <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your name' required />
           }
           <input name='email' value={data.email} onChange={onChangeHandler} type="email" placeholder='Your email' autoComplete="username" required />
+          
+          <div className="password-cont">
           <div className="password-input-wrapper">
           <input name='password' onChange={onChangeHandler} value={data.password} type={showPassword ? "text" : "password"} className='password-input' placeholder='password' required />
           <button
@@ -137,9 +141,14 @@ const LoginPopUp = () => {
               >
                 {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
               </button>
+              
               </div>
+              <p style={{textAlign:'right', cursor:'pointer'}} className="forgot-pass">Forgot password?</p>
+          </div>
+              
         </div>
         <button className='send-btn' type='submit'>{currState === "Sign Up" ? "Create Account" : "Log In"}</button>
+        
         <div className="login-popup-condition">
           <input type="checkbox" required />
           <p>By continuing, I agree to the <span style={{color:'blue'}} onClick={()=>{navigate('/terms-and-privacy-policy'); setShowLogin(false)}} >terms of use & privacy policy</span></p>
