@@ -4,13 +4,14 @@ import './Verify.css'
 import { useContext, useState } from 'react'
 import { StoreContext } from '../../Context/StoreContext'
 import { useNavigate, useParams } from 'react-router-dom'
+import SmallLoader from '../../Components/SmallLoaderSpin/SmallLoader'
 
 
 const VerifyEmail = () => {
 
     const {url} = useContext(StoreContext)
     const {token} = useParams();
-    const [verifyResponse,setVerifyResponse] = useState("No response from server");
+    const [verifyResponse,setVerifyResponse] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,11 +44,13 @@ const VerifyEmail = () => {
       }, [token]);
 
   return (
+    verifyResponse ?
     <div className='email-verification' >
         <h2 >Email Verification</h2>
         <p>{verifyResponse} </p>
         <button onClick={()=>navigate("/")}>Ok</button>
     </div>
+    :<SmallLoader/>
   )
 }
 

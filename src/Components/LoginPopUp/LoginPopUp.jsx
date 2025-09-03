@@ -6,7 +6,7 @@ import { StoreContext } from '../../Context/StoreContext'
 import Loader from '../loaderSpin/Loader'
 import PopUp from '../PopUp/PopUp'
 import { useNavigate } from 'react-router-dom'
-import { X, Zap } from 'lucide-react'
+import { Eye, EyeOff, X, Zap } from 'lucide-react'
 
 
 const LoginPopUp = () => {
@@ -20,6 +20,7 @@ const LoginPopUp = () => {
     email: "",
     password: ""
   })
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
@@ -106,7 +107,10 @@ const LoginPopUp = () => {
   const popUpHide = (event)=>{
     event.target.className === "login-popup"?setShowLogin(false):null
   }
-
+  // toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className='login-popup' onClick={(event)=>popUpHide(event)}>
@@ -123,9 +127,19 @@ const LoginPopUp = () => {
           {currState === "Log In" ? <></> : <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your name' required />
           }
           <input name='email' value={data.email} onChange={onChangeHandler} type="email" placeholder='Your email' autoComplete="username" required />
-          <input name='password' onChange={onChangeHandler} value={data.password} type="password" placeholder='password' required />
+          <div className="password-input-wrapper">
+          <input name='password' onChange={onChangeHandler} value={data.password} type={showPassword ? "text" : "password"} className='password-input' placeholder='password' required />
+          <button
+                type="button"
+                className="toggle-button"
+                onClick={togglePasswordVisibility}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+              </button>
+              </div>
         </div>
-        <button type='submit'>{currState === "Sign Up" ? "Create Account" : "Log In"}</button>
+        <button className='send-btn' type='submit'>{currState === "Sign Up" ? "Create Account" : "Log In"}</button>
         <div className="login-popup-condition">
           <input type="checkbox" required />
           <p>By continuing, I agree to the <span style={{color:'blue'}} onClick={()=>{navigate('/terms-and-privacy-policy'); setShowLogin(false)}} >terms of use & privacy policy</span></p>
