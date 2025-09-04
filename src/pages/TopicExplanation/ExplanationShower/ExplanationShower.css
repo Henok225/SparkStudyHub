@@ -1,158 +1,232 @@
-.explanation{
-    background-color: var(--primary-background);
-    color: var(--primary-color);
-    margin: 0;
-    padding: 20px 10px;
-}
 
-.explanation h1{
-    text-align: center;
-    margin-top: 50px;
-}
-.explanation .explain-nav{
-    text-align: center;
-    font-size: 1em;
-    color: rgb(130, 214, 242);
-    cursor: pointer;
-}
-.tit-box{
-    width: 90%;
-    margin: auto;
-    padding: 10px;
-    margin-bottom: 50px;
-    border-radius: 10px;
-    background-color: var(--button-color);
-    color: white;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
- 
-}
-.explanation .explain-container{
-    width: 50vw;
-    margin: auto;
-}
-/* .explain-container {
-  background-color: var(--secondary-bg);
-  border-radius: 12px;
-  box-shadow: 0 5px 20px var(--shadow-color);
- display: flex;
-  flex-direction: column;
-  gap: 25px;
-  border: 1px solid var(--border-color);
-  width: 70vw;
-    margin: auto;
-} */
-.explanation .explain-container .video-explain-container{
-    width: 100%;
-    margin: auto;
-    background-color: #424242;
-    border-radius: 5px;
-    overflow: hidden;
-}
-.explanation .explain-container .video-explain-container iframe{
-    width: 100%;
-    height: 30vw;
-    border-radius: 5px;
-}
-.explanation .explain-container .text-explanation-container{
- width: 100%;
- min-height: 100px;
- margin: auto;
- margin-top: 100px;
- padding: 20px;
-border-radius: 10px;
- box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
- font-size: 1.1em;
- line-height: 1.6em;
- letter-spacing: 0.5px;
-    text-align: justify;
-    text-justify: inter-word;
-    white-space: pre-line;
-    word-wrap: break-word;
-    word-break: break-word;
-    padding: 50px;
-}
-@media (max-width:750px) {
-    .explanation .explain-container {
-        width: 95vw;
-        min-height: 200px;
+    /* General Styles */
+    .lesson-page {
+      background-color: #f4f7f9;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
     }
-    .explanation .explain-container .video-explain-container iframe{
-        height: 50vw;
+
+    .lesson-page .lesson-content-container {
+      max-width: 960px;
+      width: 100%;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      padding: 40px;
     }
-    .explanation .explain-container .text-explanation-container{
-        width: 90%;
-        padding: 15px;
+
+    /* Header and Breadcrumb */
+    .lesson-page .lesson-header {
+      margin-bottom: 30px;
     }
-    .explanation .explain-nav{
-        font-size: 0.9em;
+
+    .lesson-page .lesson-header h1 {
+      font-size: 2.5em;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
     }
-}
 
+    .lesson-page .breadcrumb {
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 10px;
+    }
 
-.give-feedback,
-.more-to-explore,
-.share-knowledge {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 24px;
-  margin: 20px 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    .lesson-page .breadcrumb span {
+      cursor: pointer;
+      transition: color 0.2s ease-in-out;
+    }
 
-.give-feedback:hover,
-.more-to-explore:hover,
-.share-knowledge:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
-}
+    .lesson-page .breadcrumb span:hover {
+      color: #4a90e2;
+    }
 
-.give-feedback h2,
-.more-to-explore h2,
-.share-knowledge h2 {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 10px;
-}
+    .lesson-page .breadcrumb span:not(:last-child)::after {
+      content: ' > ';
+      margin: 0 5px;
+      color: #ccc;
+    }
 
-.give-feedback p,
-.more-to-explore p,
-.share-knowledge p {
-  font-size: 1rem;
-  color: #4b5563;
-  margin-bottom: 18px;
-  line-height: 1.6;
-}
+    /* Main Content Area */
+    .lesson-page .main-content-area {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
 
-.give-feedback button,
-.more-to-explore button,
-.share-knowledge button {
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-  background: linear-gradient(135deg, #6366f1, #3b82f6);
-  color: #fff;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
+    /* Video Section */
+    .lesson-page .video-section {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
 
-.give-feedback button:hover,
-.more-to-explore button:hover,
-.share-knowledge button:hover {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  transform: translateY(-2px);
-}
+    .lesson-page .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
 
-.give-feedback button:active,
-.more-to-explore button:active,
-.share-knowledge button:active {
-  transform: scale(0.97);
-}
+    /* Text Explanation */
+    .lesson-page .text-explanation-container h2 {
+      font-size: 1.8em;
+      color: #4a90e2;
+      border-bottom: 2px solid #50e3c2;
+      padding-bottom: 10px;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
 
+    .lesson-page .text-explanation-container p, .lesson-page .text-explanation-container li {
+      font-size: 1em;
+      color: #666;
+      margin-bottom: 1em;
+    }
+
+    .lesson-page .text-explanation-container h3, .lesson-page .text-explanation-container h4 {
+      color: #333;
+      margin-top: 30px;
+    }
+
+    .lesson-page .text-explanation-container ul, .lesson-page .text-explanation-container ol {
+      padding-left: 25px;
+    }
+
+    .lesson-page .text-explanation-container li {
+      margin-bottom: 8px;
+    }
+
+    .lesson-page pre {
+      background-color: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 0.9em;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .lesson-page .end-of-lesson {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .lesson-page .end-of-lesson hr {
+      width: 50%;
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 20px auto;
+    }
+
+    .lesson-page .end-of-lesson p {
+      color: #aaa;
+      font-style: italic;
+      font-size: 0.9em;
+    }
+
+    /* Action Cards Footer */
+    .lesson-page .lesson-footer-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .lesson-page .action-card {
+      background-color: #f4f7f9;
+      padding: 25px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .lesson-page .action-card h3 {
+      color: #4a90e2;
+      font-size: 1.2em;
+      margin-top: 0;
+    }
+
+    .lesson-page .action-card p {
+      font-size: 0.9em;
+      color: #666;
+      flex-grow: 1;
+    }
+
+    .lesson-page .action-button {
+      background: linear-gradient(45deg, #4a90e2, #50e3c2);
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 15px;
+    }
+
+    .lesson-page .action-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .lesson-page .lesson-content-container {
+        padding: 20px;
+      }
+      
+      .lesson-page .lesson-header h1 {
+        font-size: 2em;
+      }
+    }
+
+    /* Simple spinner for the loader */
+    .lesson-page .loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
+
+    .lesson-page .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border-left-color: #09f;
+        animation: spin 1s ease infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+  
 
 
 

@@ -7,13 +7,13 @@
     flex-direction: column;
     width: max(30vw,250px);
     padding: 20px;
-    box-shadow: 0 0 10px #b3aeae;
+    box-shadow: var(--shadow);
     border-radius: 15px;
     margin: 100px auto;
 }
 .email-verification p{
     margin: 20px;
-    color: red;
+    color: var(--button-color);
 }
 .email-verification button{
    width: 150px;

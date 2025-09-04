@@ -1,0 +1,116 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+          
+.profile-page-container {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.profile-ed-form-card {
+  /* background-color: var(--primary-background); */
+  padding: 1rem ;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 28rem;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.profile-ed-form-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.profile-ed-form-group {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.profile-ed-form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.profile-ed-form-input, .profile-ed-form-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--primary-color);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.profile-ed-form-textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.profile-ed-form-input:focus, .profile-ed-form-textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.profile-ed-form-group-with-icon .profile-form-input {
+  padding-left: 2.5rem;
+}
+
+.profile-ed-input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.profile-ed-submit-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  font-weight: 600;
+  background-color: var(--button-color);
+  border: none;
+  transition: background-color 0.2s, opacity 0.2s;
+  cursor: pointer;
+}
+
+.profile-ed-submit-btn:hover {
+  background-color: #1e40af;
+}
+
+.profile-ed-submit-btn:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.profile-ed-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  transition: color 0.3s;
+}
+
+.profile-ed-message.error {
+  color: #dc2626;
+}
+
+.profile-ed-message.success {
+  color: #16a34a;
+}

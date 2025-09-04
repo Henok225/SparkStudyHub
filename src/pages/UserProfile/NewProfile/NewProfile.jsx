@@ -5,6 +5,8 @@ import { StoreContext } from '../../../Context/StoreContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SmallLoader from '../../../Components/SmallLoaderSpin/SmallLoader';
+import EditProfile from '../../../AuthHandlers/EditProfile/EditProfile';
+import ResetPassword from '../../../AuthHandlers/ChangePassword/ChangePassword';
 
 const fetchUserData = (userData) => {
 
@@ -68,7 +70,7 @@ export default function NewProfile() {
           <>
             <ProfileHeader profileData={userInfo.profile} />
             <div className="section-grid">
-              <ProgressTracker progressData={userInfo.progress} />
+              <ProgressTracker />
               <RecentActivity />
             </div>
           </>
@@ -76,7 +78,7 @@ export default function NewProfile() {
       case 'progress':
         return (
           <>
-            <ProgressTracker progressData={userInfo.progress} />
+            <ProgressTracker />
             <RecentActivity recentItems={userInfo.recentActivity} />
           </>
         );
@@ -89,7 +91,7 @@ export default function NewProfile() {
           <>
             <ProfileHeader profileData={userInfo.profile} />
             <div className="section-grid">
-              <ProgressTracker progressData={userInfo.progress} />
+              <ProgressTracker />
               <RecentActivity />
             </div>
           </>
@@ -196,19 +198,49 @@ function AnimatedCounter({ endValue, label }) {
 }
 
 // ProgressTracker Component
-function ProgressTracker({ progressData }) {
+function ProgressTracker() {
+  // We'll keep the state variables as they are, but fix how they're used.
   const [progressWidths, setProgressWidths] = useState({});
+  const { url, token } = useContext(StoreContext);
+  const [progressData, setProgressData] = useState({});
+  const [loaded, setLoaded] = useState(false);
+
+  // This useEffect runs only once when the component mounts.
+  // Its sole purpose is to fetch the data and update the progressData state.
+  useEffect(() => {
+    const getProgress = async () => {
+      try {
+        const response = await axios.get(url + "/api/user/get-progress", {
+          headers: {
+            "Content-Type": "application/json",
+            token: token
+          }
+        });
+        // Set the progress data here.
+        // The component will re-render, and the next useEffect will run.
+        setProgressData(response.data.progress);
+        setLoaded(true); // Set loaded to true after a successful fetch.
+      } catch (error) {
+        console.log("Error fetching user progress!", error);
+      }
+    };
+    getProgress();
+  }, [url, token]); // Added dependencies to fix React's exhaustive-deps warning
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    // We check to make sure the data is valid before calculating.
+    if (progressData.totalLessons && progressData.totalQuizzes) {
+      const lessonsWidth = (progressData.completedLessons.length / progressData.totalLessons) * 100;
+      const quizzesWidth = (progressData.completedQuizzes.length / progressData.totalQuizzes) * 100;
+
       setProgressWidths({
-        lessons: `${(progressData.completedLessons.length / progressData.totalLessons) * 100}%`,
-        quizzes: `${(progressData.completedQuizzes.length / progressData.totalQuizzes) * 100}%`,
+        lessons: `${lessonsWidth}%`,
+        quizzes: `${quizzesWidth}%`,
       });
-    }, 100);
-    return () => clearTimeout(timeout);
+    }
   }, [progressData]);
 
+  // Destructure the data here, so it's always up-to-date.
   const { learningHours, completedLessons, totalLessons, completedQuizzes, totalQuizzes } = progressData;
 
   return (
@@ -220,24 +252,24 @@ function ProgressTracker({ progressData }) {
           <div className="progress-bar-container">
             <div
               className="progress-bar lessons-bar"
-              style={{ width: progressWidths.lessons }}
+              style={loaded ? { width: progressWidths.lessons } : { width: 0 }}
             ></div>
           </div>
-          <span className="progress-value">{completedLessons.length}/{totalLessons}</span>
+          <span className="progress-value">{completedLessons ? completedLessons.length : ""}/{totalLessons||0}</span>
         </div>
         <div className="progress-item">
           <span className="progress-label">Completed Quizzes</span>
           <div className="progress-bar-container">
             <div
               className="progress-bar quizzes-bar"
-              style={{ width: progressWidths.quizzes }}
+              style={loaded ? { width: progressWidths.quizzes } : { width: 0 }}
             ></div>
           </div>
-          <span className="progress-value">{completedQuizzes.length}/{totalQuizzes}</span>
+          <span className="progress-value">{completedQuizzes ? completedQuizzes.length : ""}/{totalQuizzes||0}</span>
         </div>
       </div>
       <div className="learning-hours">
-        <AnimatedCounter endValue={learningHours} label="Total Learning Hours" />
+        <AnimatedCounter endValue={learningHours||0} label="Total Learning Hours" />
       </div>
     </div>
   );
@@ -530,6 +562,7 @@ function AccountSettings() {
   const {userData,setUserData,token, setToken} = useContext(StoreContext);
   const navigate = useNavigate();
   const [confirmer, setConfirmer] = useState(null)
+  const [settingFocus,setSettingFocus] = useState("")
 
   const handleEditProfile = () => {
     setModalTitle('Edit Profile');
@@ -538,9 +571,7 @@ function AccountSettings() {
   };
 
   const handleChangePassword = () => {
-    setModalTitle('Change Password');
-    setModalMessage('This is a placeholder for the change password form.');
-    setShowModal(true);
+    navigate('/auth/reset-password')
   };
 
   const handleLogout = () => {
@@ -572,11 +603,11 @@ function AccountSettings() {
     <div className="account-settings-container">
       <h2>Account Settings <Settings className="section-icon" /></h2>
       <div className="settings-buttons-grid">
-        <button className="settings-button" onClick={handleEditProfile}>
+        <button className="settings-button" onClick={()=>setSettingFocus("edit profile")}>
           <Pencil size={20} />
           <span>Edit Profile</span>
         </button>
-        <button className="settings-button" onClick={handleChangePassword}>
+        <button className="settings-button" onClick={()=>setSettingFocus("reset password")}>
           <Lock size={20} />
           <span>Change Password</span>
         </button>
@@ -585,6 +616,20 @@ function AccountSettings() {
           <span>Log Out</span>
         </button>
       </div>
+
+     <div className="profile-page-container">
+
+     <div className="profile-page-container">
+      {
+        settingFocus === "edit profile" ? <EditProfile />:" "
+      }
+      {
+        settingFocus === "reset password" ? <ResetPassword/>:" "
+      }
+      </div>
+      
+     </div>
+      
 
       {showModal && (
         <div className="modal-overlay">

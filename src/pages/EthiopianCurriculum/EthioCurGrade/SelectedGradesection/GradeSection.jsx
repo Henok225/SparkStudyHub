@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useContext } from 'react';
 import { StoreContext } from '../../../../Context/StoreContext';
 import Tooltip from '../../../../Components/Utilities/Tooltip';
+import Flagged from '../../../../Components/ReusableComponents/Flagging/Flagged';
 
 // This is the main component for the curriculum section.
 // It displays four interactive cards for different learning activities.
@@ -121,7 +122,8 @@ const GradeSection = ({
       icon: <ClipboardCheck size={48} />, // Clipboard icon for quizzes
       colorClass: "card-green",
       iconColorClass: "icon-green",
-      link: `ethiopian-curriculum/grade/${gradeId}/quizzes`
+      link: `ethiopian-curriculum/grade/${gradeId}/quizzes`,
+
     },
     {
       title: "Videos",
@@ -129,7 +131,8 @@ const GradeSection = ({
       icon: <Video size={48} />, // Video icon for video content
       colorClass: "card-red",
       iconColorClass: "icon-red",
-      link: `ethiopian-curriculum/grade/${gradeId}/videos`
+      link: `ethiopian-curriculum/grade/${gradeId}/videos`,
+      flagged:"Coming Soon"
     },
     {
       title: "Prepare for Exam",
@@ -137,7 +140,8 @@ const GradeSection = ({
       icon: <Rocket size={48} />, // Rocket icon for exam preparation
       colorClass: "card-yellow",
       iconColorClass: "icon-yellow",
-      link: `ethiopian-curriculum/grade/${gradeId}/exam?grade=${gradeId}`
+      link: `ethiopian-curriculum/grade/${gradeId}/exam?grade=${gradeId}`,
+      flagged:"Coming Soon"
     },
   ];
 
@@ -183,8 +187,11 @@ const GradeSection = ({
                 <div
                   key={index}
                   className={`sg-card sg-${card.colorClass}`}
-                  onClick={() => navigate('/' + card.link)}
+                  onClick={() =>{!card.flagged ? navigate('/' + card.link):null}}
                 >
+                  {
+                    card.flagged ? <Flagged title={card.flagged}/>:null
+                  }
                   {/* Icon container */}
                   <div className={`sg-card-icon-container sg-${card.iconColorClass}`}>
                     {card.icon}

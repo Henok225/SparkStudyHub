@@ -3,7 +3,8 @@ import './Navbar.css'
 import { useNavigate } from 'react-router-dom'
 import { assets } from '../../assets/assets';
 import { StoreContext } from '../../Context/StoreContext';
-import { Archive, BookOpenCheck, ClipboardList, Home, Menu, ScrollText, User, UserRoundSearch, UsersRound, X, Zap } from 'lucide-react'; // Using lucide-react for icons
+import { Archive, BookOpenCheck, ClipboardList, HelpCircle, Home, Mail, Menu, MessageCircle, ScrollText, User, UserRoundSearch, UsersRound, X, Zap } from 'lucide-react'; // Using lucide-react for icons
+import Flagged from '../ReusableComponents/Flagging/Flagged';
 
 
 const Navbar = () => {
@@ -116,10 +117,10 @@ const Navbar = () => {
                     <p className='plan'>{userData !== null ? userData.plan : ""} user</p>
                   </div>
                   <div className="links">
-                    <p onClick={() => navigate('/profile')}>my profile</p>
-                    <p onClick={() => navigate('/profile')}>change email</p>
-                    <p onClick={() => navigate('/feedback')}>feedback</p>
-                    <p onClick={() => navigate('/help')}>help</p>
+                    <p onClick={() => navigate('/profile')}> <User size={18}/><span>my profile</span> </p>
+                    <p onClick={() => navigate('/profile')}> <Mail size={18}/><span>change email</span> </p>
+                    <p onClick={() => navigate('/feedback')}> <MessageCircle size={18}/><span>feedback</span> </p>
+                    <p onClick={() => navigate('/help')}> <HelpCircle size={18}/><span>help</span> </p>
                     <div className='logout-icon' onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></div>
                   </div>
                 </div>
@@ -170,9 +171,9 @@ const Navbar = () => {
           <h3> <Archive size={30} /> Resources</h3>
           <div className="reso-list">
             <ul>
-              <li> <BookOpenCheck size={18} /> Learn</li>
-              <li> <ClipboardList size={18} /> Quizzes</li>
-              <li> <ScrollText size={18} /> Ethiopian Curriculum</li>
+              <li onClick={()=>{navigate('/explain'); setShowResources(false)}}> <BookOpenCheck size={18} /> Learn</li>
+              <li onClick={()=>{navigate('quizzes'); setShowResources(false)}}> <ClipboardList size={18} /> Quizzes</li>
+              <li onClick={()=>{navigate('ethiopian-curriculum'); setShowResources(false)}}> <ScrollText size={18} /> Ethiopian Curriculum</li>
               <li> <UserRoundSearch size={18} /> Find tutor</li>
 
             </ul>
@@ -184,8 +185,8 @@ const Navbar = () => {
 
           <p onClick={() => { navigate("/explain"); setShowResources(false) }}> <span className="image"><img src={assets.explanation_icon} alt="" /></span> <span className="res-tit">Learn</span></p>
           <p onClick={() => { navigate("/quizzes"); setShowResources(false) }}> <span className="image"><img src={assets.quiz_icon1} alt="" /></span> <span className="res-tit">Take quiz</span></p>
-          <p onClick={() => { navigate("/exams"); setShowResources(false) }}> <span className="image"><img src={assets.previous_exam_icon1} alt="" /></span> <span className="res-tit">Previous exams</span></p>
-          <p onClick={() => { navigate("/books"); setShowResources(false) }}> <span className="image"><img src={assets.books_icon1} alt="" /></span> <span className="res-tit">Books</span></p>
+          <p onClick={() => { navigate("/"); setShowResources(false) }}> <span className="image"><img src={assets.previous_exam_icon1} alt="" /></span> <span className="res-tit">Previous exams </span><span><Flagged title="Coming Soon"/></span></p>
+          <p onClick={() => { navigate("/"); setShowResources(false) }}> <span className="image"><img src={assets.books_icon1} alt="" /></span> <span className="res-tit">Books</span><Flagged title="Coming Soon"/></p>
 
         </div>
       </div>

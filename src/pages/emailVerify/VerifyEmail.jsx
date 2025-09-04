@@ -29,12 +29,13 @@ const VerifyEmail = () => {
         } catch (error) {
           console.error('Error verifying email:', error);
           if (error.response) {
-            alert(error.response.data.message || 'An error occurred during verification.');
+            // alert(error.response.data.message || 'An error occurred during verification.');
             setVerifyResponse(error.response.data.message)
           } else if (error.request) {
-            alert('No response from the server. Please try again.');
+            // alert('No response from the server. Please try again.');
+            setVerifyResponse('No response from the server. Please try again.')
           } else {
-            alert('An error occurred. Please try again.');
+            // alert('An error occurred. Please try again.');
             setVerifyResponse('An error occurred. Please try again.')
           }
         }

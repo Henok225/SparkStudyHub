@@ -27,6 +27,8 @@ import NotFoundPage from './pages/utilityPages/NotFoundPage'
 import EthCurQuizzes from './pages/EthiopianCurriculum/EthCurContents/EthCurQuzzes/EthCurQuizzes'
 import Contact from './Components/ContactUs/Contact'
 import HelpAndFaq from './pages/HelpandFAQ/HelpAndFaq'
+import ForgotPassword from './AuthHandlers/Forgot password/ForgotPassword'
+import ResetPassword from './AuthHandlers/ChangePassword/ChangePassword'
 
 function App() {
   
@@ -81,6 +83,9 @@ function App() {
         <Route path='/ethiopian-curriculum/grade/:gradeId/lessons' element={<EthCurExplanationList />} />
          <Route path='/ethiopian-curriculum/grade/:gradeId/quizzes' element={<EthCurQuizzes/>} />
         <Route path='/terms-and-privacy-policy' element={<TermsAndPrivacy />} />
+        <Route path='/auth/forgot-password' element={<ForgotPassword/>} />
+        <Route path='/auth/reset-password' element={<ResetPassword/>} />
+        <Route path='/auth/verify-reseting-password/:resetToken' element={<ResetPassword/>} />
         {/* <Route path='/plans' element={<Plans/>} /> */}
         <Route path="*" element={<NotFoundPage userId={userData?.userId} />} />
        

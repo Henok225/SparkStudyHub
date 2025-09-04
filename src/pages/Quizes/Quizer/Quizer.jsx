@@ -7,6 +7,7 @@ import SmallLoader from '../../../Components/SmallLoaderSpin/SmallLoader';
 import axios from 'axios';
 import QuizResult from './quizResult/QuizResult';
 import { motion, AnimatePresence } from "framer-motion";
+import { ExternalLinkIcon, ListRestart, LogOut, Zap } from 'lucide-react';
 
 
 const Quizer = () => {
@@ -69,7 +70,8 @@ const Quizer = () => {
               } catch (error) {
                 console.log("Error marking explanation as viewed:", error);
               }
-            }, 3000); // 5 minutes
+
+            }, 60000); // 1 minutes
        
         } catch (error) {
             console.log("Error",error)
@@ -111,32 +113,6 @@ const question_list = {
       }
       }
   }
-  // const nextQuestionHandler = ()=>{
-
-  //   if(currentQuestionIndex > question_list.content.length-1){
-  //     setQuizFinished(true);
-      
-  //   }
-
-  //   else{
-  //      if(userAnswer === null){
-  //     alert("Select your Answer")
-  //   }
-  //  else{
-  //     // alert("Correct Answer" + userAnswer + "Vs" + answer)
-      
-  //     setAnswerList((prev)=>[...prev,userAnswer])
-  //     setUserAnswer(null)
-  //     if(!quizFinished){
-  //       goToNextquestion();
-  //       setAnsweredQuestions(answeredQuestions+1)
-    
-  //     }
-
-  //   }
-  //   }
-    
-  // }
 
   const nextQuestionHandler = ()=>{
     if(currentQuestionIndex < question_list.content.length-1){
@@ -161,31 +137,6 @@ const question_list = {
   }
 
   
-  // const quizTimer = ()=>{
-    
-
-  
-  //     const ticking = setInterval(()=>{
-  //       if(sec<60){
-  //         sec++;
-  //       }
-  //       else{
-  //          sec = 0;
-  //          min++;
-  //          if(sec<!60){
-  //           hr++;
-  //          }
-  //       }
-  //     },1000)
-   
-
- 
-  // }
-  // quizTimer();
-  // console.log(quizTimer())
-  // const userAnswerHandler = (answer)=>{
-
-  // }
 
   const [time, setTime] = useState(0); // Time in seconds
   const [isRunning, setIsRunning] = useState(false);
@@ -236,20 +187,15 @@ const question_list = {
     return(
       <div className="quiz-box">
       <div className="quizmode-nav">
+       
         <div className="quiz-timer-box">
           <p>Timer</p>
           <div className="timer">
-             
             <h1>{formatTime(time)}</h1>
-      {/* <button onClick={startTimer} disabled={isRunning}>
-        Start
-      </button>
-      <button onClick={stopTimer} disabled={!isRunning}>
-        Stop
-      </button>
-      <button onClick={resetTimer}>Reset</button> */}
           </div>
+         
         </div>
+        <span style={{width:50, height:50,backgroundColor:'var(--primary-background)',color:'var(--primary-color)', boxShadow:'var(--shadow)',display:'flex',borderRadius:'50%', justifyContent:'center',alignItems:'center'}}><Zap/></span>
         <div className="questions-tracker">
           <p>Answered questions</p>
           <p><span className="answered-questions">{answeredQuestions}</span> / <span className="total-questions">{question_list.content.length}</span></p>
@@ -331,8 +277,8 @@ const question_list = {
       gap:'20px'
       
     }}>
-        <button onClick={resetQuiz} style={{borderRadius:'5px',fontSize:'16px',cursor:'pointer', minWidth:'120px',padding:'10px',border:'none', margin:'20px', backgroundColor:'var(--button-color)',color:'white'}}>Restart</button> 
-        <button  style={{borderRadius:'5px',fontSize:'16px',cursor:'pointer',padding:'10px', minWidth:'120px', border:'none', margin:'20px', backgroundColor:'var(--button-color)',color:'white' }}>Save Result</button>
+        <button onClick={restartQuiz} style={{borderRadius:'5px',fontSize:'16px',cursor:'pointer', minWidth:'120px',padding:'10px',border:'none', margin:'20px', backgroundColor:'var(--button-color)',color:'white'}}> <ListRestart size={18}/>Restart</button> 
+        <button onClick={()=>navigate('/quizzes')}  style={{borderRadius:'5px',fontSize:'16px',cursor:'pointer',padding:'10px', minWidth:'120px', border:'none', margin:'20px', backgroundColor:'var(--button-color)',color:'white' }}>Exit <LogOut size={18}/></button>
       </div>
       
       </>
@@ -377,6 +323,35 @@ const question_list = {
       borderRadius:'5px'
     }
   }
+  
+  useEffect(()=>{
+
+    const quizCompleted = async ()=>{
+      // Marking content as completed
+      try {
+       const track_Response = await axios.post(url+'/api/user/update-progress',
+          {  
+           itemType:"quizzes",
+           itemId:"quizzes/subject/"+id,
+           date: new Date()
+          },
+         {
+           headers:{
+             "Content-Type":"application/json",
+             "token":token
+           }
+         }
+       )
+     } catch (error) {
+       console.log("Error! server error!")
+     }
+   }
+
+   quizCompleted();
+
+  },[])
+   
+   
   
     return(
       <>

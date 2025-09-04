@@ -12,6 +12,7 @@ const Footer = () => {
   return (
     <div className='footer'>
       <div className="footer-befor"></div>
+      <span><Zap/>SparkStudy</span>
       <div className="links">
         <div className="quick-links">
           <p className='footer-links-title'>Quick links</p>

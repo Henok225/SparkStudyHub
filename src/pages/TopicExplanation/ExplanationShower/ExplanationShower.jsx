@@ -30,7 +30,7 @@ const ExplanationShower = () => {
 
         setLoadingContent({ loaded: true, success: true, response: "Content has successfuly loaded" })
 
-        // waiting 5 minuts before marking viewed
+        // waiting 5 minuts before marking viewed or completed
         setTimeout(async () => {
           try {
            const timer_response = await axios.post(`${url}/api/user/update-recently-viewed`, 
@@ -51,6 +51,27 @@ const ExplanationShower = () => {
           } catch (error) {
             console.log("Error marking explanation as viewed:", error);
           }
+
+ // Marking content as completed
+          try {
+            const track_Response = await axios.post(url+'/api/user/update-progress', 
+              { 
+                itemType:"lessons",
+                itemId:"explain/subject/"+id,
+                date: new Date()
+              },
+              {
+                headers:{
+                  "Content-Type":"application/json",
+                  "token":token
+                }
+              }
+            )
+          } catch (error) {
+            console.log("Error! server error!",error)
+          }
+
+
         }, 3000); // 5 minutes
        
 
@@ -67,37 +88,7 @@ const ExplanationShower = () => {
     
   }, [])
 
-  // 
-  // useEffect(()=>{
-  //   const updateViewedItem = (itemTitle)=>{
-  //     setTimeout(async () => {
-  //       try {
-  //        const timer_response = await axios.post(`${url}/api/user/update-recently-viewed`, 
-  //           {
-  //             itemType:"lessons",
-  //             itemId:"explain/subject/"+id,
-  //             itemTitle:itemTitle,
-  //             date: new Date()
-  //           },{
-  //             headers: {
-  //               'Content-Type': 'application/json',
-  //               'token': token
-  //             }
-  //           });
-
-  //           console.log(timer_response.data.message)
-
-  //       } catch (error) {
-  //         console.log("Error marking explanation as viewed:", error);
-  //       }
-  //     }, 3000); // 5 minutes
-  //   }
-  //   console.log("Title: ",title )
-  //   title ?
-  //    updateViewedItem(title) :null
-  // },[])
-
-
+  
   const topicToExplain = {
     id: id,
     subject: subject,
@@ -108,103 +99,128 @@ const ExplanationShower = () => {
   // const tagNames = ["p","h1","h2","h3"]
   // let tgName = topicToExplain.content.text[0].tagName;
 
-  const TextContent = (props) => {
+  // const TextContent = (props) => {
 
-    if (props.tagName === "p") {
-      return <p>{props.content}</p>
-    }
-    else if (props.tagName === "h1") {
-      return <h1>{props.content}</h1>
-    }
-    else if (props.tagName === "h2") {
-      return <h2>{props.content}</h2>
-    }
-    else if (props.tagName === "h3") {
-      return <h3>{props.content}</h3>
-    }
-    else {
-      return <p>{props.content}</p>
-    }
+  //   if (props.tagName === "p") {
+  //     return <p>{props.content}</p>
+  //   }
+  //   else if (props.tagName === "h1") {
+  //     return <h1>{props.content}</h1>
+  //   }
+  //   else if (props.tagName === "h2") {
+  //     return <h2>{props.content}</h2>
+  //   }
+  //   else if (props.tagName === "h3") {
+  //     return <h3>{props.content}</h3>
+  //   }
+  //   else {
+  //     return <p>{props.content}</p>
+  //   }
 
-  }
+  // }
 
 
   return (
-    <div className='explanation'>
-      <h1>Explanation</h1>
-
-
-      <div className="explain-container ">
-
-        <div className="tit-box">
-          <div className="explain-nav">
-            <p><span onClick={() => { navigate('/explain') }}>explanation</span> / <span>{topicToExplain.subject}</span> / <span> {topicToExplain.title}</span></p>
-          </div>
+    <div className="lesson-page">
+      
+      <div className="lesson-content-container">
+        <div className="lesson-header">
+          <p className="breadcrumb">
+            <span onClick={() => navigate('/explain')}>Explanation</span> / <span>{topicToExplain.subject}</span> / <span> {topicToExplain.title}</span>
+          </p>
           <h1>{topicToExplain.title}</h1>
-
         </div>
 
-        <div className="video-explain-container">
-          video
-          <iframe src={topicToExplain.content.video} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        <div className="main-content-area">
+          <div className="video-section">
+            <div className="video-wrapper">
+              <iframe
+                src={topicToExplain.content.video}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+
+          {loadingContent.loaded ? (
+            loadingContent.success ? (
+              <>
+                <div className="text-explanation-container">
+                  <h2>{topicToExplain.title}</h2>
+                  <div dangerouslySetInnerHTML={{ __html: topicToExplain.content.note }}></div>
+                  <div className="end-of-lesson">
+                    <hr />
+                    <p>End of the lesson</p>
+                    <hr />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="error-message">
+                <p>An error occurred while loading the content.</p>
+              </div>
+            )
+          ) : (
+            <SmallLoader />
+          )}
         </div>
-        {
-          loadingContent.loaded ? loadingContent.success ? <><div className="text-explanation-container">
-            <h3>{topicToExplain.title}</h3>
 
-            <div dangerouslySetInnerHTML={{ __html: topicToExplain.content.note }}></div>
-            <div className="end-of-lesson">
-              {/* This is the end of the lesson */}
-              <hr style={{ width: '50vw', color: 'silver' }} />
-              <h3 style={{ textAlign: 'center', color: 'gray' }}>End of the lesson</h3>
-              <hr style={{ width: '50vw', color: 'silver' }} />
-
-            </div>
-
+        <div className="lesson-footer-actions">
+          <div className="action-card">
+            <h3>Was this explanation helpful?</h3>
+            <p>Your feedback helps us improve our content. Please let us know your thoughts!</p>
+            {userData ? (
+              <button className="action-button" onClick={() => navigate('/feedback')}>
+                Give Feedback
+              </button>
+            ) : (
+              <button
+                className="action-button"
+                onClick={() => {
+                  setShowPopup({ show: true, response: "You need to be logged in to give feedback!" });
+                  showLogin(true);
+                }}
+              >
+                Login to Give Feedback
+              </button>
+            )}
           </div>
-
-            {/* <div className="similar-topics">
-          <h2>Similar Topics</h2>
-          <div className="content-list">
-          {
-            <ExplanationLister apiName="/api/explanations" />
-    
-          }           
+          <div className="action-card">
+            <h3>Explore More Topics</h3>
+            <p>Dive deeper into related subjects and expand your knowledge with our curated content.</p>
+            <button className="action-button" onClick={() => navigate('/explain')}>
+              Explore Topics
+            </button>
           </div>
-        </div> */}
-            <div className="give-feedback">
-              <h2>Was this explanation helpful?</h2>
-              <p>Your feedback helps us improve our content. Please let us know your thoughts!</p>
-              {
-                userData ? <button onClick={() => navigate('/feedback')}>Give Feedback</button>
-                  : <button onClick={() => {
-                    setShowPopup(prev => ({ ...prev, show: true, response: "You need to be logged in to give feedback!" }));
-                    showLogin(true)
-                  }}>Login to Give Feedback</button>
-              }
-
-            </div>
-            <div className="more-to-explore">
-              <h2>Explore More Topics</h2>
-              <p>Dive deeper into related subjects and expand your knowledge with our curated content.</p>
-              <button onClick={() => { navigate('/explain') }}>Explore Topics</button>
-            </div>
-            <div className="share-knowledge">
-              <h2>Share Your Knowledge</h2>
-              <p>Have insights or resources to share? Contribute to our community and help others learn.</p>
-              {
-                userData ? <button onClick={() => { setShowPopup(prev => ({ ...prev, show: true, response: "Content contribution is under development!" })) }}>Contribute Now</button> : <button onClick={() => { setShowPopup(prev => ({ ...prev, show: true, response: "You need to be logged in to contribute content!" })); showLogin(true) }}>Login to Contribute</button>
-              }
-
-
-            </div>
-          </>
-            : setShowPopup(prev => ({ ...prev, show: true, response: loadingContent.response }))
-            : <SmallLoader />
-        }
-
+          <div className="action-card">
+            <h3>Share Your Knowledge</h3>
+            <p>Have insights or resources to share? Contribute to our community and help others learn.</p>
+            {userData ? (
+              <button
+                className="action-button"
+                onClick={() => {
+                  setShowPopup({ show: true, response: "Content contribution is under development!" });
+                }}
+              >
+                Contribute Now
+              </button>
+            ) : (
+              <button
+                className="action-button"
+                onClick={() => {
+                  setShowPopup({ show: true, response: "You need to be logged in to contribute content!" });
+                  showLogin(true);
+                }}
+              >
+                Login to Contribute
+              </button>
+            )}
+          </div>
+        </div>
       </div>
-
     </div>
   )
 }

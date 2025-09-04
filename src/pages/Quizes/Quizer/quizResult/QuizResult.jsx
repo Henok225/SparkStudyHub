@@ -17,7 +17,6 @@ const QuizResult = (props) => {
         }   
         }
         resultIncremental();
-        console.log(rightAnswer)
     },[])
       
   return ( 

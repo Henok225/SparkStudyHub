@@ -60,8 +60,12 @@ const LoginPopUp = () => {
       showPopup.show ? 
       setTimeout(()=>{
         setShowLogin(false)
+        setTimeout(()=>{
+          setShowPopup({show:false, response:"", title:""})
+        },1000 ) 
       },1000 ) 
       : null
+     
     
       
     } catch (error) {
@@ -143,7 +147,7 @@ const LoginPopUp = () => {
               </button>
               
               </div>
-              <p style={{textAlign:'right', cursor:'pointer'}} className="forgot-pass">Forgot password?</p>
+              <p onClick={()=>{navigate('/auth/forgot-password'); setShowLogin(false)}} style={{textAlign:'right', cursor:'pointer'}} className="forgot-pass">Forgot password?</p>
           </div>
               
         </div>
