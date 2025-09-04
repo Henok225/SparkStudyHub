@@ -43,9 +43,9 @@ align-items: flex-start;
 .contact form div label{
     margin: auto;
     position: relative;
-    top: 15px;
-    right: 45%;
-    background-color: var(--primary-background);
+    /* top: 15px; */
+    right: 40%;
+    /* background-color: var(--primary-background); */
     padding: 5px;
     border-radius: 5px;
     font-size: 0.8rem;

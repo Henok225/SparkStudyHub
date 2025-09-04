@@ -3,7 +3,7 @@ import './QuizzesLister.css'
 // import { assets } from '../../../assets/assets'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Atom, Bookmark, BookmarkCheck, Globe, Landmark, Microscope, Search, SearchXIcon, Sigma } from 'lucide-react';
+import { Atom, Bookmark, BookmarkCheck, FileQuestion, Globe, Landmark, Microscope, Search, SearchXIcon, Sigma } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import { StoreContext } from '../../../../Context/StoreContext';
 import SmallLoader from '../../../SmallLoaderSpin/SmallLoader';
@@ -188,6 +188,9 @@ useEffect(() => {
 
   return (
     <div className='quizzes-container content-container'>
+      <h1>
+        <FileQuestion color='var(--primary-color)' size={40} />
+        </h1>
       <h1 className='header-title'>Quizzes</h1>
 
 

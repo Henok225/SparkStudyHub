@@ -28,6 +28,7 @@ import home_icon from './home_icon.png'
 import ethiopian_curriculum_icon from './ethiopian_curriculum_icon.png'
 import contact_us_side_image from './illustrations/undraw_contact-us_kcoa.svg'
 import students_jumping_illustration from './illustrations/many-students-jumping-illustration.jpg'
+import physics_motion1 from './Lessons_coverpage-image/physics_motion1.png'
 
 export const assets = {
     explanation_icon,
@@ -59,5 +60,6 @@ export const assets = {
     home_icon,
     ethiopian_curriculum_icon,
     contact_us_side_image,
-    students_jumping_illustration
+    students_jumping_illustration,
+    physics_motion1
 }

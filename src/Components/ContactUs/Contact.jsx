@@ -5,16 +5,19 @@ import { assets } from '../../assets/assets'
 import { Send } from 'lucide-react'
 import { StoreContext } from '../../Context/StoreContext'
 
+
 const Contact = () => {
+
+  const [status, setStatus] = useState(null) // success or error
+  const {url, token, userData} = useContext(StoreContext) 
+
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    email: userData?.email || '',
     message: ''
   })
 
-  const [status, setStatus] = useState(null) // success or error
-  const {url, token} = useContext(StoreContext) 
-
+ 
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -37,11 +40,13 @@ const Contact = () => {
 
       setStatus('success')
       
+      
       setFormData({ name: '', email: '', message: '' }) // reset form
     } catch (error) {
       console.error(error)
       setStatus('error')
     }
+    alert(status)
   }
 
   useEffect(()=>{
@@ -63,7 +68,7 @@ const Contact = () => {
         <img src={assets.contact_us_side_image} alt="contact-us" />
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name">Name </label>
+            <label htmlFor="name">Name: </label>
             <input
               type="text"
               name='name'
@@ -75,7 +80,7 @@ const Contact = () => {
             />
           </div>
           <div>
-            <label htmlFor="email">Email </label>
+            <label htmlFor="email">Email: </label>
             <input
               type="email"
               name='email'
@@ -87,7 +92,7 @@ const Contact = () => {
             />
           </div>
           <div>
-            <label htmlFor="message">Message </label>
+            <label htmlFor="message">Message: </label>
             <textarea
               name="message"
               id="message"
@@ -95,6 +100,7 @@ const Contact = () => {
               cols="50"
               value={formData.message}
               onChange={handleChange}
+              placeholder='Message'
               required
             ></textarea>
           </div>

@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import SmallLoader from '../../SmallLoaderSpin/SmallLoader'
 import { StoreContext } from '../../../Context/StoreContext'
 import { assets } from '../../../assets/assets';
-import { Atom, Bookmark, BookmarkCheck, Save, SaveIcon, Landmark, Globe, Microscope, Globe2, LandmarkIcon, MicroscopeIcon, Sigma, Search, SearchXIcon,  } from 'lucide-react';
+import { Atom, Bookmark, BookmarkCheck, Save, SaveIcon, Landmark, Globe, Microscope, Globe2, LandmarkIcon, MicroscopeIcon, Sigma, Search, SearchXIcon, Filter, BookOpen,  } from 'lucide-react';
 
 
 const ExplanationLister = ({apiName, filter}) => {
@@ -180,11 +180,14 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
 
   return (
     <div className='explanation-container content-container'>
+      <h1>
+        <BookOpen color='var(--primary-color)' size={40} />
+        </h1>
       <h1 className='header-title'>Explanations</h1>
      
       <div className="content-nav">
         <div className="content-filter">
-          <p>Filter Explanations</p>
+          <p><Filter/> Filter Explanations</p>
         </div>
         <div className="content-search">
           <div className="search-bar">
