@@ -100,7 +100,7 @@ useEffect(() => {
    
     if(subFilter!=="All"){
       const filteredQuizzes = quizzesList.filter((topic) => {
-      return topic.subject === subFilter.toLowerCase(); 
+      return topic.subject.toLowerCase() === subFilter.toLowerCase(); 
     })
     setFilteredQuizList((prev) => ({ ...prev, content: filteredQuizzes}));
     }

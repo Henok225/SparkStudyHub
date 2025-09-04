@@ -185,8 +185,8 @@ const Navbar = () => {
 
           <p onClick={() => { navigate("/explain"); setShowResources(false) }}> <span className="image"><img src={assets.explanation_icon} alt="" /></span> <span className="res-tit">Learn</span></p>
           <p onClick={() => { navigate("/quizzes"); setShowResources(false) }}> <span className="image"><img src={assets.quiz_icon1} alt="" /></span> <span className="res-tit">Take quiz</span></p>
-          <p onClick={() => { navigate("/"); setShowResources(false) }}> <span className="image"><img src={assets.previous_exam_icon1} alt="" /></span> <span className="res-tit">Previous exams </span><span><Flagged title="Coming Soon"/></span></p>
-          <p onClick={() => { navigate("/"); setShowResources(false) }}> <span className="image"><img src={assets.books_icon1} alt="" /></span> <span className="res-tit">Books</span><Flagged title="Coming Soon"/></p>
+          <p onClick={() => { navigate("/"); setShowResources(false) }}> <span className="image"><Flagged title="Coming Soon"/><img src={assets.previous_exam_icon1} alt="" /></span> <span className="res-tit">Previous exams </span><span></span></p>
+          <p onClick={() => { navigate("/"); setShowResources(false) }}> <span className="image"><Flagged title="Coming Soon"/><img src={assets.books_icon1} alt="" /></span> <span className="res-tit">Books</span></p>
 
         </div>
       </div>

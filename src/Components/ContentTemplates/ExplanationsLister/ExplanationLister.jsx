@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import SmallLoader from '../../SmallLoaderSpin/SmallLoader'
 import { StoreContext } from '../../../Context/StoreContext'
 import { assets } from '../../../assets/assets';
-import { Atom, Bookmark, BookmarkCheck, Save, SaveIcon, Landmark, Globe, Microscope, Globe2, LandmarkIcon, MicroscopeIcon, Sigma, Search, SearchXIcon, Filter, BookOpen,  } from 'lucide-react';
+import { Atom, Bookmark, BookmarkCheck, Save, SaveIcon, Landmark, Globe, Microscope, Globe2, LandmarkIcon, MicroscopeIcon, Sigma, Search, SearchXIcon, Filter, BookOpen, TestTube, ChartBar,  } from 'lucide-react';
 
 
 const ExplanationLister = ({apiName, filter}) => {
@@ -145,6 +145,14 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
     {
       name:"Geography",
       icon:Globe
+    },
+    {
+      name:"Chemistry",
+      icon:TestTube
+    },
+    {
+      name:"Economics",
+      icon:ChartBar
     }
   ] ;
 
@@ -155,7 +163,7 @@ const handleSaveExplanation = async (e, itemId, itemTitle, itemSubject) => {
    
     if(subFilter!=="All"){
       const filteredExplanations = explanationsList.content.filter((topic) => {
-      return topic.subject === subFilter;
+      return topic.subject.toLowerCase() === subFilter.toLowerCase();
     })
     setFilteredExplanationsList((prev) => ({ ...prev, content: filteredExplanations }));
     }
