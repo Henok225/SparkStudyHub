@@ -97,3 +97,9 @@ border: none;
         width: 100%;
     }
 }
+
+.success, .error{
+    z-index: 100;
+    position: relative;
+    top:60px;
+}

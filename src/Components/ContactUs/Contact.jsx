@@ -10,6 +10,7 @@ const Contact = () => {
 
   const [status, setStatus] = useState(null) // success or error
   const {url, token, userData} = useContext(StoreContext) 
+  const [sending,setSending] = useState(false)
 
   const [formData, setFormData] = useState({
     name: '',
@@ -28,7 +29,8 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      // Replace with your backend endpoint
+      
+      setSending(true)
       const response = await axios.post(url+'/api/messages/contact',
          {name:formData.name,email:formData.email, message:formData.message}, {
         headers:{
@@ -36,24 +38,26 @@ const Contact = () => {
           'token': token
         }
       })
-      console.log(response.data)
-
-      setStatus('success')
+      if(response.data.success){
+        setStatus('success')
+      }
       
       
-      setFormData({ name: '', email: '', message: '' }) // reset form
     } catch (error) {
       console.error(error)
       setStatus('error')
+    }finally{
+      setSending(false)
+      setFormData({ name: '', email: '', message: '' })
     }
-    alert(status)
+    // alert(status)
   }
 
   useEffect(()=>{
     status !== null ?
     setTimeout(()=>{
       setStatus(null)
-    },3000) :null
+    },7000) :null
   },[status])
 
   return (
@@ -66,7 +70,7 @@ const Contact = () => {
       <h2>Contact Us</h2>
       <div className="contact-img-container">
         <img src={assets.contact_us_side_image} alt="contact-us" />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e)=>handleSubmit(e)}>
           <div>
             <label htmlFor="name">Name: </label>
             <input
@@ -104,7 +108,7 @@ const Contact = () => {
               required
             ></textarea>
           </div>
-          <button className='submit-btn' type='submit'>
+          <button disabled={sending}  className='submit-btn' type='submit'>
             <Send size={14}/> Send Message
           </button>
         </form>
