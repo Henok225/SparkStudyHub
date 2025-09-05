@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const FeedBack = () => {
-    const {userData,url, token, setShowLogin} = useContext(StoreContext)
+    const {userData,url, token, setShowLogin, setShowPopup} = useContext(StoreContext)
     const navigate = useNavigate();
     const [feedBackSent, setFeedBackSent] = useState(false);
     const handleSubmit = async (event) => {
@@ -20,10 +20,12 @@ const FeedBack = () => {
             email: formData.get('email'),
             message: formData.get('message'),
         };
+        console.log(data)
         try {
           const response = await axios.post(`${url}/api/messages/feedback`, data, {
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
+              "token":token
             },
           });
           if (response.data.success === true) { 
@@ -36,7 +38,8 @@ const FeedBack = () => {
           }
         }
         catch (error) {
-          console.error('Error submitting feedback:', error);
+          console.log('Error submitting feedback:', error);
+
           alert('An error occurred while submitting your feedback. Please try again later.');
         }
         
@@ -58,44 +61,24 @@ const FeedBack = () => {
         
           <form className='feedback__form' onSubmit={handleSubmit}>
         <div className='feedback__form-group'>
-            <label htmlFor='message' className='feedback__label'>Describe Your Feedback:</label>
-            <textarea id='message' name='message' className='feedback__textarea' required></textarea>
+            <label htmlFor='feedback-message' className='feedback__label'>Describe Your Feedback:</label>
+            <textarea id='feedback-message' name='message' className='feedback__textarea' required></textarea>
           </div>
           <div className="inputs1">
           <div className='feedback__form-group'>
-            <label htmlFor='name' className='feedback__label'>Full Name:</label>
-            <input type='text' name='name' id='name' className='feedback__input' required />
+            <label htmlFor='feedback-name' className='feedback__label'>Full Name:</label>
+            <input type='text' name='name' id='feedback-name' className='feedback__input' required />
           </div>
           <div className='feedback__form-group'>
-            <label htmlFor='email' className='feedback__label'>Email:</label>
-            <input type='email' name='email' id='email' defaultValue={userData? userData.email:""} className='feedback__input' required />
+            <label htmlFor='feedback-email' className='feedback__label'>Email:</label>
+            <input type='email' name='email' id='feedback-email' defaultValue={userData? userData.email:""} className='feedback__input' required />
           </div>
           </div>
           
           <div className="btns">
           <button type='submit' className='feedback__submit'>Submit</button>
           <style>
-            {`
-              .feedback__submit {
-                background-color: #4CAF50;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                font-size: 16px;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-              }
-
-              .feedback__submit:hover {
-                background-color: #45a049;
-              }
-
-              .feedback__submit:focus {
-                outline: none;
-                box-shadow: 0 0 5px #4CAF50;
-              }
-            `}
+            
           </style>
           </div>
            </form>

@@ -84,11 +84,11 @@ const Contact = () => {
             />
           </div>
           <div>
-            <label htmlFor="email">Email: </label>
+            <label htmlFor="contact-email">Email: </label>
             <input
               type="email"
-              name='email'
-              id='email'
+              name='contact-email'
+              id='contact-email'
               placeholder='example@gmail.com'
               value={formData.email}
               onChange={handleChange}
