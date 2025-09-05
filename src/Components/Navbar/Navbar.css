@@ -468,7 +468,7 @@
         overflow: hidden;
     } */
 }
-@media (max-width:400px) {
+@media (max-width:500px) {
     .navbar{
         padding: 20px;
         margin: 0;
