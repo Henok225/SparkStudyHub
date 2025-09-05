@@ -13,7 +13,7 @@
     background-color: var(--primary-background);
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     padding: 25px 30px;
     border-radius: 8px;
     font-size: 14px;
@@ -58,7 +58,17 @@
     background-color: var(--primary-background);
     color: var(--primary-color);
 }
-.login-popup-container .send-btn{
+.login-popup-inputs input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb;
+}
+.email-cont, .inpt-cont{
+  display: flex;
+  flex-direction: column;
+}
+.send-btn{
+  width: 100%;
     border: none;
     padding: 10px;
     border-radius: 4px;
@@ -117,6 +127,7 @@
     color: #6b7280;
     padding: 0;
   }
+  .send-btn
   
   .toggle-button:hover {
     color: #111827;

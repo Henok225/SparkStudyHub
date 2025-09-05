@@ -4,23 +4,23 @@
     background-color: rgba(12, 12, 12, 0.877);
     width: 100vw;
     height: 100vh;
-    z-index: 60;
+    z-index: 999;
     display: flex;
     justify-content: center;
     align-items: center;
 
 }
 .popup{
-    background-color: white;
-    color: black;
+    background-color: var(--primary-background);
+    color: var(--primaty-color);
     display: flex;
     justify-content: center;
     /* align-items: center; */
     flex-direction: column;
     width: max(20vw,250px);
     padding: 20px;
-    box-shadow: 0 0 10px #b3aeaeab;
-    border-radius: 15px;
+    box-shadow: var(--shadow);
+    border-radius: 10px;
     margin: 100px auto;
     animation: popup 0.7s;
    

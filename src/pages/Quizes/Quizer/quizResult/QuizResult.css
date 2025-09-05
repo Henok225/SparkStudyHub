@@ -47,6 +47,8 @@
 .questions-box .question-explanation{
     display: none;
     background-color: whitesmoke;
+    padding: 20px 15px;
+    border-radius: 5px;
 }
 .questions-box .question-explanation-show{
     display: block;

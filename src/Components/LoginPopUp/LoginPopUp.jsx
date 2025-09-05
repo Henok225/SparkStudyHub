@@ -14,6 +14,7 @@ const LoginPopUp = () => {
   const { url, setToken, userData, setUserData,showPopup, setShowPopup, setShowLogin } = useContext(StoreContext)
   const [currState, setCurrState] = useState("Log In")
   const [loading, setLoading] = useState(false)
+  const [signUpSuccess, setSignUpSuccess] = useState(false)
   const [serverResponse, setServerResponse] = useState(null)
    const [data, setData] = useState({
     name: "",
@@ -22,6 +23,7 @@ const LoginPopUp = () => {
   })
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const [resendTimer, setResendTimer] = useState(0)
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -29,6 +31,25 @@ const LoginPopUp = () => {
     setData(data => ({ ...data, [name]: value }))
   }
 
+  // Email resend timer for registration
+  useEffect(() => {
+    let timer;
+    if (resendTimer > 0) {
+      timer = setInterval(() => {
+        setResendTimer(prev => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [resendTimer])
+
+  // Helper function to format seconds into MM:SS
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+    return `${formattedMinutes}:${formattedSeconds}`;
+  };
 
   const onLogin = async (event) => {
 
@@ -42,6 +63,7 @@ const LoginPopUp = () => {
     }
 
     try {
+      setSignUpSuccess(false)
       setServerResponse(null)
       setLoading(true)
       const response = await axios.post(newUrl, data);
@@ -50,20 +72,28 @@ const LoginPopUp = () => {
           setToken(response.data.token);
           localStorage.setItem("token", response.data.token)
           setUserData(response.data.data);
+           const tempUserData = JSON.stringify(response.data.data);
+        localStorage.setItem("userData", tempUserData)
+      
         }
         
-        const tempUserData = JSON.stringify(response.data.data);
-        localStorage.setItem("userData", tempUserData)
-        
+        setSignUpSuccess(true) 
+        setResendTimer(120); 
       }
       setServerResponse(response.data.message)
       showPopup.show ? 
       setTimeout(()=>{
-        setShowLogin(false)
+        if (currState === "Log In") {
+            setShowLogin(false)
+        }
+        // else if(currState === "Sign Up"){
+        //   setResendTimer(120);
+        // }
+        
         setTimeout(()=>{
           setShowPopup({show:false, response:"", title:""})
-        },1000 ) 
-      },1000 ) 
+        },3000 ) 
+      },3000 ) 
       : null
      
     
@@ -79,6 +109,7 @@ const LoginPopUp = () => {
       : null
       
     } finally {
+      
       setLoading(false)
     }
 
@@ -129,14 +160,26 @@ const LoginPopUp = () => {
 
         </div>
         <p style={{ color: 'red' }}>{serverResponse}</p>
-        <div className="login-popup-inputs">
-          {currState === "Log In" ? <></> : <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your name' required />
+
+        {
+          signUpSuccess ? null
+          :<div className="login-popup-inputs">
+          {currState === "Log In" ? <></> : <div className="inpt-cont">
+            <label htmlFor="name">Name:</label>
+            <input id='name' name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your name' required />
+          </div>
           }
-          <input name='email' value={data.email} onChange={onChangeHandler} type="email" placeholder='Your email' autoComplete="username" required />
+          <div className="email-cont">
+          <label htmlFor="email">Email:</label>
+          <input id='email' name='email' value={data.email} onChange={onChangeHandler} type="email" placeholder='Your email' autoComplete="username" required />
+          
+          </div>
           
           <div className="password-cont">
+          <label htmlFor="password">Password:</label>
           <div className="password-input-wrapper">
-          <input name='password' onChange={onChangeHandler} value={data.password} type={showPassword ? "text" : "password"} className='password-input' placeholder='password' required />
+            
+          <input id='password' name='password' onChange={onChangeHandler} value={data.password} type={showPassword ? "text" : "password"} className='password-input' placeholder='password' required />
           <button
                 type="button"
                 className="toggle-button"
@@ -151,7 +194,34 @@ const LoginPopUp = () => {
           </div>
               
         </div>
-        <button className='send-btn' type='submit'>{currState === "Sign Up" ? "Create Account" : "Log In"}</button>
+        }
+        
+        {
+          currState === "Log In" ? <button disabled={loading} className='send-btn' type='submit'>{currState === "Sign Up" ? "Create Account" : "Log In"}</button>
+           : <div>
+            {
+              signUpSuccess ?
+              <div>
+           
+              {resendTimer > 0 && (
+                <span className="timer-text">
+                  Resend available in {formatTime(resendTimer)}
+                </span>
+              )}
+              <button
+                type='submit'
+                disabled={resendTimer > 0 || loading}
+                className="submit-btn"
+                style={{ marginTop: '1rem' }}
+              >
+                {loading ? "Sending..." : "Resend Confirmation Link"}
+              </button>
+            </div>
+            : <button disabled={loading} className='send-btn' type='submit'>{currState === "Sign Up" ? "Create Account" : "Log In"}</button>
+            }
+           </div>
+           
+        }
         
         <div className="login-popup-condition">
           <input type="checkbox" required />

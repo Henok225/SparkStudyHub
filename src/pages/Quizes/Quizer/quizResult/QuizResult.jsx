@@ -41,7 +41,7 @@ const QuizResult = (props) => {
           
          <p key={index} style={{color:'blue',cursor:'pointer'}} onClick={()=>setQuestionExplanation(!questionExplanation)} className="give-explanation"> Explanation </p>
       <div style={{backgroundColor:'white',padding:'10px'}} className={"question-explanation question-explanation-show"} >
-        {ques.explanation?ques.explanation:<p style={{color:'red'}}>No explanation for this question! </p>}
+        {ques.answerDetail?ques.answerDetail:<p style={{color:'red'}}>No explanation for this question! </p>}
         <br />
       </div>
       </div>
@@ -52,7 +52,8 @@ const QuizResult = (props) => {
 
       }
       <div className="quiz-final-result">
-        <p className="result">Your Result: <span>{rightAnswer}</span> / {quiz.quiz.length} </p>
+        <p className="result">Your Result: <span >{rightAnswer}</span> / {quiz.quiz.length} </p>
+        <p className="time-taken">Total time: <span style={{color:'var(--button-color)'}}>{props.totalTime}</span></p>
         <p className="compliment">
           {
             rightAnswer === quiz.quiz.length ? "Excellent! You got all answers correct! 🏆" :

@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default function EditProfile() {
   const {url, userData, token, setShowPopup} = useContext(StoreContext)
-  const [username, setUsername] = useState("JaneDoe");
+  const [username, setUsername] = useState(userData.name);
   const [email, setEmail] = useState("jane.doe@example.com");
   // const [bio, setBio] = useState("A passionate learner and student.");
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,10 @@ export default function EditProfile() {
         setShowPopup({show:true, response:response.data.message, title:"Profile Update"})
 
       }
-      else{setLoading(false);}
+      else{
+        setLoading(false);
+        setMessage(response.data.message)
+      }
       
     } catch (error) {
       console.log("Error! updating profile is not successful!", error)

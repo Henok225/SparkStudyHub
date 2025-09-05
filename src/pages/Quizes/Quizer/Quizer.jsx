@@ -25,7 +25,7 @@ const Quizer = () => {
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
   const [content,setContent] = useState({})
   const [title,setTitle] = useState("")
-  const {url,token} = useContext(StoreContext)
+  const {url,token, setShowPopup} = useContext(StoreContext)
   const [contentLoaded,setContentLoaded] = useState({loading:true,message:"Couldn't load questions!"})
   const [refetch,setRefetch] = useState(true)
   const [quizFinished,setQuizFinished] = useState(false)
@@ -117,7 +117,7 @@ const question_list = {
   const nextQuestionHandler = ()=>{
     if(currentQuestionIndex < question_list.content.length-1){
       if(userAnswer === null){
-        alert("Select your Answer")
+        setShowPopup({show:true, response:"Answer not selected!"})
       }
       else{
         setAnswerList((prev)=>[...prev,userAnswer])
@@ -140,6 +140,7 @@ const question_list = {
 
   const [time, setTime] = useState(0); // Time in seconds
   const [isRunning, setIsRunning] = useState(false);
+  const [totalTime, setTotalTime] = useState(0)
 
   // Function to start the timer
   const startTimer = () => {
@@ -153,6 +154,7 @@ const question_list = {
 
   // Function to reset the timer
   const resetTimer = () => {
+    setTotalTime(time)
     setTime(0);
     setIsRunning(false);
   };
@@ -186,6 +188,7 @@ const question_list = {
 
     return(
       <div className="quiz-box">
+        {/* <button ><LogOut color='blue' size={18}/><span>Exit Quiz</span></button> <br /> */}
       <div className="quizmode-nav">
        
         <div className="quiz-timer-box">
@@ -217,7 +220,7 @@ const question_list = {
           })
           }</div>
         <div className="quiz-controllers">
-          <button>Hint</button>
+          {/* <button>Hint</button> */}
           <button onClick={nextQuestionHandler}>Next</button>
         </div>
       </div>
@@ -267,7 +270,7 @@ const question_list = {
     return (
       <>
       {
-        contentLoaded.success ? <QuizResult quiz={question_list.content} result={answerlist} />
+        contentLoaded.success ? <QuizResult quiz={question_list.content} result={answerlist} totalTime={formatTime(totalTime)} />
         :""
    
       }
@@ -323,7 +326,7 @@ const question_list = {
       borderRadius:'5px'
     }
   }
-  
+  // tracking completed quizzes
   useEffect(()=>{
 
     const quizCompleted = async ()=>{

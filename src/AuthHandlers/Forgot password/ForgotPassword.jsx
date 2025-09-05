@@ -43,7 +43,7 @@ export default function ForgotPassword() {
 
 };
 
-
+// Email resend timer
   useEffect(() => {
     let timer;
     if (resendTimer > 0) {

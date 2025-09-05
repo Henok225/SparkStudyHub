@@ -5,8 +5,8 @@
       font-family: 'Poppins', sans-serif;
       background-color: var(--primary-background);
       min-height: 100vh;
-      position: sticky;
-      top: 50px;
+      /* position: sticky;
+      top: 50px; */
       padding: 40px 20px;
       color: var(--primary-color);
       text-align: center;
@@ -356,4 +356,5 @@
         margin-bottom: 20px;
       }
     }
+  
   
