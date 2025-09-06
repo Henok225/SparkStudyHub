@@ -72,11 +72,11 @@ const Contact = () => {
         <img src={assets.contact_us_side_image} alt="contact-us" />
         <form onSubmit={(e)=>handleSubmit(e)}>
           <div>
-            <label htmlFor="name">Name: </label>
+            <label htmlFor="contact-name">Name: </label>
             <input
               type="text"
               name='name'
-              id='name'
+              id='contact-name'
               placeholder='Full name'
               value={formData.name}
               onChange={handleChange}
