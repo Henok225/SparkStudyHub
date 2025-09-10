@@ -78,22 +78,23 @@ const LoginPopUp = () => {
         }
         
         setSignUpSuccess(true) 
-        setResendTimer(120); 
+        setResendTimer(60); 
       }
       setServerResponse(response.data.message)
       showPopup.show ? 
+
       setTimeout(()=>{
         if (currState === "Log In") {
             setShowLogin(false)
         }
         // else if(currState === "Sign Up"){
-        //   setResendTimer(120);
+        //   setResendTimer(60);
         // }
         
         setTimeout(()=>{
           setShowPopup({show:false, response:"", title:""})
         },3000 ) 
-      },3000 ) 
+      },1000 ) 
       : null
      
     
@@ -102,11 +103,11 @@ const LoginPopUp = () => {
       console.log("Error", error)
       setServerResponse("Server error try again later!")
      
-      showPopup.show ? 
-      setTimeout(()=>{
-        setShowLogin(false)
-      },10 ) 
-      : null
+      // showPopup.show ? 
+      // setTimeout(()=>{
+      //   setShowLogin(false)
+      // },10 ) 
+      // : null
       
     } finally {
       
@@ -116,30 +117,19 @@ const LoginPopUp = () => {
   }
 
   
-
+// popup message
   useEffect(()=>{
     setShowPopup(prev=>({...prev,show:true,response:serverResponse,title:currState}))
    
   },[serverResponse])
 
-  const Verify = () => {
-    const [reverify, setReverify] = useState(false);
-
-    useEffect(() => {
-
-    }, [reverify])
-
-    return (
-      <>
-        <div className="verify">
-          <p className="title">Verify with email</p>
-          <div className="btns">
-            <button>Verify</button>
-          </div>
-        </div>
-      </>
-    )
-  }
+  // pingroute waking the server 
+  useEffect(() => {
+    axios.get(`${url}/api/ping`)
+      // .then(() => console.log("Backend pinged successfully!"))
+      .catch(() => console.log("Ping failed."));
+  }, []);
+  
 
   const popUpHide = (event)=>{
     event.target.className === "login-popup"?setShowLogin(false):null
@@ -166,12 +156,12 @@ const LoginPopUp = () => {
           :<div className="login-popup-inputs">
           {currState === "Log In" ? <></> : <div className="inpt-cont">
             <label htmlFor="name">Name:</label>
-            <input id='name' name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your name' required />
+            <input id='name' name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your name' autoComplete='name' required />
           </div>
           }
           <div className="email-cont">
           <label htmlFor="email">Email:</label>
-          <input id='email' name='email' value={data.email} onChange={onChangeHandler} type="email" placeholder='Your email' autoComplete="username" required />
+          <input id='email' name='email' value={data.email} onChange={onChangeHandler} type="email" placeholder='Your email' autoComplete="username"  required />
           
           </div>
           
@@ -179,7 +169,7 @@ const LoginPopUp = () => {
           <label htmlFor="password">Password:</label>
           <div className="password-input-wrapper">
             
-          <input id='password' name='password' onChange={onChangeHandler} value={data.password} type={showPassword ? "text" : "password"} className='password-input' placeholder='password' required />
+          <input id='password' name='password' onChange={onChangeHandler} value={data.password} type={showPassword ? "text" : "password"} className='password-input' placeholder='password' autoComplete='current-password' required />
           <button
                 type="button"
                 className="toggle-button"

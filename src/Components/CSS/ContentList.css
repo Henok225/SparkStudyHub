@@ -148,6 +148,7 @@ border-radius: 50%;
     cursor: pointer;
     padding-bottom: 10px;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .content-list > div:hover{
@@ -167,6 +168,13 @@ border-radius: 50%;
     width: 125%;
     height: auto;
     margin: auto;
+}
+.content-list > div .caption .txt-caption{
+    max-height: 7rem;
+    overflow: hidden;
+    padding: 10px;
+    margin-bottom: 5px;
+    
 }
 .content-list > div .caption h3{
     text-align: center;

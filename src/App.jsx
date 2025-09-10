@@ -29,6 +29,8 @@ import Contact from './Components/ContactUs/Contact'
 import HelpAndFaq from './pages/HelpandFAQ/HelpAndFaq'
 import ForgotPassword from './AuthHandlers/Forgot password/ForgotPassword'
 import ResetPassword from './AuthHandlers/ChangePassword/ChangePassword'
+import AdminPage from './Admin/AdminPage'
+import AdminRoute from './utills/AdminRoute'
 
 function App() {
   
@@ -86,9 +88,11 @@ function App() {
         <Route path='/auth/forgot-password' element={<ForgotPassword/>} />
         <Route path='/auth/reset-password' element={<ResetPassword/>} />
         <Route path='/auth/verify-reseting-password/:resetToken' element={<ResetPassword/>} />
-        {/* <Route path='/plans' element={<Plans/>} /> */}
+        <Route path='/plans' element={<Plans/>} />
         <Route path="*" element={<NotFoundPage userId={userData?.userId} />} />
        
+        
+       <Route path='/sparkstudy/admin' element={<AdminRoute><AdminPage /></AdminRoute>} />
       </Routes>
 
       <Footer/>

@@ -3,7 +3,7 @@ import './Navbar.css'
 import { useNavigate } from 'react-router-dom'
 import { assets } from '../../assets/assets';
 import { StoreContext } from '../../Context/StoreContext';
-import { Archive, BookOpenCheck, ClipboardList, HelpCircle, Home, Mail, Menu, MessageCircle, ScrollText, User, UserRoundSearch, UsersRound, X, Zap } from 'lucide-react'; // Using lucide-react for icons
+import { Archive, BookOpenCheck, ClipboardList, HelpCircle, Home, Lock, Mail, Menu, MessageCircle, ScrollText, User, UserRoundSearch, UsersRound, X, Zap } from 'lucide-react'; // Using lucide-react for icons
 import Flagged from '../ReusableComponents/Flagging/Flagged';
 
 
@@ -41,9 +41,6 @@ const Navbar = () => {
 
     return (
       <>
-
-
-
         <p onClick={() => { navigate("/"); props.isMenu ? menuClickHandler() : "" }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z" />
@@ -94,6 +91,12 @@ const Navbar = () => {
 
           {" "}
           Feedback </p>
+          {  userData?.role === "admin" || userData?.role === "superadmin" ?
+            <p onClick={() => { navigate("/sparkstudy/admin"); props.isMenu ? menuClickHandler() : "" }}>
+            <Lock size={18} /> Admin
+          </p>
+          :null
+          }
 
       </>
     )
@@ -136,8 +139,6 @@ const Navbar = () => {
           </div>
         </div>
 
-
-
       </div>
       <div className="nav-lists">
         <p onClick={() => { navigate("/") }}>
@@ -164,6 +165,12 @@ const Navbar = () => {
 
           {" "}
           Feedback </p>
+          {  userData?.role === "admin" || userData?.role === "superadmin" ?
+            <p onClick={()=>navigate('/sparkstudy/admin')}>
+            <Lock size={18} /> Admin
+          </p>
+          :null
+          }
       </div>
       <div className={showResources ? "resources show-resources" : "resources"} onMouseLeave={() => setShowResources(false)}>
 

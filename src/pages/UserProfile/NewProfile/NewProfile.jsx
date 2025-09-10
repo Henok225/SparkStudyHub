@@ -340,7 +340,7 @@ function SavedItems() {
   const [removing, setRemoving] = useState(false);
 
   const date = (d) => new Date(d);
-  console.log(date.toLocaleString());
+  // console.log(date.toLocaleString());
   const navigate = useNavigate();
 
   useEffect(() => {

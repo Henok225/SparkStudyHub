@@ -258,8 +258,10 @@ useEffect(() => {
 
                 </div>
                 <div className="caption" >
-                  <h3>{topic.title}</h3>
-                  <p>{topic.description}</p>
+                 <div className="txt-caption">
+                 <h3>{topic.title}</h3>
+                 <p>{topic.description}</p>
+                 </div>
                  
                   <div className="btns">
                       

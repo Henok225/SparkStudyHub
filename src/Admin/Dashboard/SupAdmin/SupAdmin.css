@@ -1,0 +1,109 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .chart-mockup {
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding-top: 1rem;
+  }
+  
+  .bar-set {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+    align-items: flex-end;
+    gap:10px;
+  }
+  
+  .bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .bar {
+    width: 20px;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: height 0.3s ease-out;
+  }
+  
+  .bar-group .label {
+    font-size: 0.8rem;
+    color: var(--muted-text);
+    margin-top: 0.5rem;
+  }
+  
+  .pie-chart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .pie-chart {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--primary-color) 0% 30%,
+      #8b5cf6 30% 70%,
+      #a78bfa 70% 100%
+    );
+  }
+  
+  .pie-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+  
+  .legend-circle {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+  }
+  
+  .summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .summary-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  
+  .summary-icon {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  .summary-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-dark);
+    margin: 0;
+  }
+  
+  .summary-label {
+    font-size: 0.9rem;
+    color: var(--muted-text);
+  }

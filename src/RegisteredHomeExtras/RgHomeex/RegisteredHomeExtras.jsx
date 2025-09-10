@@ -139,7 +139,7 @@ const RegisteredHomeExtras = () => {
     <>
       <div className="home-extras-container">
         {/* Recommended Lessons Section */}
-        <section id="recommended-lessons" ref={el => sectionRefs.current[0] = el} className={`section section-animation horizontal-scroll-section fade-in-slide-up ${inView['recommended-lessons'] ? 'in-view' : ''}`}>
+        {/* <section id="recommended-lessons" ref={el => sectionRefs.current[0] = el} className={`section section-animation horizontal-scroll-section fade-in-slide-up ${inView['recommended-lessons'] ? 'in-view' : ''}`}>
           <div className="content-wrapper">
             <div className="section-header">
               <GraduationCap size={40} color="#5e72e4" />
@@ -160,10 +160,10 @@ const RegisteredHomeExtras = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Recently Viewed Section */}
-        <section id="recently-viewed" ref={el => sectionRefs.current[1] = el} className={`section section-animation horizontal-scroll-section slide-in-right ${inView['recently-viewed'] ? 'in-view' : ''}`}>
+        {/* <section id="recently-viewed" ref={el => sectionRefs.current[1] = el} className={`section section-animation horizontal-scroll-section slide-in-right ${inView['recently-viewed'] ? 'in-view' : ''}`}>
           <div className="content-wrapper">
             <div className="section-header">
               <History size={40} color="#e67e22" />
@@ -184,7 +184,7 @@ const RegisteredHomeExtras = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Your Learning Statistics Section */}
         <section id="learning-statistics" ref={el => sectionRefs.current[2] = el} className={`section section-animation scale-in ${inView['learning-statistics'] ? 'in-view' : ''}`}>

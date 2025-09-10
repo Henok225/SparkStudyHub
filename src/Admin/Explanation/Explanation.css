@@ -1,0 +1,39 @@
+.content-page-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .content-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-dark);
+  }
+
+  .add-form-card, .list-card {
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: var(--card-bg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .add-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group-row {
+      display: flex;
+      gap: 1rem;
+  }
+  
+  .form-group-row input, .form-group-row .form-select {
+      flex: 1;
+  }
+  
+  .form-select {
+      cursor: pointer;
+  }

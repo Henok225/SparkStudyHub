@@ -3,6 +3,7 @@ import './Service.css'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, HelpCircle } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const Service = () => {
   
@@ -11,6 +12,13 @@ const navigate = useNavigate();
   return (
     <div className="service">
       <h1>What Are You Looking For?</h1>
+      <motion.div
+      className="my-section"
+      initial={{ opacity: 0, y: -50 }}
+      whileInView={{ opacity: 1, y: 1 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+      viewport={{ once: true }}
+    >
       <div className="service-list">
       <div onClick={()=>{navigate('/explain')}}>
         <div className="image">
@@ -44,6 +52,7 @@ const navigate = useNavigate();
         </div> */}
         
       </div>
+      </motion.div>
     </div>
   )
 }

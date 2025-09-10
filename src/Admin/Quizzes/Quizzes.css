@@ -1,0 +1,115 @@
+.question-builder {
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    
+  }
+  
+  .question-builder h3 {
+    color: var(--primary-dark);
+    margin-top: 0;
+    font-size: 1.1rem;
+  }
+  
+  .question-list {
+    border: 1px dashed var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #faf5ff;
+  }
+  
+  .question-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--secondary-color);
+  }
+  
+  .question-item:last-child {
+    border-bottom: none;
+  }
+  
+  .question-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+  }
+  
+  .question-item li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: #f5f5f5;
+    border-radius: 0.5rem;
+    border-left: 3px solid transparent;
+    margin-bottom: 0.5rem;
+  }
+  
+  .question-item li.correct-answer {
+    border-left: 3px solid #10b981;
+  }
+  
+  .correct-icon {
+    color: #10b981;
+  }
+  
+  .current-question-form {
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    background-color: #f9f5ff;
+  }
+  
+  .choices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .choice-input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .choice-input-group input {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  
+  .correct-toggle {
+    cursor: pointer;
+    color: var(--muted-text);
+    transition: color 0.2s;
+  }
+  
+  .correct-toggle:hover {
+    color: var(--primary-color);
+  }
+  
+  .correct-toggle.is-correct {
+    color: var(--primary-dark);
+  }
+  
+  .remove-btn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    padding: 0.5rem;
+    transition: color 0.2s;
+  }
+  
+  .remove-btn:hover {
+    color: #dc2626;
+  }
+  
+  .add-question-btn {
+  margin-top:10px;
+    background-color: #10b981;
+    
+  }
+  
+  .add-question-btn:hover {
+    background-color: #059669;
+  }
+  

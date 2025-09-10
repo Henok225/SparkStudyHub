@@ -1,0 +1,85 @@
+.content-cover-page{
+    width: max(20vw,300px);
+    height: max(25vw,350px);
+    background-color: #fefcfc;
+    border-radius: 10px;
+    cursor: pointer;
+}
+  .content-cover-page .image-box{
+    width: 100%;
+    height: 60%;
+    background-color: rgba(223, 223, 223, 0.626);
+    animation: loadingContent 1s ;
+}
+.content-cover-page .image-box img{
+    width: 100%;
+}
+  .content-cover-page .caption h3{
+    text-align: center;
+}
+  .content-cover-page .caption p{
+    text-align: center;
+}
+  .content-cover-page .caption .btns{
+    display: flexbox;
+    justify-content: space-between;
+}
+  .content-cover-page .caption .btns button{
+    width: 30px;
+    padding: 0;
+    border: none;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.explanation{
+    background-color: white;
+    color: black;
+    margin: 0;
+    padding: 20px 0;
+}
+.explanation h1{
+    text-align: center;
+    margin-top: 50px;
+}
+.explanation .explain-nav{
+    text-align: center;
+    font-size: 1.1em;
+    color: rgb(28, 192, 247);
+    cursor: pointer;
+}
+.explanation .explain-container .video-explain-container{
+    width: 60vw;
+    margin: auto;
+    background-color: #424242;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.explanation .explain-container .video-explain-container iframe{
+    width: 100%;
+    height: 30vw;
+    border-radius: 5px;
+}
+.explanation .explain-container .text-explanation-container{
+ width: 70vw;
+ min-height: 100px;
+ margin: auto;
+ margin-top: 100px;
+ /* background-color: rgb(237, 236, 236); */
+ padding: 20px;
+ border-left: 5px solid rgba(0, 0, 255, 0.5);
+ border-radius: 10px;
+}
+@media (max-width:750px) {
+    .explanation .explain-container .video-explain-container{
+        width: 95vw;
+        min-height: 200px;
+    }
+    .explanation .explain-container .video-explain-container iframe{
+        height: 200px;
+    }
+    .explanation .explain-container .text-explanation-container{
+        width: 90vw;
+    }
+}

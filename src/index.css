@@ -1,4 +1,5 @@
 @import url('./Components/CSS/ContentList.css');
+@import "katex/dist/katex.min.css";
 
 /* @tailwind base; */
 /* @tailwind components;

@@ -36,7 +36,7 @@ const Footer = () => {
         <p className='footer-links-title'>Get in touch</p>
           <div>
           <p><span></span><Phone/> +251 941 86 7800</p>
-          <p><span></span><Mail/> contact@sparkstudy.com</p>
+          <p><span></span><Mail/> henok@sparkstudy.com</p>
           <p><span></span> <MapPin/> Addis Ababa, Ethiopia</p>
           </div>
         </div>
