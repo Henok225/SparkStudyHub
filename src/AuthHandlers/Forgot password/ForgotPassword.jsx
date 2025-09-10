@@ -9,7 +9,7 @@ export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
-  const {url, token} = useContext(StoreContext)
+  const {url} = useContext(StoreContext)
 
   // Helper function to format seconds into MM:SS
   const formatTime = (seconds) => {
@@ -26,7 +26,7 @@ export default function ForgotPassword() {
       return;
     }
 
-    setMessage(""); // Clear previous messages
+    setMessage(""); 
     setIsSuccess(false);
 
     try {
