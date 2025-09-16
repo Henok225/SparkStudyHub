@@ -1,71 +1,107 @@
-import React, { use, useContext } from 'react'
-import Button from '../../Components/ReusableComponents/Button/Button'
+import React from 'react';
 import './EthioCurHome.css'
-import { assets } from '../../assets/assets'
-import { ethioCurContext } from './EthioCurcontext/EthioCurContext'
-import { useNavigate } from 'react-router-dom'
+import { assets } from '../../assets/assets';
 
+// This is a placeholder for your assets.
+// In a real application, you would replace this with your actual image imports.
+const assetsA = {
+  ethiopian_curriculum_icon: 'https://placehold.co/100x100/A0B9C9/000?text=ETHIO',
+};
+
+// All components, logic, and styling are in this single file as required.
 const EthioCurHome = () => {
-
-    const navigate = useNavigate(); // Import useNavigate from react-router-dom if needed
-    // const { setSelectedGrade} = useContext(ethioCurContext)
-    
-    // Function to handle grade click and redirect to the respective grade page
-    const handleGradeClick = (grade) => {
-        // setSelectedGrade(grade); // Update the selected grade in context
-        // Redirect to the respective grade page
-        navigate(`/ethiopian-curriculum/grade-${grade}`);
-    };
-
+  // Array of grade levels to easily map and render the cards.
+  const grades = [
+    {
+      grade: 9,
+      title: "Grade 9",
+      description: "Explore resources for Grade 9 students, including textbooks, study guides, and educational materials tailored to the Ethiopian curriculum."
+    },
+    {
+      grade: 10,
+      title: "Grade 10",
+      description: "Access a variety of resources for Grade 10 students, including textbooks, study guides, and other educational materials designed to support learning."
+    },
+    {
+      grade: 11,
+      title: "Grade 11",
+      description: "Find resources for Grade 11 students, including textbooks, study guides, and other educational materials that align with the Ethiopian curriculum."
+    },
+    {
+      grade: 12,
+      title: "Grade 12",
+      description: "Discover resources for Grade 12 students, including textbooks, study guides, and other educational materials specifically designed for the Ethiopian curriculum."
+    }
+  ];
 
   return (
-    <div className='ethio-cur-home'>
-        <div className="welc">
-        <img src={assets.ethiopian_curriculum_icon} alt="Ethiopian Flag" />
-        <div className="welc-text">
-        <h1>Welcome to <span style={{color:'blue'}}>Spark Study</span> <br /> For Ethiopian Curriculum</h1>
-      <p>This section is dedicated to providing resources and information related to the Ethiopian curriculum. Here, you can find
-        various materials, including textbooks, study guides, and other educational resources tailored to the Ethiopian education
-        system. Whether you are a student, teacher, or parent, this section aims to support your learning journey and enhance your understanding of the Ethiopian curriculum.</p>
-      <p>Explore the available resources, access study materials, and stay updated with the latest information related to the Ethiopian curriculum.
-        We are committed to providing valuable content that aligns with the educational standards and requirements of Ethiopia.</p>
+    <>
+     
       
+      <div className="app-container">
+        {/* Welcome section with a clean, two-column layout */}
+        <section className="welcome-section">
+          <div className="welcome-text-container">
+            <h1 className="welcome-title">
+              Welcome to <span className="spark-study-span">Spark Study</span>
+            </h1>
+            <p className="welcome-paragraph">
+              This section is dedicated to providing resources and information related to the Ethiopian curriculum. Whether you are a student, teacher, or parent, this section aims to support your learning journey and enhance your understanding.
+            </p>
+            <p className="update-note">
+              Explore the available resources, access study materials, and stay updated with the latest information. We are committed to providing valuable content that aligns with the educational standards and requirements of Ethiopia.
+            </p>
+          </div>
+          <img
+            src={assets.ethiopian_curriculum_icon}
+            alt="Ethiopian Flag"
+            className="flag-icon"
+          />
+        </section>
 
-        <p>Note: This section is continuously being updated with new materials and resources, so be sure to check back regularly for the latest additions.</p>
-
-        </div>
-        </div>
-        <div className="main">
-            {/* ask grade (9-12)*/}
-            <h2>Select Your Grade</h2>
-            <div className="grades">
-                <div className="grade" onClick={() => window.location.href = '/ethiopian-curriculum/grade/9'}>
-                    <h3>Grade 9</h3>
-                    <p>Explore resources for Grade 9 students, including textbooks, study guides, and other educational materials tailored to the Ethiopian curriculum.</p>
+        {/* Grade selection section with a dynamic grid and improved card design */}
+        <section className="grade-section">
+          <h2 className="grade-title">
+            Select Your Grade
+          </h2>
+          <div className="grades-grid">
+            {grades.map((item) => (
+              <div
+                key={item.grade}
+                className="grade-card"
+                onClick={() => window.location.href = `/ethiopian-curriculum/grade/${item.grade}`}
+              >
+                <div className="grade-icon-container">
+                  {/* Inline SVG for a book with a checkmark, from Lucide Icons */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="grade-icon"
+                  >
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                    <polyline points="9 11 11 13 15 9" />
+                  </svg>
                 </div>
-                <div className="grade" onClick={() => window.location.href = '/ethiopian-curriculum/grade/10'}>
-                    <h3>Grade 10</h3>
-                    <p>Access a variety of resources for Grade 10 students, including textbooks, study guides, and other educational materials designed to support learning in the Ethiopian curriculum.</p>
-                </div>
-                <div className="grade" onClick={() => window.location.href = '/ethiopian-curriculum/grade/11'}>
-                    <h3>Grade 11</h3>
-                    <p>Find resources for Grade 11 students, including textbooks, study guides, and other educational materials that align with the Ethiopian curriculum.</p>
-                </div>
-                <div className="grade" onClick={() => window.location.href = '/ethiopian-curriculum/grade/12'}>
-                    <h3>Grade 12</h3>
-                    <p>Discover resources for Grade 12 students, including textbooks, study guides, and other educational materials specifically designed for the Ethiopian curriculum.</p>
-                </div>
+                <h3>
+                  {item.title}
+                </h3>
+                <p>
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </>
+  );
+};
 
-        </div>
-
-     {/* next button  */}
-        {/* <div className="next-button">
-            <Button children={"Next"} onClick={() => window.location.href = '/ethiopian-curriculum/grade-9'} type="primary" />
-            </div> */}
-     </div>
-      
-    </div>
-  )
-}
-
-export default EthioCurHome
+export default EthioCurHome;

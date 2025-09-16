@@ -41,7 +41,8 @@ const QuizResult = (props) => {
           
          <p key={index} style={{color:'blue',cursor:'pointer'}} onClick={()=>setQuestionExplanation(!questionExplanation)} className="give-explanation"> Explanation </p>
       <div style={{backgroundColor:'white',padding:'10px'}} className={"question-explanation question-explanation-show"} >
-        {ques.answerDetail?ques.answerDetail:<p style={{color:'red'}}>No explanation for this question! </p>}
+        {ques.answerDetail ? <div dangerouslySetInnerHTML={{__html:ques.answerDetail}}></div>
+        :<p style={{color:'red'}}>No explanation for this question! </p>}
         <br />
       </div>
       </div>

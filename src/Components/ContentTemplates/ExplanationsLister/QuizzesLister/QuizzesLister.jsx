@@ -3,10 +3,11 @@ import './QuizzesLister.css'
 // import { assets } from '../../../assets/assets'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Atom, Bookmark, BookmarkCheck, FileQuestion, Globe, Landmark, Microscope, Search, SearchXIcon, Sigma } from 'lucide-react';
+import { Atom, Bookmark, BookmarkCheck, BookOpen, FileQuestion, FileQuestionMark, Globe, Landmark, Microscope, Search, SearchXIcon, Sigma } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import { StoreContext } from '../../../../Context/StoreContext';
 import SmallLoader from '../../../SmallLoaderSpin/SmallLoader';
+import CheckImage from '../../../Utilities/image checker/CheckImage';
 
 
 const QuizzesLister = ({apiName, filter}) => {
@@ -22,6 +23,8 @@ const QuizzesLister = ({apiName, filter}) => {
   const [filteredQuizList,setFilteredQuizList] = useState({content:quizzesList})
   const [itemSaved,setItemSaved] = useState(false); 
   const [savedItems,setSavedItems] = useState([]);
+  const [imageLoaded, setImageLoaded] = useState(true);
+
  
 // fetching quizzes list
 useEffect(()=>{
@@ -29,38 +32,78 @@ useEffect(()=>{
   const fetchQuizzesList = async ()=>{
 
       setQuizzesFetched({loaded:false})
+    if(userData?.role === "superadmin"){
       try {
-          const response = await axios.get(`${url}/${apiName}`);
-          console.log("Quizzes list:",response.data.data)
-          const filteredData = filter ? response.data.data.filter((quiz) => {
-            let isMatch = true;
-            for (const key in filter) {
-              if (quiz[key] !== filter[key]) {
-                isMatch = false;
-                break;
-              }
+        const response = await axios.get(`${url}/api/quizzes/all-quizzes-list/admin`,{
+          headers:{
+            "Content-Type":"application/json",
+            "Authorization": "Bearer "+token
+          }
+        });
+        // console.log("Quizzes list:",response.data.data)
+        const filteredData = filter ? response.data.data.filter((quiz) => {
+          let isMatch = true;
+          for (const key in filter) {
+            if (quiz[key] !== filter[key]) {
+              isMatch = false;
+              break;
             }
-            return isMatch;
-          }) : response.data.data;
+          }
+          return isMatch;
+        }) : response.data.data;
 
-          setQuizzesList(filteredData)
-          setFilteredQuizList({content:filteredData})
-         
-          setQuizzesFetched({loaded:true,success:true})
-     
-          filteredData.forEach((element)=>{
-            const searchKey1 = element.title;
-            const searchKey2 = element.description;
-            setSearchKeyList((prev) => ([...prev,{key:searchKey1,address:`/quizzes/${element.subject}/${element._id}`},
-              {key:searchKey2,address:`/quizzes/${element.subject}/${element._id}`}]))
-            })
+        setQuizzesList(filteredData)
+        setFilteredQuizList({content:filteredData})
+       
+        setQuizzesFetched({loaded:true,success:true})
+   
+        filteredData.forEach((element)=>{
+          const searchKey1 = element.title;
+          const searchKey2 = element.description;
+          setSearchKeyList((prev) => ([...prev,{key:searchKey1,address:`/quizzes/${element.subject}/${element._id}`},
+            {key:searchKey2,address:`/quizzes/${element.subject}/${element._id}`}]))
+          })
 
-      } catch (error) {
-          console.log("Error",error)
+    } catch (error) {
+        console.log("Error",error)
 
-          setQuizzesFetched({loaded:true,success:false})
-     
-      }
+        setQuizzesFetched({loaded:true,success:false})
+   
+    }
+    }else{
+      try {
+        const response = await axios.get(`${url}/${apiName}`);
+        // console.log("Quizzes list:",response.data.data)
+        const filteredData = filter ? response.data.data.filter((quiz) => {
+          let isMatch = true;
+          for (const key in filter) {
+            if (quiz[key] !== filter[key]) {
+              isMatch = false;
+              break;
+            }
+          }
+          return isMatch;
+        }) : response.data.data;
+
+        setQuizzesList(filteredData)
+        setFilteredQuizList({content:filteredData})
+       
+        setQuizzesFetched({loaded:true,success:true})
+   
+        filteredData.forEach((element)=>{
+          const searchKey1 = element.title;
+          const searchKey2 = element.description;
+          setSearchKeyList((prev) => ([...prev,{key:searchKey1,address:`/quizzes/${element.subject}/${element._id}`},
+            {key:searchKey2,address:`/quizzes/${element.subject}/${element._id}`}]))
+          })
+
+    } catch (error) {
+        console.log("Error",error)
+
+        setQuizzesFetched({loaded:true,success:false})
+   
+    }
+    }
      
           
   }
@@ -77,7 +120,7 @@ useEffect(() => {
             headers: { token: token }
           });
           setSavedItems(response.data.savedItems);
-          console.log("Saved items fetched", response.data.savedItems)
+          // console.log("Saved items fetched", response.data.savedItems)
       } catch (error) {
           console.log("Error fetching saved items", error);
       }
@@ -150,6 +193,10 @@ useEffect(() => {
     {
       name:"Geography",
       icon:Globe
+    },
+    {
+      name:"English",
+      icon:BookOpen
     }
   ] ;
 
@@ -253,10 +300,14 @@ useEffect(() => {
       viewport={{ once: true }}  >
 
               <div key={index} >
+                {
+                  topic?.review !== "reviewed" ? <span style={{width:'100%', backgroundColor:'blue', color:'white',padding:'5px 10px'}}>{topic?.review}</span>
+                   :null
+                }
                 <div className="image" onClick={() => { token?navigate(`/quizzes/${topic.subject}/${topic._id}`):setShowLogin(true) }}>
-                  <img src={topic.image} alt="" />
-
-                </div>
+                  <CheckImage imageUrl={topic.image} Icon={FileQuestionMark} title="Quiz Icon" />
+                 
+                 </div>
                 <div className="caption" >
                  <div className="txt-caption">
                  <h3>{topic.title}</h3>

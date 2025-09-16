@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import {
   GraduationCap, Lightbulb, BookText, Sparkles, Rocket, History, Star,
   Trophy, Medal, Check, X,
@@ -7,6 +7,7 @@ import {
 
 import './Rghmex.css'
 import { useNavigate } from 'react-router-dom';
+import { StoreContext } from '../../Context/StoreContext';
 // Data for demonstration purposes
 const recommendedLessons = [
   { id: 1, title: 'Introduction to React Hooks', progress: 75, type: 'Lesson' },
@@ -79,6 +80,7 @@ const RegisteredHomeExtras = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [pollSelected, setPollSelected] = useState(null);
+  const {userData} = useContext(StoreContext)
 
   const navigate = useNavigate();
 
@@ -196,18 +198,18 @@ const RegisteredHomeExtras = () => {
             <div className="stats-grid">
               <div className="stats-card-item fade-in-slide-up" style={{ transitionDelay: `${inView['learning-statistics'] ? 0.2 : 0}s` }}>
                 <Clock size={40} className="stats-icon hours" />
-                <span className="stat-number">{learningStats.hoursSpent}</span>
+                <span className="stat-number">{Math.floor( userData.progress?.learningHours)}</span>
                 <span className="stat-label">Hours Spent</span>
               </div>
               <div className="stats-card-item fade-in-slide-up" style={{ transitionDelay: `${inView['learning-statistics'] ? 0.4 : 0}s` }}>
                 <CheckCircle size={40} className="stats-icon lessons" />
-                <span className="stat-number">{learningStats.lessonsCompleted}</span>
+                <span className="stat-number">{userData.progress?.completedLessons.length}</span>
                 <span className="stat-label">Lessons Completed</span>
               </div>
               <div className="stats-card-item fade-in-slide-up" style={{ transitionDelay: `${inView['learning-statistics'] ? 0.6 : 0}s` }}>
                 <Award size={40} className="stats-icon quizzes" />
-                <span className="stat-number">{learningStats.quizzesPassed}</span>
-                <span className="stat-label">Quizzes Passed</span>
+                <span className="stat-number">{userData.progress?.completedQuizzes.length}</span>
+                <span className="stat-label">Quizzes Completed</span>
               </div>
             </div>
           </div>

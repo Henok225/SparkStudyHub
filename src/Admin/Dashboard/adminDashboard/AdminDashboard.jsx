@@ -109,7 +109,7 @@ const AdminDashboard = () => {
           </div>
           <div className="card summary-card">
             <TrendingUp className="summary-icon" />
-            <p className="summary-value">1,245</p>
+            <p className="summary-value">Under Production</p>
             <p className="summary-label">Total Views</p>
           </div>
         </div>

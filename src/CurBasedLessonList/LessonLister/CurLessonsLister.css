@@ -1,0 +1,515 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* --- Keyframe Animations --- */
+@keyframes sparkFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes sparkSlideInFromTop {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes sparkCardPopIn {
+  0% { transform: scale(0.95) translateY(20px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes sparkLoadingGradient {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --- General Styles --- */
+
+
+.spark-container {
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  box-sizing: border-box;
+  color: #333;
+  background-image: radial-gradient(circle, #f5f7fa, #eef1f5);
+  
+}
+
+.spark-header {
+  display: flex;
+  justify-content: flex-start;
+  gap: 5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1.5rem 3rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+  animation: sparkSlideInFromTop 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.spark-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.spark-logo {
+  font-weight: 800;
+  font-size: 1.75rem;
+  color: #3498db;
+}
+
+.spark-curriculum-text {
+  margin-left: 1.5rem;
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.spark-header-right {
+  text-align: right;
+}
+
+.spark-breadcrumb {
+  font-size: 0.875rem;
+  color: #777;
+  font-weight: 400;
+  animation: sparkFadeIn 1.2s ease-out forwards;
+}
+.spark-breadcrumb span{
+    transition: 0.5s;
+}
+.spark-breadcrumb span:hover{
+  color: lightblue;
+  cursor: pointer;
+}
+
+.spark-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.spark-page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  animation: sparkFadeIn 1s ease-out forwards;
+}
+
+.spark-filters-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  animation: sparkFadeIn 1.2s ease-out forwards;
+  position: relative;
+  z-index: 10;
+}
+
+.spark-search-container {
+  position: relative;
+  flex-grow: 1;
+}
+
+.spark-search-input {
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  padding-left: 3rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: var(--primary-color);
+  box-sizing: border-box;
+  background-color: var(--primary-background);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  
+}
+
+.spark-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-color);
+}
+
+.spark-search-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+ /* search dropdown css */
+
+ .spark-container .search-keys{
+  width:max(50vw,250px);
+  max-height: 320px;
+  position: absolute;
+  background-color: var(--primary-background);
+  overflow: hidden;
+  z-index: 20;
+  right: 10vw;
+  border-radius:10px;
+  /* padding: 10px; */
+  margin-top: 10px;
+  box-shadow: var(--shadow);
+  transition: 0.3s;
+  border-bottom: 4px solid var(--primary-color);
+  visibility: hidden;
+}
+.spark-container .search-keys .search-key p{
+  color: var(--primary-color);
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  padding:10px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.spark-container .search-keys .search-key:hover{
+  background-color: var(--primary-backgroundhover);
+  cursor: pointer;
+}
+.spark-container .spark-search-container:focus-within .search-keys,
+.search-keys:hover {
+  visibility: visible;
+}
+
+
+.spark-container .spark-filter-dropdown {
+    position: relative;
+    z-index: 10;
+}
+
+.spark-filter-button {
+    padding: 0.9rem 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    color: var(--primary-color);
+    background-color: var(--primary-background);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.spark-filter-options {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 200px; 
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+    opacity: 0;
+    height: 0;
+    transform: scale(0.95);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transform-origin: top right;
+    overflow: hidden;
+   
+}
+
+.spark-filter-options.active {
+    opacity: 1;
+    height: auto;
+    transform: scale(1);
+}
+
+.spark-filter-options ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+}
+
+.spark-filter-options li {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+}
+
+.spark-filter-options li:hover {
+    background-color: #f5f7fa;
+}
+
+.spark-filter-options li.selected {
+    color: #3498db;
+    font-weight: 600; 
+}
+
+.spark-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+  animation: sparkFadeIn 1.5s ease-out forwards;
+ z-index: 0;
+}
+
+.spark-card {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  padding: 2rem 3rem 2rem 2rem; 
+  border: 1px solid #e0e0e0;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+  cursor: pointer;
+  animation: sparkCardPopIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.spark-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+.spark-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-right: 10px;
+}
+
+.spark-card-icon-wrapper {
+  /* background-color: #f5f7fa; */
+  /* border-radius: 50%; */
+  padding: 0.75rem;
+  margin-right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.spark-card-icon {
+  font-size: 1.5rem;
+  color: #3498db;
+}
+
+.spark-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  
+}
+
+.spark-card-snippet {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.spark-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.spark-view-lesson-button {
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+  transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+}
+
+.spark-view-lesson-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
+}
+
+.spark-view-lesson-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+.spark-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #3498db;
+}
+
+.spark-rating .spark-star {
+    font-size: 1rem;
+}
+
+.spark-rating .spark-star.half-filled {
+    position: relative;
+}
+
+.spark-rating .spark-star.half-filled::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    width: 50%;
+    color: #3498db;
+}
+
+.spark-bookmark-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem; /* Adjusted right position to match new padding */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #ccc;
+    transition: color 0.3s ease, transform 0.2s ease;
+    line-height: 1;
+    padding: 0;
+    outline: none;
+}
+
+.spark-bookmark-btn:hover {
+    color: #999;
+    transform: scale(1.1);
+}
+
+.spark-bookmark-btn.active {
+    color: #ffc107;
+}
+
+.spark-creation-date {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 2rem; /* Adjusted right position to match new padding */
+    font-size: 0.8rem;
+    color: #aaa;
+    font-weight: 500;
+}
+
+.spark-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  animation: sparkFadeIn 1.5s ease-out forwards;
+}
+
+.spark-page-link {
+  background-color: #ffffff;
+  color: #3498db;
+  border: 1px solid #e0e0e0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.spark-page-link:hover {
+  background-color: #3498db;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.spark-page-link.active {
+  background-color: #3498db;
+  color: #ffffff;
+  border: 1px solid #3498db;
+  transform: translateY(0);
+}
+
+/* Loading state styles */
+.spark-loading-card {
+  background: linear-gradient(90deg, #f0f0f0, #e0e0e0, #f0f0f0);
+  background-size: 200% 100%;
+  border-radius: 0.75rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  padding: 2rem;
+  border: 1px solid #e0e0e0;
+  animation: sparkLoadingGradient 1.5s infinite ease-in-out;
+}
+
+.spark-loading-line {
+  height: 1.25rem;
+  background-color: #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.spark-loading-line.spark-short {
+  width: 60%;
+}
+
+@media (max-width: 768px) {
+  .spark-container {
+    padding: 2rem 1rem;
+  }
+  .spark-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+  .spark-header-left {
+    margin-bottom: 0.5rem;
+  }
+  .spark-curriculum-text {
+    display: none;
+  }
+  .spark-header-right {
+    text-align: left;
+  }
+  .spark-filters-bar {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+  .spark-search-container {
+    width: 100%;
+  }
+  .spark-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .spark-filter-dropdown {
+    width: 100%;
+  }
+  .spark-filter-options {
+    width: 100%;
+    top: auto;
+    right: auto;
+    left: 0;
+    transform-origin: top left;
+  }
+  .spark-filter-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .spark-page-title {
+    font-size: 2rem;
+  }
+  .spark-header {
+    padding: 1rem 0.5rem;
+  }
+  .spark-logo {
+    font-size: 1.5rem;
+  }
+  .spark-pagination {
+    flex-wrap: wrap;
+  }
+}

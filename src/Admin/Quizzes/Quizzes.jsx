@@ -168,7 +168,7 @@ const QuizzesPage = () => {
     
   
     return (
-      <div className="content-page-container">
+      <div className="admin-content-container">
         <h1 className="page-heading">
           <List size={40} />
           Quizzes

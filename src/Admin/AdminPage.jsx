@@ -10,10 +10,12 @@ import QuizzesPage from './Quizzes/Quizzes';
 import ExplanationsPage from './Explanation/Explanaion';
 import FeedbackPage from './FeedBack/FeedBack';
 import { StoreContext } from '../Context/StoreContext';
+import SupAdminHome from './AdminHome/superadmin/SupAdminHome';
+import AdminHome from './AdminHome/admin/AdminHome';
 
 
 const AdminPage = () => {
-  const [currentPage, setCurrentPage] = useState('');
+  const [currentPage, setCurrentPage] = useState('admin');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [previewContent, setPreviewContent] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -30,7 +32,9 @@ const AdminPage = () => {
       
       case 'dashboard':
         return userData.role.toLowerCase() === "superadmin" ? <SupAdmin /> : <AdminDashboard />;
-      case 'explanations':
+        case 'admin':
+          return userData.role.toLowerCase() === "superadmin" ? <SupAdminHome /> : <AdminHome />;
+          case 'explanations':
         return <ExplanationsPage onPreviewExplanation={handlePreviewExplanation} />;
       case 'quizzes':
         return <QuizzesPage  />;
@@ -69,7 +73,7 @@ const AdminPage = () => {
           </button>
           <nav className="mobile-menu" style={{ display: isSidebarOpen ? 'flex' : 'none' }}>
            
-          <div className={`nav-item`} >
+          <div className={`nav-item ${currentPage === 'admin' ? 'active' : ''}`} onClick={() => { setCurrentPage('admin'); setIsSidebarOpen(false); }} >
               <User size={20} />
               <span>Admin</span>
             </div>
@@ -102,7 +106,7 @@ const AdminPage = () => {
           <aside className="sidebar-desktop">
             <div className="sidebar-brand">Spark Study Admin</div>
             <nav className="sidebar-nav">
-            <div className={`nav-item `} >
+            <div className={`nav-item ${currentPage === 'admin' ? 'active' : ''}`}  onClick={() => setCurrentPage('admin')}>
               <User size={20} />
               <span>Admin</span>
             </div>

@@ -41,7 +41,7 @@
     margin: 0;
     position: relative;
     left: 30px;
-    z-index: 1;
+    z-index: 10;
     
 }
 .navbar .signin-login > p{
@@ -193,7 +193,7 @@
     top: 0px;
     margin: 0;
     background-color: var(--primary-background);
-    z-index: 5;
+    z-index: 15;
     box-shadow: 0 0 15px #aeadad;
 }
 .nav-lists p{
@@ -224,7 +224,7 @@
      background-color: rgba(82, 80, 80, 0.142);
      top: 0;
      bottom: 0;
-     z-index: 1;
+     z-index: 20;
      display: none;
    
 }
@@ -354,24 +354,29 @@
     color: var(--primary-color);
     margin:0;
     padding: 0;
-    position: fixed;
-    top: 200px;
+    position: sticky;
+    top: 50px;
     right: 0px;
     left: 0px;
     overflow: hidden;
-    transition: 0.3s;
-    z-index: 10;
+    transition: 0.2s;
+    z-index: 12;
     box-shadow: 0 0 5px #aeadad;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+
 }
 .show-resources{
     height: 35vh;
     padding-left: 20px;
     padding-top: 30px;
-    top: 70px;
 }
 .resources .tit{
-    position: absolute;
+    /* position: absolute; */
     margin: 10px 0 0px 30px;
+   
 }
 .resources .tit h3{
     font-size: 20px;
@@ -393,13 +398,13 @@
  display: flex;
  align-items: center;
  gap: 5px;
+ width: 200px;
 }
 
 .resources .reso-list ul li:hover{
-    margin-left: 5px;
+   opacity: 0.7;
 }
 .resources .res-list{
-    
     width: 100%;
     margin: auto;
     display: flex;
@@ -413,13 +418,14 @@
     border:1px solid silver ;
     border-radius: 10px;
     min-height: 200px;
-    background-color: var(--button-color);
-    color: white;
+    /* background-color: var(--button-color); */
+    /* color: white; */
     display: flex;
     align-items: center;
     flex-direction: column;
     transition: 0.3s;
     box-shadow: 0 0 5px rgba(126, 124, 124, 0.667);
+    padding: 10px;
 
 }
 .resources .res-list p:hover{

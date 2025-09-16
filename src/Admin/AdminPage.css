@@ -10,11 +10,9 @@
     box-sizing: border-box;
     width: 100vw;
   }
-  .main-content{
+ .admin-page .main-content{
     width: 100%;
-    background-color: #d9e4f2;
     box-sizing: border-box;
-    /* overflow: scroll; */
   }
   
   .admin-page input, .admin-page textarea,select{
@@ -27,8 +25,10 @@
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
+    align-items: baseline;
     min-height: 100vh;
     box-sizing: border-box;
+    padding: 10px;
     
   }
   .admin-page .content-page-container{
@@ -82,7 +82,7 @@
     transition: background-color 0.2s, color 0.2s;
   }
   
-  .nav-item:hover, .admin-page .nav-item.active {
+  .admin-page .nav-item:hover, .admin-page .nav-item.active {
     background-color: var(--admin-secondary-color);
     color: var(--admin-primary-dark);
   }
@@ -92,7 +92,7 @@
     padding: 2rem;
     box-sizing: border-box;
     position: relative;
-    /* width:100%; */
+    width:100%;
   }
   
   

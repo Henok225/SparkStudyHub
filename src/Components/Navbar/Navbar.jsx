@@ -178,9 +178,9 @@ const Navbar = () => {
           <h3> <Archive size={30} /> Resources</h3>
           <div className="reso-list">
             <ul>
-              <li onClick={()=>{navigate('/explain'); setShowResources(false)}}> <BookOpenCheck size={18} /> Learn</li>
-              <li onClick={()=>{navigate('quizzes'); setShowResources(false)}}> <ClipboardList size={18} /> Quizzes</li>
-              <li onClick={()=>{navigate('ethiopian-curriculum'); setShowResources(false)}}> <ScrollText size={18} /> Ethiopian Curriculum</li>
+              <li onClick={()=>{navigate('/explain'); setShowResources(false)}}> <BookOpenCheck size={18} /> <span>Learn</span></li>
+              <li onClick={()=>{navigate('quizzes'); setShowResources(false)}}> <ClipboardList size={18} /> <span>Quizzes</span></li>
+              <li onClick={()=>{navigate('ethiopian-curriculum'); setShowResources(false)}}> <ScrollText size={18} /> <span>Ethiopian Curriculum</span></li>
               <li> <UserRoundSearch size={18} /> Find tutor</li>
 
             </ul>

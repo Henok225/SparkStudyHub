@@ -152,7 +152,7 @@ const GradeSection = ({
   return (
     <>
 
-      <div className="app-container">
+      <div className="eth-cont-container">
         {/* Top navigation/header section */}
         {/* <header className="header"> */}
         <br /> <div className="header-content">

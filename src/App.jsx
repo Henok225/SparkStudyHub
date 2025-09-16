@@ -13,7 +13,6 @@ import VerifyEmail from './pages/emailVerify/VerifyEmail'
 import Loader from './Components/loaderSpin/Loader'
 import { StoreContext } from './Context/StoreContext'
 import About from './Components/AboutUs/About'
-import UserProfile from './pages/UserProfile/UserProfile'
 import Plans from './pages/Plans/Plans'
 import PopUp from './Components/PopUp/PopUp'
 import FeedBack from './Components/feedback form/FeedBack'
@@ -31,6 +30,8 @@ import ForgotPassword from './AuthHandlers/Forgot password/ForgotPassword'
 import ResetPassword from './AuthHandlers/ChangePassword/ChangePassword'
 import AdminPage from './Admin/AdminPage'
 import AdminRoute from './utills/AdminRoute'
+import CurLessonsLister from './CurBasedLessonList/LessonLister/CurLessonsLister'
+import CurQuizzesLister from './CurBasedLessonList/QuizLister/CurQuizzesLister'
 
 function App() {
   
@@ -73,21 +74,31 @@ function App() {
         <Route path='/about' element={<About/>} />
         <Route path='/contact' element={<Contact/>} />
         <Route path='/help' element={<HelpAndFaq/>} />
+        <Route path='/feedback' element={<FeedBack/>} />
+        <Route path='/terms-and-privacy-policy' element={<TermsAndPrivacy />} />
+        
         <Route path='/explain' element={<TopicExplanation/>} />
         <Route path='/explain/:subject/:id' element={<ExplanationShower/>} />
         <Route path='/quizzes' element={<Quizes/>} />
         <Route path='/quizzes/:subject/:id' element={<Quizer/>} />
+       
         <Route path='/user/verifyemail/:token' element={<VerifyEmail/>} />
         <Route path='/profile' element={<NewProfile/>} />
-        <Route path='/feedback' element={<FeedBack/>} />
+        
         <Route path='/ethiopian-curriculum' element={<EthioCurHome/>} />
         <Route path='/ethiopian-curriculum/grade/:gradeId' element={<GradeSection/>} />
-        <Route path='/ethiopian-curriculum/grade/:gradeId/lessons' element={<EthCurExplanationList />} />
-         <Route path='/ethiopian-curriculum/grade/:gradeId/quizzes' element={<EthCurQuizzes/>} />
-        <Route path='/terms-and-privacy-policy' element={<TermsAndPrivacy />} />
+        {/* <Route path='/ethiopian-curriculum/grade/:gradeId/lessons' element={<EthCurExplanationList />} /> */}
+        {/* <Route path='/ethiopian-curriculum/grade/:gradeId/quizzes' element={<EthCurQuizzes/>} /> */}
+        {/* <Route path='/ethiopian-curriculum/grade/:gradeId/lessons/view' element={<LessonDisplay />} /> */}
+        <Route path='/ethiopian-curriculum/grade/:gradeId/lessons' element={<CurLessonsLister />} />
+        <Route path='/ethiopian-curriculum/grade/:gradeId/quizzes' element={<CurQuizzesLister />} />
+       
         <Route path='/auth/forgot-password' element={<ForgotPassword/>} />
         <Route path='/auth/reset-password' element={<ResetPassword/>} />
         <Route path='/auth/verify-reseting-password/:resetToken' element={<ResetPassword/>} />
+        
+        
+        
         <Route path='/plans' element={<Plans/>} />
         <Route path="*" element={<NotFoundPage userId={userData?.userId} />} />
        

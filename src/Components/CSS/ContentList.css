@@ -162,6 +162,9 @@ border-radius: 50%;
     /* animation: onLoading 10s infinite; */
     transition: 1s;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .content-list > div .image img{

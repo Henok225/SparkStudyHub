@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import SmallLoader from '../../SmallLoaderSpin/SmallLoader'
 import { StoreContext } from '../../../Context/StoreContext'
 import { assets } from '../../../assets/assets';
-import { Atom, Bookmark, BookmarkCheck, Save, SaveIcon, Landmark, Globe, Microscope, Globe2, LandmarkIcon, MicroscopeIcon, Sigma, Search, SearchXIcon, Filter, BookOpen, TestTube, ChartBar, } from 'lucide-react';
+import { Atom, Bookmark, BookmarkCheck, Save, SaveIcon, Landmark, Globe, Microscope, Globe2, LandmarkIcon, MicroscopeIcon, Sigma, Search, SearchXIcon, Filter, BookOpen, TestTube, ChartBar, Book, } from 'lucide-react';
+import CheckImage from '../../Utilities/image checker/CheckImage';
 
 
 const ExplanationLister = ({ apiName, filter }) => {
@@ -37,7 +38,47 @@ const ExplanationLister = ({ apiName, filter }) => {
 
       setExplanationsFetched({ loaded: false })
 
+     if(userData?.role === "superadmin"){
       try {
+        
+        const response = await axios.get(`${url}/api/explanations/all-explanations-list/admin`,{
+          headers:{
+            "Content-Type":"application/json",
+            "Authorization": "Bearer "+token
+          }
+        });
+
+        const filteredData = filter ? response.data.data.filter((lesson) => {
+          let isMatch = true;
+          for (const key in filter) {
+            if (lesson[key] !== filter[key]) {
+              isMatch = false;
+              break;
+            }
+          }
+          return isMatch;
+        }) : response.data.data;
+
+        setExplanationsList({ loaded: true, content: filteredData })
+        setFilteredExplanationsList({ content: filteredData })
+
+        filteredData.forEach((element) => {
+          const searchKey1 = element.name.toLowerCase();
+          const searchKey2 = element.description.toLowerCase();
+          searchKeyList.push({ key: searchKey1, address: `/explain/${element.subject}/${element._id}` })
+          searchKeyList.push({ key: searchKey2, address: `/explain/${element.subject}/${element._id}` })
+        })
+
+        setExplanationsFetched({ loaded: true, success: true })
+
+
+      }
+      catch (error) {
+        console.log("Error", error)
+        setExplanationsFetched({ loaded: true, success: false })
+      }} 
+      else{ 
+        try {
         const response = await axios.get(url + apiName);
 
         const filteredData = filter ? response.data.data.filter((lesson) => {
@@ -66,10 +107,8 @@ const ExplanationLister = ({ apiName, filter }) => {
 
       } catch (error) {
         console.log("Error", error)
-
         setExplanationsFetched({ loaded: true, success: false })
-
-      }
+      }}
 
 
     }
@@ -153,6 +192,10 @@ const ExplanationLister = ({ apiName, filter }) => {
     {
       name: "Economics",
       icon: ChartBar
+    },
+    {
+      name:"English",
+      icon:BookOpen
     }
   ];
 
@@ -251,9 +294,15 @@ const ExplanationLister = ({ apiName, filter }) => {
                       viewport={{ once: true }}
                     >
                       <div key={index} >
+                      {
+                  topic?.review !== "reviewed" ? <span style={{width:'100%', backgroundColor:'blue', color:'white',padding:'5px 10px'}}>{topic?.review}</span>
+                   :null
+                }
                         <div className="image" onClick={() => { token ? navigate(`/explain/${topic.subject}/${topic._id}`) : setShowLogin(true) }}>
-                          <img src={topic.image} alt="" />
-
+                <div className="image" onClick={() => { token?navigate(`/quizzes/${topic.subject}/${topic._id}`):setShowLogin(true) }}>
+                  <CheckImage imageUrl={topic.image} Icon={Book} title="Explanation Icon" />
+                  
+                 </div>
                         </div>
                         <div className="caption" >
                           <div className="txt-caption">

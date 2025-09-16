@@ -10,6 +10,7 @@ import axios from "axios";
 import { StoreContext } from "../../Context/StoreContext";
 import ContentEditor from "../utils/Editor";
 import ConfirmationPrompt from "../../Components/ReusableComponents/ConfirmationPrompt/ConfirmationPrompt";
+import LessonEditor from "./LessonEditor/LessonEditor";
 
 const ExplanationsPage = ({ onPreviewExplanation }) => {
   const { url, token, userData, setShowPopup } = useContext(StoreContext);
@@ -157,7 +158,7 @@ const ExplanationsPage = ({ onPreviewExplanation }) => {
  }
 
   return (
-    <div className="content-page-container">
+    <div className="admin-content-container">
       <h1 className="page-heading">
         <FileText size={40} />
         Explanations
@@ -286,6 +287,8 @@ const ExplanationsPage = ({ onPreviewExplanation }) => {
       />
       
     </div>
+
+    // <LessonEditor onSave={setExplanations} />
 
   );
 };

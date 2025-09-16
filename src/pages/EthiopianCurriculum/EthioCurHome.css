@@ -1,91 +1,184 @@
-.ethio-cur-home .welc{
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-}
-.ethio-cur-home .welc h1 {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 20px;
-}
-.ethio-cur-home .welc p {
-    font-size: 1.2rem;
-    color: #666;
-    max-width: 600px;
-    margin-bottom: 30px;    
-}
-.ethio-cur-home .welc .welc-text{
-    /* text-align: center; */
-    padding: 20px;
-    background-color: #f9f9f9;
-}
-.main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background-color: #f0f0f0;
-}
-.main .grades{
-    display: flex;
-    /* flex-direction: column; */
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-.main .grades .grade{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-    width: max(25vw,200px);
-    cursor: pointer;
-}
-.main .grades .grade:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
 
-}
-.main .grades .grade h3 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 10px;
-}
-.main h2 {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 20px;
-}
-.main p {
-    font-size: 1rem;
-    color: #666;
-    max-width: 800px;
-    margin-bottom: 30px;
-}
+        /* Import a professional font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
 
-@media screen and (max-width: 768px) {
-    .ethio-cur-home .welc {
-        flex-direction: column;
-        padding: 20px;
-    }
-    .ethio-cur-home .welc h1 {
-        font-size: 2rem;
-    }
-    .ethio-cur-home .welc p {
-        font-size: 1rem;
-    }
-    .ethio-cur-home .welc .welc-text {
-        padding: 15px;
-    }
-    
-}
+        .app-container {
+          background-color: #f9fafb;
+          min-height: 100vh;
+          font-family: 'Inter', sans-serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 2rem;
+          overflow: hidden; /* Prevent horizontal scroll from animations */
+        }
+        
+        /* Keyframe animations for a modern entrance */
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+          from { opacity: 0; transform: translateX(-50px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+
+        .welcome-section {
+          width: 100%;
+          max-width: 80rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 2rem;
+          padding: 3rem;
+          background-color: #ffffff;
+          border-radius: 2rem;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+          animation: fadeIn 1s ease-in-out;
+        }
+        
+        @media (min-width: 768px) {
+          .welcome-section {
+            flex-direction: row;
+            text-align: left;
+            padding: 4rem;
+          }
+        }
+        
+        .welcome-text-container {
+          flex: 1;
+        }
+        
+        .welcome-title {
+          font-size: 2.5rem;
+          font-weight: 800;
+          color: #1f2937;
+          line-height: 1.2;
+          margin-bottom: 1rem;
+          animation: slideInLeft 1s ease-out;
+        }
+        
+        .spark-study-span {
+          color: #2563eb;
+        }
+
+        .welcome-paragraph {
+          font-size: 1rem;
+          color: #4b5563;
+          line-height: 1.6;
+          max-width: 48rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        .update-note {
+          font-size: 0.875rem;
+          color: #6b7280;
+          font-style: italic;
+        }
+
+        .flag-icon {
+          width: 8rem;
+          height: 8rem;
+          border-radius: 9999px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .flag-icon:hover {
+          transform: scale(1.1) rotate(5deg);
+        }
+
+        .grade-section {
+          width: 100%;
+          max-width: 80rem;
+          margin-top: 5rem;
+          text-align: center;
+        }
+
+        .grade-title {
+          font-size: 2.5rem;
+          font-weight: 800;
+          color: #1f2937;
+          margin-bottom: 3rem;
+        }
+        
+        .grades-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          padding: 1rem;
+        }
+        
+        .grade-card {
+          background-color: #ffffff;
+          padding: 2rem;
+          border-radius: 1.5rem;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          cursor: pointer;
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .grade-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), transparent);
+          transform: translateY(100%);
+          transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .grade-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .grade-card:hover::before {
+          transform: translateY(0);
+        }
+        
+        .grade-icon-container {
+          background-color: #dbeafe;
+          color: #2563eb;
+          border-radius: 9999px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          z-index: 1; /* Place above the pseudo-element */
+        }
+        
+        .grade-card:hover .grade-icon-container {
+          background-color: #2563eb;
+          color: #ffffff;
+        }
+        
+        .grade-icon {
+          width: 3rem;
+          height: 3rem;
+        }
+        
+        .grade-card h3 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #1f2937;
+          margin-bottom: 0.5rem;
+          z-index: 1;
+        }
+        
+        .grade-card p {
+          font-size: 0.95rem;
+          color: #6b7280;
+          z-index: 1;
+          max-width: 250px;
+        }
+      

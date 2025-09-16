@@ -1,7 +1,9 @@
-.content-page-container {
+.admin-content-container {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    max-width: 700px;
+    margin: auto;
   }
 
   .content-heading {
