@@ -32,10 +32,11 @@ import AdminPage from './Admin/AdminPage'
 import AdminRoute from './utills/AdminRoute'
 import CurLessonsLister from './CurBasedLessonList/LessonLister/CurLessonsLister'
 import CurQuizzesLister from './CurBasedLessonList/QuizLister/CurQuizzesLister'
+import ProtectedRoute from './utills/Protectroute'
 
 function App() {
   
-  const {showLogin,showPopup,userData, url, token} = useContext(StoreContext)
+  const {showLogin,setShowLogin,showPopup,userData, url, token} = useContext(StoreContext)
   // const UserName = userData?userData.name:"there"
 
   function ScrollToTop() {
@@ -78,12 +79,18 @@ function App() {
         <Route path='/terms-and-privacy-policy' element={<TermsAndPrivacy />} />
         
         <Route path='/explain' element={<TopicExplanation/>} />
-        <Route path='/explain/:subject/:id' element={<ExplanationShower/>} />
+        <Route path='/explain/:subject/:id' element={<ProtectedRoute token={token} setShowLogin={setShowLogin} >
+          <ExplanationShower/>
+          </ProtectedRoute>} />
         <Route path='/quizzes' element={<Quizes/>} />
-        <Route path='/quizzes/:subject/:id' element={<Quizer/>} />
+        <Route path='/quizzes/:subject/:id' element={<ProtectedRoute token={token} setShowLogin={setShowLogin} >
+          <Quizer/>
+          </ProtectedRoute>} />
        
         <Route path='/user/verifyemail/:token' element={<VerifyEmail/>} />
-        <Route path='/profile' element={<NewProfile/>} />
+        <Route path='/profile' element={<ProtectedRoute token={token} setShowLogin={setShowLogin} >
+          <NewProfile/>
+          </ProtectedRoute>} />
         
         <Route path='/ethiopian-curriculum' element={<EthioCurHome/>} />
         <Route path='/ethiopian-curriculum/grade/:gradeId' element={<GradeSection/>} />
@@ -96,7 +103,6 @@ function App() {
         <Route path='/auth/forgot-password' element={<ForgotPassword/>} />
         <Route path='/auth/reset-password' element={<ResetPassword/>} />
         <Route path='/auth/verify-reseting-password/:resetToken' element={<ResetPassword/>} />
-        
         
         
         <Route path='/plans' element={<Plans/>} />
