@@ -4,6 +4,7 @@ import './Contact.css'
 import { assets } from '../../assets/assets'
 import { Send } from 'lucide-react'
 import { StoreContext } from '../../Context/StoreContext'
+import { Turnstile } from "@marsidev/react-turnstile";
 
 
 const Contact = () => {
@@ -11,6 +12,7 @@ const Contact = () => {
   const [status, setStatus] = useState(null) // success or error
   const {url, token, userData} = useContext(StoreContext) 
   const [sending,setSending] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState("")
 
   const [formData, setFormData] = useState({
     name: '',
@@ -32,7 +34,7 @@ const Contact = () => {
       
       setSending(true)
       const response = await axios.post(url+'/api/messages/contact',
-         {name:formData.name,email:formData.email, message:formData.message}, {
+         {name:formData.name,email:formData.email, message:formData.message, turnstileToken:captchaToken}, {
         headers:{
           'Content-Type':'application/json',
           'token': token
@@ -71,6 +73,16 @@ const Contact = () => {
       <div className="contact-img-container">
         <img src={assets.contact_us_side_image} alt="contact-us" />
         <form onSubmit={(e)=>handleSubmit(e)}>
+
+       
+
+        <Turnstile
+        siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+        onSuccess={(captoken) => setCaptchaToken(captoken)}
+        onError={() => setCaptchaToken('')}
+        onExpire={() => setCaptchaToken('')}
+      />
+
           <div>
             <label htmlFor="contact-name">Name: </label>
             <input
@@ -108,7 +120,7 @@ const Contact = () => {
               required
             ></textarea>
           </div>
-          <button disabled={sending}  className='submit-btn' type='submit'>
+          <button disabled={sending && !token}  className='submit-btn' type='submit'>
             <Send size={14}/> Send Message
           </button>
         </form>
